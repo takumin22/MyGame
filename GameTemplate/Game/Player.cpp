@@ -81,24 +81,12 @@ void Player::Move()
 		        ////XZ成分の移動速度をクリア。
 		    m_moveSpeed.x *= 0.7f;
 			m_moveSpeed.z *= 0.7f;
-		//m_moveSpeed += cameraForward * lStick_y * 450.0f;	//奥方向への移動速度を代入。
-		//m_moveSpeed += cameraRight * lStick_x * 450.0f;		//右方向への移動速度を加算。
-		    cameraForward *= lStick_y * 450.0f;
-		    cameraRight *= lStick_x * 450.0f;
+		m_moveSpeed += cameraForward * lStick_y * 450.0f;	//奥方向への移動速度を代入。
+		m_moveSpeed += cameraRight * lStick_x * 450.0f;		//右方向への移動速度を加算。
 			m_moveSpeed.z = min(450.0f,m_moveSpeed.z);
 			m_moveSpeed.z = max(-450.0f, m_moveSpeed.z);
 			m_moveSpeed.x = min(450.0f, m_moveSpeed.x);
 			m_moveSpeed.x = max(-450.0f, m_moveSpeed.x);
-
-
-
-		//摩擦力。
-		//auto friction = m_moveSpeed;
-		//friction *= -3.0f;
-		//m_moveSpeed.x += friction.x;
-		//m_moveSpeed.z += friction.z;
-			m_moveSpeed += cameraForward;
-			m_moveSpeed += cameraRight;
 		//Y方向の移動速度は重力加速を行う。
 		//加速度を加える。
 		//m_moveSpeed += cameraForward;
@@ -132,18 +120,18 @@ void Player::MoveRun()
 		cameraRight.y = 0.0f;
 		cameraRight.Normalize();
 		////XZ成分の移動速度をクリア。
-		m_moveSpeed.x = 0.0f;
-		m_moveSpeed.z = 0.0f;
-		//摩擦力。
-
-		auto friction = m_moveSpeed;
-		friction *= 0.8f;
-		m_moveSpeed.x += friction.x;
-		m_moveSpeed.z += friction.z;
+		m_moveSpeed.x = 0.8f;
+		m_moveSpeed.z = 0.8f;
+		
 		m_moveSpeed += cameraForward *lStick_y * 650.0f;	//奥方向への移動速度を代入。
 		m_moveSpeed += cameraRight *lStick_x * 650.0f;		//右方向への移動速度を加算。
-															//Y方向の移動速度は重力加速を行う。
-		m_moveSpeed.y -= 1800.0f * (1.0f / 60.0f);
+		//m_moveSpeed.z = min(450.0f, m_moveSpeed.z);
+		//m_moveSpeed.z = max(-450.0f, m_moveSpeed.z);
+		//m_moveSpeed.x = min(450.0f, m_moveSpeed.x);
+		//m_moveSpeed.x = max(-450.0f, m_moveSpeed.x);
+
+															
+		m_moveSpeed.y -= 1800.0f * (1.0f / 60.0f);//Y方向の移動速度は重力加速を行う。
 
 		//キャラクターコントローラーに１フレームの経過時間:秒(第一引数)、時間ベースの移動速度(第二引数)を渡している。
 		//Execute関数の中で行っている計算は下記のようなもの。
@@ -289,10 +277,6 @@ void Player::AABB()
 void Player::Scafflod()
 {
 
-	//CVector3 toScaffolDir = m_position - m_scaffold[1]->GetScaPosition();
-	//float toScaffoldLen = toScaffolDir.Length();
-	//CVector3 toScaffolDlr = m_position - m_scaffold[0]->GetScaPosition();
-	//float toScaffoldLan = toScaffolDlr.Length();
 	AABB();
 	if (kariflag == true) {
 
@@ -309,20 +293,6 @@ void Player::Scafflod()
 
 }
 void Player::Distans() {
-	//CVector3 springForward = CVector3::AxisY();
-	//m_rotation.Multiply(springForward);
-	////springからプレイヤーに伸びるベクトルを求める。
-	//CVector3 toPlayerDir = m_position - m_spring[0]->GetSPosition();
-	//CVector3 toScaffolDir = m_position - m_scaffold[2]->GetScaPosition();
-	////springまでの距離を求めておく。
-	//float toPlayerLen = toPlayerDir.Length();
-	//float toScaffoldLen = toScaffolDir.Length();
-	////正規化
-	//toPlayerDir.Normalize();
-	////springForwardとtoPlayerDirとの内積を計算する。
-	//float d = springForward.Dot(toPlayerDir);
-	////内積の結果をacos関数に渡して、springForwardとtoPlayerDirのなす角を求める。
-	//float angle = acos(d);
 }
 void Player::Update()
 {
