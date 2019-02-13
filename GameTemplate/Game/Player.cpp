@@ -78,23 +78,31 @@ void Player::Move()
 		cameraForward.Normalize();
 		cameraRight.y = 0.0f;
 		cameraRight.Normalize();
-		////XZ成分の移動速度をクリア。
-		//m_moveSpeed.x = 0.0f;
-		//m_moveSpeed.z = 0.0f;
+		        ////XZ成分の移動速度をクリア。
+		    m_moveSpeed.x *= 0.7f;
+			m_moveSpeed.z *= 0.7f;
 		//m_moveSpeed += cameraForward * lStick_y * 450.0f;	//奥方向への移動速度を代入。
 		//m_moveSpeed += cameraRight * lStick_x * 450.0f;		//右方向への移動速度を加算。
-		cameraForward *= lStick_y * 450.0f;
-		cameraRight *= lStick_x * 450.0f;
+		    cameraForward *= lStick_y * 450.0f;
+		    cameraRight *= lStick_x * 450.0f;
+			m_moveSpeed.z = min(450.0f,m_moveSpeed.z);
+			m_moveSpeed.z = max(-450.0f, m_moveSpeed.z);
+			m_moveSpeed.x = min(450.0f, m_moveSpeed.x);
+			m_moveSpeed.x = max(-450.0f, m_moveSpeed.x);
+
+
+
 		//摩擦力。
 		//auto friction = m_moveSpeed;
 		//friction *= -3.0f;
 		//m_moveSpeed.x += friction.x;
 		//m_moveSpeed.z += friction.z;
-
+			m_moveSpeed += cameraForward;
+			m_moveSpeed += cameraRight;
 		//Y方向の移動速度は重力加速を行う。
 		//加速度を加える。
-		m_moveSpeed += cameraForward;
-		m_moveSpeed += cameraRight;
+		//m_moveSpeed += cameraForward;
+		//m_moveSpeed += cameraRight;
 		m_moveSpeed.y -= 1800.0f * (1.0f / 60.0f);
 		//キャラクターコントローラーに１フレームの経過時間:秒(第一引数)、時間ベースの移動速度(第二引数)を渡している。
 		//Execute関数の中で行っている計算は下記のようなもの。
@@ -124,9 +132,10 @@ void Player::MoveRun()
 		cameraRight.y = 0.0f;
 		cameraRight.Normalize();
 		////XZ成分の移動速度をクリア。
-		//m_moveSpeed.x = 0.0f;
-		//m_moveSpeed.z = 0.0f;
+		m_moveSpeed.x = 0.0f;
+		m_moveSpeed.z = 0.0f;
 		//摩擦力。
+
 		auto friction = m_moveSpeed;
 		friction *= 0.8f;
 		m_moveSpeed.x += friction.x;
@@ -336,8 +345,8 @@ void Player::Update()
 	switch (m_pstate)
 	{
 	case State_Idel: //待機ステート
-	/*	m_moveSpeed.x = 0.0f;
-		m_moveSpeed.z = 0.0f;*/
+		//m_moveSpeed.x = 0.0f;
+		//m_moveSpeed.z = 0.0f;
 		Time = 0;
 		Move();
 		MoveRun();
@@ -349,10 +358,10 @@ void Player::Update()
 		if (g_game->GetGoal() == true) {
 			m_pstate = State_Goal;
 		}
-		if (fabsf(angle) < CMath::DegToRad(50.0f)
-			&&toPlayerLen <= 70.0f) {
-			m_pstate = State_SpringJump;
-		}
+		//if (fabsf(angle) < CMath::DegToRad(50.0f)
+		//	&&toPlayerLen <= 70.0f) {
+		//	m_pstate = State_SpringJump;
+		//}
 		if (m_position.y <= -500.0f) {
 			m_pstate = State_Return;
 		}
