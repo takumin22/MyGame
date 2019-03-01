@@ -60,13 +60,9 @@ Player::~Player()
 void Player::Move()
 {
 
-	if (g_pad[0].IsPress(enButtonB) == false) {
+		auto MOVE_SPEED = 2400.0f;
+		static float MOVE_SPEED_JUMP = 1000.0f;
 
-		if (g_pad[0].IsTrigger(enButtonA) == true
-			&& m_charaCon.IsOnGround() == true
-			) {
-			m_moveSpeed.y += 490.0f;
-		}
 		//左スティックの入力量を受け取る。
 		auto lStick_x = g_pad[0].GetLStickXF();
 		auto lStick_y = g_pad[0].GetLStickYF();
@@ -78,75 +74,79 @@ void Player::Move()
 		cameraForward.Normalize();
 		cameraRight.y = 0.0f;
 		cameraRight.Normalize();
-		        ////XZ成分の移動速度をクリア。
-		    m_moveSpeed.x *= 0.7f;
-			m_moveSpeed.z *= 0.7f;
-		m_moveSpeed += cameraForward * lStick_y * 450.0f;	//奥方向への移動速度を代入。
-		m_moveSpeed += cameraRight * lStick_x * 450.0f;		//右方向への移動速度を加算。
-			m_moveSpeed.z = min(450.0f,m_moveSpeed.z);
-			m_moveSpeed.z = max(-450.0f, m_moveSpeed.z);
-			m_moveSpeed.x = min(450.0f, m_moveSpeed.x);
-			m_moveSpeed.x = max(-450.0f, m_moveSpeed.x);
-		//Y方向の移動速度は重力加速を行う。
-		//加速度を加える。
-		//m_moveSpeed += cameraForward;
-		//m_moveSpeed += cameraRight;
-		m_moveSpeed.y -= 1800.0f * (1.0f / 60.0f);
-		//キャラクターコントローラーに１フレームの経過時間:秒(第一引数)、時間ベースの移動速度(第二引数)を渡している。
-		//Execute関数の中で行っている計算は下記のようなもの。
-		//
-		// CVector3 addPos = m_moveSpeed * ( 1.0f / 60.0f ); //１フレームで移動する量を計算する。
-		// m_position += addPos;  //1フレームの移動量を座標に加算する。これをオイラー積分という。
-		m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
-	}
-}
-void Player::MoveRun()
-{
-	if (g_pad[0].IsPress(enButtonB) == true) {
-		if (g_pad[0].IsTrigger(enButtonA) == true
-			&& m_charaCon.IsOnGround() == true
-			) {
-			m_moveSpeed.y += 490.0f;
+		if (m_pstate == State_Jump) {
+			//ジャンプ中でも緩く方向転換できるようにする。
+			cameraForward *= lStick_y * MOVE_SPEED_JUMP * (1.0f / 60.0f);
+			cameraRight *= lStick_x * MOVE_SPEED_JUMP * (1.0f / 60.0f);
 		}
-		//左スティックの入力量を受け取る。
-		float lStick_x = g_pad[0].GetLStickXF();
-		float lStick_y = g_pad[0].GetLStickYF();
-		//カメラの前方方向と右方向を取得
-		auto cameraForward = g_camera3D.GetForward();
-		auto cameraRight = g_camera3D.GetRight();
-		//XZ平面での前方方向、右方向に変換する。
-		cameraForward.y = 0.0f;
-		cameraForward.Normalize();
-		cameraRight.y = 0.0f;
-		cameraRight.Normalize();
-		////XZ成分の移動速度をクリア。
-		m_moveSpeed.x = 0.8f;
-		m_moveSpeed.z = 0.8f;
-		
-		m_moveSpeed += cameraForward *lStick_y * 650.0f;	//奥方向への移動速度を代入。
-		m_moveSpeed += cameraRight *lStick_x * 650.0f;		//右方向への移動速度を加算。
-		//m_moveSpeed.z = min(450.0f, m_moveSpeed.z);
-		//m_moveSpeed.z = max(-450.0f, m_moveSpeed.z);
-		//m_moveSpeed.x = min(450.0f, m_moveSpeed.x);
-		//m_moveSpeed.x = max(-450.0f, m_moveSpeed.x);
+		else {
+			cameraForward *= lStick_y * MOVE_SPEED * (1.0f / 60.0f);
+			cameraRight *= lStick_x * MOVE_SPEED * (1.0f / 60.0f);
+		}
 
-															
-		m_moveSpeed.y -= 1800.0f * (1.0f / 60.0f);//Y方向の移動速度は重力加速を行う。
+		//摩擦力。
+		auto friction = m_moveSpeed;
+		if (m_pstate == State_Jump) {
+			//ジャンプ中の摩擦力。
+			friction *= -1.0f;
+		}
+		else {
+			friction *= -3.0f;
+		}
+		m_moveSpeed.x += friction.x * (1.0f / 60.0f);
+		m_moveSpeed.z += friction.z * (1.0f / 60.0f);
+		//加速度を加える。
+		m_moveSpeed += cameraForward;
+		m_moveSpeed += cameraRight;
+		m_moveSpeed.y += -1800.0f * (1.0f / 60.0f);
+		if (m_pstate == State_Jump) {
+			//移動速度に制限を加える。
+			//ジャンプ中にジャンプ前より早くなることはない。
+			auto moveSpeedXZ = CVector3(m_moveSpeed.x, 0.0f, m_moveSpeed.z);
 
-		//キャラクターコントローラーに１フレームの経過時間:秒(第一引数)、時間ベースの移動速度(第二引数)を渡している。
-		//Execute関数の中で行っている計算は下記のようなもの。
-		//
-		// CVector3 addPos = moveSpeed * ( 1.0f / 60.0f ); //１フレームで移動する量を計算する。
-		// position += addPos;  //1フレームの移動量を座標に加算する。これをオイラー積分という。
-		m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
-	}
-}
+			if (moveSpeedXZ.LengthSq() > m_moveSpeedWhenStartJump * m_moveSpeedWhenStartJump) {
+				moveSpeedXZ.Normalize();
+				moveSpeedXZ *= m_moveSpeedWhenStartJump;
+				m_moveSpeed.x = moveSpeedXZ.x;
+				m_moveSpeed.z = moveSpeedXZ.z;
+
+			}
+		}
+				//if (g_pad[0].IsTrigger(enButtonA) == true
+				//	&& m_charaCon.IsOnGround() == true
+				//	) {
+				//	cameraForward *= lStick_y * 490.0f * (1.0f / 60.0f);
+				//	cameraRight *= lStick_x * 490.0f * (1.0f / 60.0f);
+				//	//m_moveSpeed.y += 490.0f;
+				//}
+						////XZ成分の移動速度をクリア。
+				//m_moveSpeed.x *= 0.8f;
+				//m_moveSpeed.z *= 0.8f;
+				//m_moveSpeed += cameraForward * lStick_y * 450.0f;	//奥方向への移動速度を代入。
+				//m_moveSpeed += cameraRight * lStick_x * 450.0f;		//右方向への移動速度を加算。
+				//m_moveSpeed.z = min(450.0f,m_moveSpeed.z);
+				//m_moveSpeed.z = max(-450.0f, m_moveSpeed.z);
+				//m_moveSpeed.x = min(450.0f, m_moveSpeed.x);
+				//m_moveSpeed.x = max(-450.0f, m_moveSpeed.x);
+				//Y方向の移動速度は重力加速を行う。
+				//加速度を加える。
+				//m_moveSpeed += cameraForward;
+				//m_moveSpeed += cameraRight;
+				m_moveSpeed.y -= 1800.0f * (1.0f / 60.0f);
+				//キャラクターコントローラーに１フレームの経過時間:秒(第一引数)、時間ベースの移動速度(第二引数)を渡している。
+				//Execute関数の中で行っている計算は下記のようなもの。
+				//
+				// CVector3 addPos = m_moveSpeed * ( 1.0f / 60.0f ); //１フレームで移動する量を計算する。
+				// m_position += addPos;  //1フレームの移動量を座標に加算する。これをオイラー積分という。
+				m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
+			
+		}
 void Player::Turn()
 {
-	if (fabsf(m_moveSpeed.x) < 0.001f
-		&& fabsf(m_moveSpeed.z) < 0.001f) {
-		//m_moveSpeed.xとm_moveSpeed.zの絶対値がともに0.001以下ということは
-		//このフレームではキャラは移動していないので旋回する必要はない。
+	auto moveSpeedXZ = m_moveSpeed;
+	moveSpeedXZ.y = 0.0f;
+	moveSpeedXZ.Normalize();
+	if (moveSpeedXZ.LengthSq() < 1.0f) {
 		return;
 	}
 	//atan2はtanθの値を角度(ラジアン単位)に変換してくれる関数。
@@ -162,33 +162,52 @@ void Player::AnimationControl()
 {
 	CVector3 stick;
 
-	if (!m_charaCon.IsJump()) {
-		if (stick.x = g_pad[0].GetLStickXF()&& g_pad[0].IsPress(enButtonB) == false) {
-			m_animation.Play(enAnimationClip_walk,0.2f);
-		}
-		else if (stick.y = g_pad[0].GetLStickYF()&& g_pad[0].IsPress(enButtonB) == false) {
-			m_animation.Play(enAnimationClip_walk,0.2f);
-		}
-		else if (stick.x = g_pad[0].GetLStickXF() && g_pad[0].IsPress(enButtonB) == true) {
+	if (m_pstate == State_Jump) {
+		m_animation.Play(enAnimationClip_jump, 0.1f);
+	}
+	else if (m_pstate == State_MoveRun
+		|| m_pstate == State_Idel
+		) {
+		if (m_moveSpeed.LengthSq() > 600.0f * 600.0f) {
+			//走りモーション。
 			m_animation.Play(enAnimationClip_run, 0.2f);
 		}
-		else if (stick.y = g_pad[0].GetLStickYF() && g_pad[0].IsPress(enButtonB) == true) {
-			m_animation.Play(enAnimationClip_run, 0.2f);
+		else if (m_moveSpeed.LengthSq() > 50.0f * 50.0f) {
+			//走りモーション。
+			m_animation.Play(enAnimationClip_walk, 0.2f);
 		}
-		//else if (g_game->GetGoal() == true) {
-
-		//	m_pstate = State_Goal;
-		//}
 		else {
-			m_animation.Play(enAnimationClip_idle,0.2f);
+			//待機モーション
+			m_animation.Play(enAnimationClip_idle, 0.2f);
 		}
+	}
+	//if (!m_charaCon.IsJump()) {
+	//	if (stick.x = g_pad[0].GetLStickXF()&& g_pad[0].IsPress(enButtonB) == false) {
+	//		m_animation.Play(enAnimationClip_walk,0.2f);
+	//	}
+	//	else if (stick.y = g_pad[0].GetLStickYF()&& g_pad[0].IsPress(enButtonB) == false) {
+	//		m_animation.Play(enAnimationClip_walk,0.2f);
+	//	}
+	//	else if (stick.x = g_pad[0].GetLStickXF() && g_pad[0].IsPress(enButtonB) == true) {
+	//		m_animation.Play(enAnimationClip_run, 0.2f);
+	//	}
+	//	else if (stick.y = g_pad[0].GetLStickYF() && g_pad[0].IsPress(enButtonB) == true) {
+	//		m_animation.Play(enAnimationClip_run, 0.2f);
+	//	}
+	//	else if (g_game->GetGoal() == true) {
 
-	}
-	else {
-		if (m_charaCon.IsOnGround()== false&&g_pad[0].IsTrigger(enButtonA) == true) {
-			m_animation.Play(enAnimationClip_jump, 0.1f);
-		}
-	}
+	//		m_pstate = State_Goal;
+	//	}
+	//	else {
+	//		m_animation.Play(enAnimationClip_idle,0.2f);
+	//	}
+
+	//}
+	//else {
+	//	if (m_charaCon.IsOnGround()== false&&g_pad[0].IsTrigger(enButtonA) == true) {
+	//		m_animation.Play(enAnimationClip_jump, 0.1f);
+	//	}
+	//}
 }
 void Player::Damage()
 {
@@ -293,6 +312,7 @@ void Player::Scafflod()
 
 }
 void Player::Distans() {
+
 }
 void Player::Update()
 {
@@ -311,32 +331,64 @@ void Player::Update()
 		float d = springForward.Dot(toPlayerDir);
 		//内積の結果をacos関数に渡して、springForwardとtoPlayerDirのなす角を求める。
 		float angle = acos(d);
-	
+		static float JUMP_SPEED = 630.0f;
+		Turn();
+		AnimationControl();
 	switch (m_pstate)
 	{
 	case State_Idel: //待機ステート
-		//m_moveSpeed.x = 0.0f;
-		//m_moveSpeed.z = 0.0f;
+		m_moveSpeed.x = 0.0f;
+		m_moveSpeed.z = 0.0f;
 		Time = 0;
 		Move();
-		MoveRun();
-		Turn();
-		AnimationControl();
+		//MoveRun();
+		//Turn();
+		//AnimationControl();
 	    Scafflod();
 		Damage();
-
+		if (g_pad[0].IsTrigger(enButtonA)) {
+			m_moveSpeed.y = JUMP_SPEED;
+			m_pstate = State_Jump;
+		}
+		else if (m_moveSpeed.LengthSq() > 0.001f) {
+			//入力がある。
+			m_pstate = State_MoveRun;
+		}
 		if (g_game->GetGoal() == true) {
 			m_pstate = State_Goal;
 		}
-		//if (fabsf(angle) < CMath::DegToRad(50.0f)
-		//	&&toPlayerLen <= 70.0f) {
-		//	m_pstate = State_SpringJump;
-		//}
+		if (fabsf(angle) < CMath::DegToRad(50.0f)
+			&&toPlayerLen <= 70.0f) {
+			m_pstate = State_SpringJump;
+		}
 		if (m_position.y <= -500.0f) {
 			m_pstate = State_Return;
 		}
 		break;
 	case State_MoveRun:
+		Move();
+		if (m_moveSpeed.LengthSq() < 50.0f * 50.0f) {
+			//入力がなくなった。
+			m_pstate = State_Idel;
+		}
+		else if (g_pad[0].IsTrigger(enButtonA)) {
+			//この時点でのXZ方向の速度を記憶しておく。
+			m_moveSpeedWhenStartJump = m_moveSpeed.Length();
+			m_moveSpeed.y = JUMP_SPEED;
+			m_pstate = State_Jump;
+		}
+		break;
+	case State_Jump:
+		Move();
+		if (!m_charaCon.IsJump()) {
+			if (m_moveSpeed.LengthSq() < 50.0f * 50.0f) {
+				//入力がなくなった。
+				m_pstate = State_Idel;
+			}
+			else {
+				m_pstate = State_MoveRun;
+			}
+		}
 		break;
 	case State_SpringJump: //バネジャンプ
         SpringJump();
@@ -348,9 +400,9 @@ void Player::Update()
 		break;
 	case State_Scaffold://足場上
 	    Move();
-		MoveRun();
-	    Turn();
-		AnimationControl();
+		//MoveRun();
+	    /*Turn();
+		AnimationControl();*/
 		Scafflod();
 	if (m_scaffold[1]->m_sstate == m_scaffold[1]->State_FrontMove) {
 		m_position.z += 5.0f;
@@ -363,9 +415,9 @@ void Player::Update()
 		break;
 	case State_Scaffold1:
 		Move();
-		MoveRun();
-		Turn();
-		AnimationControl();
+		//MoveRun();
+		/*Turn();
+		AnimationControl();*/
 		Scafflod();
 		if (m_scaffold[0]->m_sstate == m_scaffold[0]->State_FrontMove) {
 			m_position.z += 5.0f;
@@ -385,9 +437,9 @@ void Player::Update()
 		break;
 	case State_InvincibleCount:  //無敵時間(仮)	
 		Move();
-		MoveRun();
-		Turn();
-		AnimationControl();
+		//MoveRun();
+		//Turn();
+		//AnimationControl();
 		Time++;
 		if (Time== 60.0f) {
 			m_pstate = State_Idel;

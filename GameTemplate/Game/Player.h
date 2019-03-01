@@ -24,7 +24,7 @@ public:
 	/// <summary>
 	/// ダッシュ移動処理
 	/// </summary>
-	void MoveRun();
+	//void MoveRun();
 	/// <summary>
 	/// 回転
 	/// </summary>
@@ -108,6 +108,7 @@ private:
 	enum PState {
 		State_Idel, //基本ステート(歩)
 		State_MoveRun,
+		State_Jump,
 		State_Damage,  //ダメージステート
 		State_Scaffold, //足場上ステート
 		State_Scaffold1,
@@ -130,6 +131,7 @@ private:
 	CVector3 m_up = CVector3::Zero();
 	CVector3 m_forward = CVector3::Zero();
 	CharacterController m_charaCon;   //キャラクターコントローラ
+	float m_moveSpeedWhenStartJump;
 	int Time = 0;//無敵時間
 	int DamageCount = 0;//ダメージ量のカウント
     Enemy* m_enemy[2]; //エネミー
