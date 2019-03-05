@@ -21,11 +21,6 @@ public:
 	/// 移動処理
 	/// </summary>
 	void Move();
-	/// <summary>
-	/// ダッシュ移動処理
-	/// </summary>
-	//void MoveRun();
-	/// <summary>
 	/// 回転
 	/// </summary>
 	void Turn();
@@ -41,7 +36,6 @@ public:
 	/// バネジャンプの処理
 	/// </summary>
 	void SpringJump();
-	void Distans();
 	/// <summary>
 	/// プレイヤーの復帰処理
 	/// </summary>

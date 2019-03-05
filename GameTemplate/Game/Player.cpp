@@ -60,7 +60,7 @@ Player::~Player()
 void Player::Move()
 {
 
-		auto MOVE_SPEED = 2400.0f;
+		auto MOVE_SPEED = 2600.0f;
 		static float MOVE_SPEED_JUMP = 1000.0f;
 
 		//左スティックの入力量を受け取る。
@@ -88,10 +88,10 @@ void Player::Move()
 		auto friction = m_moveSpeed;
 		if (m_pstate == State_Jump) {
 			//ジャンプ中の摩擦力。
-			friction *= -1.0f;
+			friction *= -2.0f;
 		}
 		else {
-			friction *= -3.0f;
+			friction *= -5.0f;
 		}
 		m_moveSpeed.x += friction.x * (1.0f / 60.0f);
 		m_moveSpeed.z += friction.z * (1.0f / 60.0f);
@@ -112,13 +112,14 @@ void Player::Move()
 
 			}
 		}
-				m_moveSpeed.y -= 1800.0f * (1.0f / 60.0f);
+				//m_moveSpeed.y -= 1800.0f * (1.0f / 60.0f);
 				//キャラクターコントローラーに１フレームの経過時間:秒(第一引数)、時間ベースの移動速度(第二引数)を渡している。
 				//Execute関数の中で行っている計算は下記のようなもの。
 				//
 				// CVector3 addPos = m_moveSpeed * ( 1.0f / 60.0f ); //１フレームで移動する量を計算する。
 				// m_position += addPos;  //1フレームの移動量を座標に加算する。これをオイラー積分という。
 				//m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
+				
 			
 		}
 void Player::Turn()
@@ -148,11 +149,11 @@ void Player::AnimationControl()
 	else if (m_pstate == State_MoveRun
 		|| m_pstate == State_Idel
 		) {
-		if (m_moveSpeed.LengthSq() > 600.0f * 600.0f) {
+		if (m_moveSpeed.LengthSq() > 300.0f * 300.0f) {
 			//走りモーション。
 			m_animation.Play(enAnimationClip_run, 0.2f);
 		}
-		else if (m_moveSpeed.LengthSq() > 50.0f * 50.0f) {
+		else if (m_moveSpeed.LengthSq() > 30.0f * 30.0f) {
 			//走りモーション。
 			m_animation.Play(enAnimationClip_walk, 0.2f);
 		}
@@ -189,7 +190,7 @@ void Player::SpringJump()
 {
 
 		m_animation.Play(enAnimationClip_jump, 0.2f);
-		m_moveSpeed.y += 1000.0f;
+		m_moveSpeed.y += 1300.0f;
 		m_pstate = State_Idel;
 		
 		
@@ -255,17 +256,17 @@ void Player::Scafflod()
 
 		m_pstate = State_Scaffold;
 	}
-	else if (kariflag == false&&kariflag1 == false) {
+	else if (kariflag == false&&kariflag1 == false && m_moveSpeed.LengthSq() < 50.0f * 50.0f) {
 		m_pstate = State_Idel;
+	}
+	else if (kariflag == false && kariflag1 == false && m_moveSpeed.LengthSq() > 0.001f) {
+		m_pstate = State_MoveRun;
 	}
 
     if (kariflag1 == true) {
 
 		m_pstate = State_Scaffold1;
 	}
-
-}
-void Player::Distans() {
 
 }
 void Player::Update()
@@ -285,7 +286,7 @@ void Player::Update()
 		float d = springForward.Dot(toPlayerDir);
 		//内積の結果をacos関数に渡して、springForwardとtoPlayerDirのなす角を求める。
 		float angle = acos(d);
-		static float JUMP_SPEED = 730.0f;
+		static float JUMP_SPEED = 500.0f;
 		Turn();
 		AnimationControl();
 	switch (m_pstate)
@@ -318,8 +319,9 @@ void Player::Update()
 		break;
 	case State_MoveRun:
 		Move();
-		//Scafflod();
-		if (m_moveSpeed.LengthSq() < 50.0f * 50.0f) {
+		Scafflod();
+		Damage();
+		if (m_moveSpeed.LengthSq() < 30.0f * 30.0f) {
 			//入力がなくなった。
 			m_pstate = State_Idel;
 		}
@@ -373,7 +375,7 @@ void Player::Update()
 	else if (m_scaffold[1]->m_sstate == m_scaffold[1]->State_BackMove) {
 		m_position.z -= 5.0f;
 	}
-        m_charaCon.SetPosition(m_position);
+       m_charaCon.SetPosition(m_position);
 		break;
 	case State_Scaffold1:
 		Move();
@@ -389,6 +391,7 @@ void Player::Update()
 		break;
 	case State_Damage: //ダメージ(仮)
 		Time++;
+		Move();
 		 m_animation.Play(enAnimationClip_damage, 0.01f);
 		 if (Time == 30.0f) {
 			 m_pstate = State_InvincibleCount;
@@ -409,6 +412,8 @@ void Player::Update()
 		}
 		break;
 	case State_Goal:
+		m_moveSpeed.x = 0.0f;
+		m_moveSpeed.z = 0.0f;
 		m_animation.Play(enAnimationClip_salute, 0.2f);
 		if (g_game->GetGoal() == false) {
 			m_pstate = State_Idel;
