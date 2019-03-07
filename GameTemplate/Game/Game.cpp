@@ -23,9 +23,7 @@ Game::Game()
 	m_goalsprite.Init(L"Resource/sprite/kari.dds", 1280, 720);
 	m_gameCamera.SetPlayer(&m_player);
 	m_goal.SetPlayer(&m_player);
-	m_soundEngine.Init();
-	/*m_bgm.Init(L"Assets/sound/coinGet.wav");
-	m_bgm.Play(true);*/
+	m_soundEngine.Init();		
 	m_coinse.Init(L"Assets/sound/coinGet.wav");
 	//メインとなるレンダリングターゲットを作成する。
 	m_mainRenderTarget.Create(
@@ -34,13 +32,13 @@ Game::Game()
 		DXGI_FORMAT_R8G8B8A8_UNORM
 	);
 
-	//メインレンダリングターゲットに描かれた絵を
-	//フレームバッファにコピーするためのスプライトを初期化する。
-	m_copyMainRtToFrameBufferSprite.Init(
-		m_mainRenderTarget.GetRenderTargetSRV(),
-		FRAME_BUFFER_W,
-		FRAME_BUFFER_H
-	);
+	////メインレンダリングターゲットに描かれた絵を
+	////フレームバッファにコピーするためのスプライトを初期化する。
+	//m_copyMainRtToFrameBufferSprite.Init(
+	//	m_mainRenderTarget.GetRenderTargetSRV(),
+	//	FRAME_BUFFER_W,
+	//	FRAME_BUFFER_H
+	//);
 }
 
 

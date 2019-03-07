@@ -295,6 +295,7 @@
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\kkk.fbx" />
+    <MeshContentTask Include="Assets\modelData\Stage01.FBX" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\animData\walk.tka">

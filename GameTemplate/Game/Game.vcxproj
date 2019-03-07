@@ -215,6 +215,7 @@
     <MeshContentTask Include="Assets\modelData\SlimeLevel1.fbx" />
     <MeshContentTask Include="Assets\modelData\Spring.FBX" />
     <MeshContentTask Include="Assets\modelData\Stage0.FBX" />
+    <MeshContentTask Include="Assets\modelData\Stage01.FBX" />
     <MeshContentTask Include="Assets\modelData\Stage1.FBX" />
     <MeshContentTask Include="Assets\modelData\star1.FBX" />
     <MeshContentTask Include="Assets\modelData\StoneMonster.FBX" />
