@@ -1,16 +1,17 @@
 #include "stdafx.h"
 #include "Goal.h"
 #include "Player.h"
-
+#include "Game.h"
 
 
 Goal::Goal()
 {
 	//cmoファイルの読み込み。
 	m_model.Init(L"Assets/modelData/star1.cmo",enFbxUpAxisZ);
-	m_position.z = 150.0f;
-	m_position.y = 100.0f;
-	m_position.x = -100.0f;
+		m_position.z = -5056.3;
+		m_position.y = 1100.0f;
+		m_position.x = -426.0f;
+	
 }
 
 

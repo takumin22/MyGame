@@ -25,11 +25,11 @@ Scaffold::~Scaffold()
 
 void Scaffold::FrontMove()
 {
-	m_position.z += 5.0f;	
+	m_position.z -= 5.0f;	
 }
 void Scaffold::BackMove()
 {
-	m_position.z -= 5.0f;
+	m_position.z += 5.0f;
 	
 
 }
@@ -46,7 +46,7 @@ void Scaffold::Update()
 			m_phyStaticObject.CreateMeshObject(m_model, m_position, m_rotation);
 			Hantei = 0;
 		}
-		if (m_position.z >= -2138.0f) {
+		if (m_position.z <= -3200.0f) {
 			m_sstate = State_BackMove;
 		}
 		break;
@@ -58,7 +58,7 @@ void Scaffold::Update()
 			m_phyStaticObject.CreateMeshObject(m_model, m_position, m_rotation);
 			Hantei = 0;
 		}
-		if (m_position.z <= -3000.0f) {
+		if (m_position.z >= -1460.0f) {
 			m_sstate = State_FrontMove;			
 		}
 		break;

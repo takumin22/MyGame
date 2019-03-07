@@ -48,6 +48,12 @@ Stage::Stage(int No)
 				g_game->GetPlayer()->SetScaffold(StageNo2++, scaffold);
 				return true;
 			}
+			else if (objData.EqualName(L"turnasiba") == true) {
+				auto turnscaffold = new TurnScaffold(objData.position, objData.rotation, g_game->GetPlayer());
+				m_turnscaffold.push_back(turnscaffold);
+				g_game->GetPlayer()->SetTurnScaffold(StageNo3++, turnscaffold);
+				return true;
+			}
 			else if (objData.EqualName(L"Coin") == true) {
 				//ƒRƒCƒ“
 				auto coin = new Coin(objData.position, objData.rotation, g_game->GetPlayer());

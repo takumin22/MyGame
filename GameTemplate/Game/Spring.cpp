@@ -50,15 +50,21 @@ void Spring::SpringJump()
 }
 void Spring::SpringAnimation()
 {
-
+	CVector3 springForward = CVector3::AxisY();
 	//springからプレイヤーに伸びるベクトルを求める。
-	//CVector3 toPlayerDir = m_position - m_player->GetPosition();
-	////springまでの距離を求めておく。
-	//float toPlayerLen = toPlayerDir.Length();
-	//if (toPlayerLen <= 70.0f) {
-	//	m_animation.Play(enAnimationClip_spring, 0.2f);
-	//}
-	//m_animation.Play(enAnimationClip_spring, 0.2f);
+	CVector3 toPlayerDir = m_position - m_player->GetPosition();
+	//springまでの距離を求めておく。
+	float toPlayerLen = toPlayerDir.Length();
+	//正規化
+	toPlayerDir.Normalize();
+	//springForwardとtoPlayerDirとの内積を計算する。
+	float d = springForward.Dot(toPlayerDir);
+	//内積の結果をacos関数に渡して、springForwardとtoPlayerDirのなす角を求める。
+	float angle = acos(d);
+	if (toPlayerLen <= 70.0f) {
+		//m_player->SetMoveSpeed(1300.0f);
+	}
+	
 }
 void Spring::Update()
 {
