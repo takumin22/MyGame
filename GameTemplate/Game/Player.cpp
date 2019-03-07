@@ -60,7 +60,7 @@ Player::~Player()
 void Player::Move()
 {
 
-		auto MOVE_SPEED = 2600.0f;
+		auto MOVE_SPEED = 3000.0f;
 		static float MOVE_SPEED_JUMP = 1000.0f;
 
 		//左スティックの入力量を受け取る。
@@ -149,11 +149,11 @@ void Player::AnimationControl()
 	else if (m_pstate == State_MoveRun
 		|| m_pstate == State_Idel
 		) {
-		if (m_moveSpeed.LengthSq() > 300.0f * 300.0f) {
+		if (m_moveSpeed.Length() > 300.0f /** 300.0f*/) {
 			//走りモーション。
 			m_animation.Play(enAnimationClip_run, 0.2f);
 		}
-		else if (m_moveSpeed.LengthSq() > 30.0f * 30.0f) {
+		else if (m_moveSpeed.Length() > 30.0f /** 30.0f*/) {
 			//走りモーション。
 			m_animation.Play(enAnimationClip_walk, 0.2f);
 		}
@@ -286,6 +286,17 @@ void Player::Update()
 		float d = springForward.Dot(toPlayerDir);
 		//内積の結果をacos関数に渡して、springForwardとtoPlayerDirのなす角を求める。
 		float angle = acos(d);
+
+		//ジャンプ台からプレイヤーに伸びるベクトルを求める。
+		CVector3 toPlayerDjr = m_position - m_spring[1]->GetSPosition();
+		//ジャンプ台までの距離を求めておく。
+		float toPlayerLan = toPlayerDjr.Length();
+		//正規化
+		toPlayerDjr.Normalize();
+		//springForwardとtoPlayerDirとの内積を計算する。
+		float e = springForward.Dot(toPlayerDjr);
+		//内積の結果をacos関数に渡して、springForwardとtoPlayerDirのなす角を求める。
+		float ange = acos(e);
 		static float JUMP_SPEED = 500.0f;
 		Turn();
 		AnimationControl();
@@ -310,7 +321,9 @@ void Player::Update()
 			m_pstate = State_Goal;
 		}
 		if (fabsf(angle) < CMath::DegToRad(50.0f)
-			&&toPlayerLen <= 70.0f) {
+			&&toPlayerLen <= 70.0f ||
+			fabsf(ange) < CMath::DegToRad(70.0f)
+			&& toPlayerLan <= 80.0f) {
 			m_pstate = State_SpringJump;
 		}
 		if (m_position.y <= -500.0f) {
@@ -369,11 +382,11 @@ void Player::Update()
 	    Move();
 		Scafflod();
 	if (m_scaffold[1]->m_sstate == m_scaffold[1]->State_FrontMove) {
-		m_position.z += 5.0f;
+		m_position.z -= 5.0f;
 
     }
 	else if (m_scaffold[1]->m_sstate == m_scaffold[1]->State_BackMove) {
-		m_position.z -= 5.0f;
+		m_position.z += 5.0f;
 	}
        m_charaCon.SetPosition(m_position);
 		break;
@@ -381,11 +394,12 @@ void Player::Update()
 		Move();
 		Scafflod();
 		if (m_scaffold[0]->m_sstate == m_scaffold[0]->State_FrontMove) {
-			m_position.z += 5.0f;
+			m_position.z -= 5.0f;
+
 
 		}
 		else if (m_scaffold[0]->m_sstate == m_scaffold[0]->State_BackMove) {
-			m_position.z -= 5.0f;
+			m_position.z += 5.0f;
 		}
 		m_charaCon.SetPosition(m_position);
 		break;

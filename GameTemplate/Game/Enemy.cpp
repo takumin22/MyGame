@@ -13,7 +13,7 @@ m_player(player)
 	m_model.Init(L"Assets/modelData/kkk.cmo");
 	//ƒLƒƒƒ‰ƒRƒ“İ’è
 	m_charaCon.Init(50.0f, 40.0f, m_position);
-	m_position.y = 100.0f;
+	//m_position.y = 100.0f;
 }
 
 

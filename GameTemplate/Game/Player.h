@@ -129,8 +129,8 @@ private:
 	int Time = 0;//無敵時間
 	int DamageCount = 0;//ダメージ量のカウント
     Enemy* m_enemy[2]; //エネミー
-	Spring* m_spring[1];//ジャンプ台
-	Coin* m_coin[3];
+	Spring* m_spring[2];//ジャンプ台
+	Coin* m_coin[8];
 	
 	Scaffold* m_scaffold[2];//動く足場
 	TurnScaffold* m_turnscaffold[4];//回転する足場
