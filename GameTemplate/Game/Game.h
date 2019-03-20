@@ -11,6 +11,7 @@
 #include "Coin.h"
 #include "Sprite.h"
 #include "PostEffect.h"
+#include "Gate.h"
 #include "sound/SoundEngine.h"
 #include "sound/SoundSource.h"
 #include "graphics/RenderTarget.h"
@@ -18,7 +19,7 @@
 
 //これらは前方宣言でよい！
 //struct PathPoint;
-class Enemy;
+//class Enemy;
 class Goal;
 class Stage;
 class Coin;
@@ -43,7 +44,6 @@ public:
 	* @brief	描画。
 	*/
 	void Draw() override;
-
 	/// <summary>
 	/// ゴール判定
 	/// </summary>
@@ -59,6 +59,10 @@ public:
 	{
 		return &m_player;
 	}
+	//Enemy* GetEnemy()
+	//{
+	//	return &m_enemy;
+	//}
 
 	Stage* GetStage()
 	{
@@ -83,6 +87,8 @@ public:
 	{
 		return &m_mainRenderTarget;
 	}
+	void ChangeRenderTarget(ID3D11DeviceContext* d3dDeviceContext, RenderTarget* renderTarget, D3D11_VIEWPORT* viewport);
+	void ChangeRenderTarget(ID3D11DeviceContext* d3dDeviceContext, ID3D11RenderTargetView* renderTarget, ID3D11DepthStencilView* depthStensil, D3D11_VIEWPORT* viewport);
 private:
 	enum GameState {
 		State_Default,
@@ -94,6 +100,7 @@ private:
 	int No = 0;
 	CSoundEngine m_soundEngine;             //サウンドエンジン
 	Player m_player;						//プレイヤー
+	//Enemy m_enemy;
 	Goal m_goal;                            //ゴール
 	Coin* m_coin;
 	Stage* m_stage;                         //ステージ
@@ -105,7 +112,7 @@ private:
 	CSoundSource m_bgm;//ステージBGM
 	CSoundSource m_coinse;//コインのSE
 	Sprite m_goalsprite;
-	PostEffect m_postEffect;				//ポストエフェクト。
+	PostEffect* m_postEffect;				//ポストエフェクト。
 	Sprite m_copyMainRtToFrameBufferSprite;			//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
 	D3D11_VIEWPORT m_frameBufferViewports;			//フレームバッファのビューポート。
 	ID3D11RenderTargetView* m_frameBufferRenderTargetView = nullptr;	//フレームバッファのレンダリングターゲットビュー。

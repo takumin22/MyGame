@@ -13,7 +13,7 @@ Scaffold::Scaffold(CVector3 pos, CQuaternion rot, Player* player):
 {
 	m_model.Init(L"Assets/modelData/karasiba.cmo");
 	//m_model.UpdateWorldMatrix(m_position, CQuaternion::Identity(), m_scale);
-		//静的物理オブジェクトを作成
+	//静的物理オブジェクトを作成
 	m_phyStaticObject.CreateMeshObject(m_model, m_position, CQuaternion::Identity());
 	//m_charaCon.Init(10.0f, 50.0f, m_position);
 }
@@ -46,7 +46,7 @@ void Scaffold::Update()
 			m_phyStaticObject.CreateMeshObject(m_model, m_position, m_rotation);
 			Hantei = 0;
 		}
-		if (m_position.z <= -3200.0f) {
+		if (m_position.z <= -3000.0f) {
 			m_sstate = State_BackMove;
 		}
 		break;

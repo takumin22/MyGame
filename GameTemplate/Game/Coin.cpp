@@ -3,14 +3,14 @@
 #include "Player.h"
 #include "Game.h"
 #include "graphics/ShadowMap.h"
-
+#include "Gate.h"
 
 Coin::Coin(CVector3 pos, CQuaternion rot,Player* player):
 	m_position(pos),
 	m_rotation(rot),
 	m_player(player)
 {
-	m_model.Init(L"Assets/modelData/Coin.cmo");
+	m_model.Init(L"Assets/modelData/Coin.cmo", enFbxUpAxisZ, { 2.5f,2.5f,2.5f});
 
 
 }

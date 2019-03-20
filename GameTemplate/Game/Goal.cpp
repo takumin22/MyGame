@@ -7,10 +7,10 @@
 Goal::Goal()
 {
 	//cmoファイルの読み込み。
-	m_model.Init(L"Assets/modelData/star1.cmo",enFbxUpAxisZ);
-		m_position.z = -5056.3;
-		m_position.y = 1100.0f;
-		m_position.x = -426.0f;
+	m_model.Init(L"Assets/modelData/star1.cmo", enFbxUpAxisZ ,{2.0f,2.0f,2.0f});
+		m_position.z =-5199.0f;
+		m_position.y = 1000.0f;
+		m_position.x = -332.0f;
 	
 }
 

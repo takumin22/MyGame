@@ -31,7 +31,7 @@ public:
 	*@param[in]	filePath		ロードするcmoファイルのファイルパス。
 	*@param[in] enFbxUpAxis		fbxの上軸。デフォルトはenFbxUpAxisZ。
 	*/
-	void Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis = enFbxUpAxisZ);
+	void Init(const wchar_t* filePathEnFbxUpAxis, EnFbxUpAxis enFbxUpAxis = enFbxUpAxisZ, CVector3 lightcolor = CVector3::One());
 	/*!
 	*@brief	モデルをワールド座標系に変換するためのワールド行列を更新する。
 	*@param[in]	position	モデルの座標。
@@ -82,6 +82,11 @@ public:
 	{
 		m_isShadowReciever = flag;
 	}
+	//法線マップを設定
+	void SetNormalMap(ID3D11ShaderResourceView* srv)
+	{
+		m_normalMapSRV = srv;
+	}
 	/*!
 	*@brief	スケルトンの取得。
 	*/
@@ -123,7 +128,7 @@ private:
 	*/
 	void InitSkeleton(const wchar_t* filePath);
 	
-	void InitDirectionLight();
+	void InitDirectionLight(CVector3 color);
 
 	//定数バッファ。
 	struct SVSConstantBuffer {
@@ -133,10 +138,25 @@ private:
 		CMatrix mLightView;		//todo ライトビュー行列。
 		CMatrix mLightProj;		//todo ライトプロジェクション行列。
 		int isShadowReciever;	//todo シャドウレシーバーのフラグ。
+		int isHasNormalMap;		//法線マップを保持している？
 	};
+	//ディレクションライトの構造体
+	struct SDirectionLight {
+		CVector4 direction;		//ライトの方向。
+		CVector4 color;			//ライトのカラー。
+	};
+
+	//ライトの構造体
+	struct SLight {
+		SDirectionLight directionlight;   //ディレクションライト
+		CVector3			eyePos;				//視点の座標。
+		float				specPow;			//鏡面反射の絞り。
+	};
+
 private:
 
-	
+	ID3D11Buffer * m_lightCb = nullptr;				//!<ライト用の定数バッファ。
+	SLight				m_light;							//!<ライト構造体
 	EnFbxUpAxis			m_enFbxUpAxis = enFbxUpAxisZ;	//!<FBXの上方向。
 	ID3D11Buffer*		m_cb = nullptr;					//!<定数バッファ。
 	Skeleton			m_skeleton;						//!<スケルトン。
@@ -144,5 +164,5 @@ private:
 	DirectX::Model*		m_modelDx;						//!<DirectXTKが提供するモデルクラス。
 	ID3D11SamplerState* m_samplerState = nullptr;		//!<サンプラステート。
 	bool m_isShadowReciever = false;						//シャドウレシーバーのフラグ。
-
+	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;		//線マップのSRV
 };

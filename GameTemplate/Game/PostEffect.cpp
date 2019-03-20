@@ -6,6 +6,7 @@ PostEffect::PostEffect()
 {
 	//フルスクリーン描画のための四角形プリミティブを初期化。
 	InitFullScreenQuadPrimitive();
+
 }
 
 
@@ -18,18 +19,26 @@ PostEffect::~PostEffect()
 
 void PostEffect::Update()
 {
-	m_bloom.Update();
+	//m_bloom.Update();
 }
 
 void PostEffect::Draw()
 {
+	//m_bloom.Update();
 	m_bloom.Draw(*this);
+	g_graphicsEngine->ChangeBackBaffer();
+	m_sprite.Draw();
 }
-
 struct SVertex {
 	float position[4];		//頂点座標。
 	float uv[2];			//UV座標。これがテクスチャ座標
 };
+void PostEffect::SetPost(ID3D11ShaderResourceView* srv) 
+{
+	m_sprite.Init(srv, FRAME_BUFFER_W, FRAME_BUFFER_H);
+
+	m_sprite.Update(CVector3::Zero(), CQuaternion::Identity(), CVector3::One());
+}
 void PostEffect::InitFullScreenQuadPrimitive()
 {
 	//頂点バッファを初期化。

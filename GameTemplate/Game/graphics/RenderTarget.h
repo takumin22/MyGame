@@ -9,7 +9,7 @@ public:
 	/// <summary>
 	/// レンダリングターゲットの解放。
 	/// </summary>
-	void ReleaseRenderTarget();
+	void Release();
 	// レンダリングターゲットとデプスステンシルのクリア。 
 	void ClearRenderTarget(float* clearColor);
 	// レンダリングターゲットビューを取得。 
@@ -51,10 +51,19 @@ public:
 	{
 		return m_height;
 	}
+	/// <summary>
+	/// レンダリングターゲットとなっているテクスチャのフォーマットを取得。
+	/// </summary>
+	/// <returns></returns>
+	DXGI_FORMAT GetTextureFormat() const
+	{
+		return m_format;
+	}
 private:
 	float m_width = 0;										//!<レンダリングターゲットの幅。
 	float m_height = 0;										//!<レンダリングターゲットの高さ。
 	//ここからレンダリングターゲット関係のメンバ変数です。
+	DXGI_FORMAT m_format = DXGI_FORMAT_UNKNOWN;				//レンダリングターゲットのフォーマット。
 	ID3D11Texture2D * m_renderTargetTex = nullptr;		//!<レンダリングターゲットとなるテクスチャ。
 	ID3D11RenderTargetView*		m_renderTargetView = nullptr;		//!<レンダーターゲットビュー。
 	ID3D11ShaderResourceView*	m_renderTargetSRV = nullptr;		//!<レンダリングターゲットのSRV

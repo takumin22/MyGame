@@ -8,6 +8,7 @@
 #include "level/Level.h"
 #include "Spring.h"
 #include "Coin.h"
+#include "Goal.h"
 #include "sound/SoundEngine.h"
 #include "sound/SoundSource.h"
 
@@ -59,6 +60,12 @@ Stage::Stage(int No)
 				auto coin = new Coin(objData.position, objData.rotation, g_game->GetPlayer());
 				m_coinList.push_back(coin);
 				g_game->GetPlayer()->SetCoin(StageNo4++, coin);
+				return true;
+			}
+			else if (objData.EqualName(L"fence_gate") == true) {
+				//ゲート
+				auto gate = new Gate(objData.position, objData.rotation, g_game->GetPlayer(),this);
+				m_gateList.push_back(gate);
 				return true;
 			}
 			return false;
@@ -120,6 +127,10 @@ Stage::~Stage()
 	for (auto& scaffold : m_sacaffoldList) {
 		delete scaffold;
 	}
+	for (auto& gate : m_gateList)
+	{
+		delete gate;
+	}
 	//バネの描画。
 	for (auto& spring : m_springList) {
 		delete spring;
@@ -143,13 +154,19 @@ void Stage::Draw()
 	for (auto& scaffold : m_sacaffoldList) {
 		scaffold->Draw();
 	}
+	for (auto& gate : m_gateList)
+	{
+		gate->Draw();
+	}
 	//エネミーを描画。
 	for (auto& enemy : m_enemyList) {
 		enemy->Draw();
 	}
-	//バネの描画。
-	for (auto& spring : m_springList) {
-		spring->Draw();
+	if (CoinCount >= 17) {
+		//バネの描画。
+		for (auto& spring : m_springList) {
+			spring->Draw();
+		}
 	}
 	for (auto& turnscaffold : m_turnscaffold) {
 		turnscaffold->Draw();
@@ -163,11 +180,17 @@ void Stage::Update()
 {
 
 	//バネの更新。
-	for (auto& spring : m_springList) {
-		spring->Update();
+	if (CoinCount == 17) {
+		for (auto& spring : m_springList) {
+			spring->Update();
+		}
 	}
 	for (auto& scaffold : m_sacaffoldList) {
 		scaffold->Update();
+	}
+	for (auto& gate : m_gateList)
+	{
+		gate->Update();
 	}
 	//エネミーを更新。
 	for (auto& enemy : m_enemyList) {
@@ -185,6 +208,7 @@ void Stage::Update()
 		{
 			
 			delete coin;
+			CoinCount++;
 			m_coinList.erase(std::remove(m_coinList.begin(), m_coinList.end(), coin)
 				, m_coinList.end());
 		}

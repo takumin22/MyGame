@@ -4,20 +4,7 @@
 #include "graphics/Shader.h"
 #include "graphics/ShadowMap.h"
 
-//ディレクションライトの構造体
-struct SDirectionLight {
-	CVector4 direction;		//ライトの方向。
-	CVector4 color;			//ライトのカラー。
-};
 
-//ライトの構造体
-struct SLight {
-	SDirectionLight directionlight;   //ディレクションライト
-	CVector3			eyePos;				//視点の座標。
-	float				specPow;			//鏡面反射の絞り。
-};
-ID3D11Buffer*		m_lightCb = nullptr;				//!<ライト用の定数バッファ。
-SLight				m_light;							//!<ライト構造体
 int Raundup16(int n)
 {
 	return (((n - 1) / 16) + 1) * 16;
@@ -39,7 +26,7 @@ SkinModel::~SkinModel()
 	}
 
 }
-void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis)
+void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis, CVector3 lightcolor)
 {
 	//スケルトンのデータを読み込む。
 	InitSkeleton(filePath);
@@ -50,7 +37,7 @@ void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis)
 	//サンプラステートの初期化。
 	InitSamplerState();
 
-	InitDirectionLight();
+	InitDirectionLight(lightcolor);
 
 	
 
@@ -59,10 +46,10 @@ void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis)
 
 	m_enFbxUpAxis = enFbxUpAxis;
 }
-void SkinModel::InitDirectionLight()
+void SkinModel::InitDirectionLight(CVector3 color)
 {
-	m_light.directionlight.direction = { 0.0f, -1.0f, 0.0f, 0.0f };
-	m_light.directionlight.color = { 1.0f, 1.0f, 1.0f, 1.0f };
+	m_light.directionlight.direction = { 0.707f,-0.707f,0.0f,1.0f };
+	m_light.directionlight.color = color;
 	m_light.specPow = 10.0f;
 	/*m_light.eyePos = { 1.0f,1.0f,1.0f };*/
 
@@ -200,6 +187,13 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 	else {
 		vsCb.isShadowReciever = 0;
 	}
+	//todo 法線マップを使用するかどうかのフラグを送る。
+	if (m_normalMapSRV != nullptr) {
+		vsCb.isHasNormalMap = true;
+	}
+	else {
+		vsCb.isHasNormalMap = false;
+	}
 	//視点を設定。
 	m_light.eyePos = g_camera3D.GetPosition();
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
@@ -222,6 +216,10 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 		auto modelMaterial = reinterpret_cast<ModelEffect*>(material);
 		modelMaterial->SetRenderMode(renderMode);
 	});
+	if (m_normalMapSRV != nullptr) {
+		//法線マップが設定されていたらをレジスタt2に設定する。
+		d3dDeviceContext->PSSetShaderResources(2, 1, &m_normalMapSRV);
+	}
 	//描画。
 	m_modelDx->Draw(
 		d3dDeviceContext,

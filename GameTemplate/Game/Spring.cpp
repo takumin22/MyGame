@@ -9,7 +9,6 @@ Spring::Spring(CVector3 pos, CQuaternion rot, Player* player):
 	m_player(player)
 {
     //cmoファイルの読み込み
-	m_model.Init(L"Assets/modelData/Spring.cmo");
 
 	/*m_animationClips[enAnimationClip_spring].Load(L"Assets/animData/spring.tka");
 	m_animationClips[enAnimationClip_spring].SetLoopFlag(true);*/
@@ -22,6 +21,7 @@ Spring::Spring(CVector3 pos, CQuaternion rot, Player* player):
 	//	enAnimationClip_Num					//アニメーションクリップの数。
 	//);
 	//静的物理オブジェクトを作成
+	m_model.Init(L"Assets/modelData/Spring.cmo");
 	m_phyStaticObject.CreateMeshObject(m_model, m_position, CQuaternion::Identity());
     m_model.UpdateWorldMatrix(m_position, m_rotation,m_scale);
 }

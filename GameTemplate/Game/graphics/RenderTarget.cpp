@@ -4,16 +4,14 @@
 
 RenderTarget::RenderTarget()
 {
-
 }
 
 
 RenderTarget::~RenderTarget()
 {
-	ReleaseRenderTarget();
+	Release();
 }
-
-void RenderTarget::ReleaseRenderTarget()
+void RenderTarget::Release()
 {
 	if (m_depthStencilView != nullptr) {
 		m_depthStencilView->Release();
@@ -35,10 +33,10 @@ void RenderTarget::ReleaseRenderTarget()
 	if (m_renderTargetSRV != nullptr) {
 		m_renderTargetSRV->Release();
 	}
-
 }
 void RenderTarget::Create(unsigned int w, unsigned int h, DXGI_FORMAT texFormat)
 {
+
 	m_width = (float)w;
 	m_height = (float)h;
 	//D3Dデバイスを取得。
@@ -153,10 +151,12 @@ void RenderTarget::Create(unsigned int w, unsigned int h, DXGI_FORMAT texFormat)
 		m_viewport.MaxDepth = 1.0f;
 	}
 }
+
+
 void RenderTarget::ClearRenderTarget(float* clearColor)
 {
-	//レンダリングターゲットをクリア。
 	auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
+	//レンダリングターゲットをクリア。
 	d3dDeviceContext->ClearRenderTargetView(m_renderTargetView, clearColor);
 	d3dDeviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }

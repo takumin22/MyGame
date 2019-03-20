@@ -21,6 +21,16 @@ void GraphicsEngine::BegineRender()
 	//バックバッファを灰色で塗りつぶす。
 	m_pd3dDeviceContext->ClearRenderTargetView(m_backBuffer, ClearColor);
 	m_pd3dDeviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+	OldView();
+}
+void GraphicsEngine::OldView() {
+	auto d3dDeviceContext = GetD3DDeviceContext();
+	d3dDeviceContext->OMGetRenderTargets(
+		1,
+		&oldRenderTargetView,
+		&oldDepthStencilView
+	);
+	d3dDeviceContext->RSGetViewports(&numViewport, &oldViewports);
 }
 void GraphicsEngine::EndRender()
 {

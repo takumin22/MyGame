@@ -2,6 +2,7 @@
 #include "Enemy.h"
 #include "Player.h"
 #include "graphics/ShadowMap.h"
+#include "Stage.h"
 
 using namespace std;
 Enemy::Enemy(CVector3 pos, CQuaternion rot, Player* player):
@@ -24,22 +25,25 @@ Enemy::~Enemy()
 
 void Enemy::RigthMove()
 {
-	
+	idoutime++;
 	m_position.x -= 5.0f;
 		//Y方向の移動速度は重力加速を行う。
 		m_moveSpeed.y -= 1800.0f * (1.0f / 60.0f);
 		m_rotation.SetRotationDeg(CVector3::AxisY(), -90.0f);
-		if (m_position.x <= -162.0f) {
+		if (idoutime>= 40) {
+			idoutime = 0;
 			m_estate = State_LeftMove;
 		}
 }
 void Enemy::LeftMove()
 {
+	idoutime++;
 	m_position.x += 5.0f;
     //Y方向の移動速度は重力加速を行う。
 	m_moveSpeed.y -= 1800.0f * (1.0f / 60.0f);
 	m_rotation.SetRotationDeg(CVector3::AxisY(), 90.0f);
-	if (m_position.x >= 162.0f) {
+	if (idoutime >= 40) {
+		idoutime = 0;
 		m_estate = State_RigthMove;
 	}
 
@@ -48,7 +52,7 @@ void Enemy::LeftMove()
 void Enemy::Search() 
 {
 	//エネミーからプレイヤーに伸びるベクトルを求める。
-	CVector3 toEnemyDir = m_position - m_player->GetPosition();
+	CVector3 toEnemyDir = m_player->GetPosition() - m_position;
 	//エネミーまでの距離を求めておく。
 	float toEnemyLen = toEnemyDir.Length();
 	if (toEnemyLen < 200.0f) {
@@ -65,7 +69,7 @@ void Enemy::Tracking()
 	//正規化
 	toPlayer.Normalize();
 	m_moveSpeed = toPlayer * 200.0f;
-	m_moveSpeed.y += -1700.0f * (1.0f / 60.0f);
+	m_moveSpeed.y += -1800.0f * (1.0f / 60.0f);
 	if (len > 200.0f) {
 		m_estate = State_LeftMove;
 	}
@@ -98,16 +102,19 @@ void Enemy::Update()
 	switch (m_estate)
 	{
 	case State_LeftMove:
+		m_moveSpeed.x = 0.0f;
 	    m_moveSpeed.z = 0.0f;
         LeftMove();
 	    Search();
 		break;
 	case State_RigthMove:
+		m_moveSpeed.x = 0.0f;
 		m_moveSpeed.z = 0.0f;
 		RigthMove();
 		Search();
 		break;
 	case State_Tracking:
+		//m_moveSpeed.x = 0.0f;
 		Tracking();
 		
 		break;

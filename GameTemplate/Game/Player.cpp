@@ -11,6 +11,8 @@
 #include "graphics/animation/Animation.h"
 #include "graphics/animation/AnimationClip.h"
 
+//todo 法線マップ。
+ID3D11ShaderResourceView* g_normalMapSRV = nullptr;
 Player::Player()
 {
 	//cmoファイルの読み込み。
@@ -49,6 +51,17 @@ Player::Player()
 		m_animationClips,	//アニメーションクリップの配列。
 		enAnimationClip_Num					//アニメーションクリップの数。
 	);
+
+	//todo Unityちゃんの法線マップをロード。
+	//ファイル名を使って、テクスチャをロードして、ShaderResrouceViewを作成する。
+	HRESULT hr = DirectX::CreateDDSTextureFromFileEx(
+		g_graphicsEngine->GetD3DDevice(), L"Assets/modelData/utc_nomal.dds", 0,
+		D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0,
+		false, nullptr, &g_normalMapSRV);
+
+	//モデルに法線マップを設定する。
+	m_model.SetNormalMap(g_normalMapSRV);
+
 	
 	m_charaCon.Init(10.0f, 45.0f, m_position);
 }
@@ -56,6 +69,10 @@ Player::Player()
 
 Player::~Player()
 {
+	//todo 法線マップを解放。
+	if (g_normalMapSRV != nullptr) {
+		g_normalMapSRV->Release();
+	}
 }
 void Player::Move()
 {
@@ -266,6 +283,7 @@ void Player::Scafflod()
     if (kariflag1 == true) {
 
 		m_pstate = State_Scaffold1;
+
 	}
 
 }
@@ -322,8 +340,8 @@ void Player::Update()
 		}
 		if (fabsf(angle) < CMath::DegToRad(50.0f)
 			&&toPlayerLen <= 70.0f ||
-			fabsf(ange) < CMath::DegToRad(70.0f)
-			&& toPlayerLan <= 80.0f) {
+			fabsf(ange) < CMath::DegToRad(50.0f)
+			&& toPlayerLan <= 70.0f) {
 			m_pstate = State_SpringJump;
 		}
 		if (m_position.y <= -500.0f) {
@@ -348,7 +366,9 @@ void Player::Update()
 			m_pstate = State_Return;
 		}
 		if (fabsf(angle) < CMath::DegToRad(50.0f)
-			&& toPlayerLen <= 70.0f) {
+			&& toPlayerLen <= 70.0f ||
+			fabsf(ange) < CMath::DegToRad(50.0f)
+			&& toPlayerLan <= 70.0f) {
 			m_pstate = State_SpringJump;
 		}
 		if (g_game->GetGoal() == true) {
@@ -388,6 +408,12 @@ void Player::Update()
 	else if (m_scaffold[1]->m_sstate == m_scaffold[1]->State_BackMove) {
 		m_position.z += 5.0f;
 	}
+	if (g_pad[0].IsTrigger(enButtonA)) {
+		//この時点でのXZ方向の速度を記憶しておく。
+		m_moveSpeedWhenStartJump = m_moveSpeed.Length();
+		m_moveSpeed.y = JUMP_SPEED;
+		m_pstate = State_Jump;
+	}
        m_charaCon.SetPosition(m_position);
 		break;
 	case State_Scaffold1:
@@ -399,7 +425,13 @@ void Player::Update()
 
 		}
 		else if (m_scaffold[0]->m_sstate == m_scaffold[0]->State_BackMove) {
-			m_position.z += 5.0f;
+				m_position.z += 5.0f;
+		}
+	 if (g_pad[0].IsTrigger(enButtonA)) {
+			//この時点でのXZ方向の速度を記憶しておく。
+			m_moveSpeedWhenStartJump = m_moveSpeed.Length();
+			m_moveSpeed.y = JUMP_SPEED;
+			m_pstate = State_Jump;
 		}
 		m_charaCon.SetPosition(m_position);
 		break;
@@ -456,7 +488,6 @@ void Player::Update()
 }
 void Player::Draw()
 {
-
 	m_model.Draw(
 		enRenderMode_Normal,
 		g_camera3D.GetViewMatrix(), 

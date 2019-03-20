@@ -9,6 +9,7 @@
 //アルベドテクスチャ。
 Texture2D<float4> albedoTexture : register(t3);	
 Texture2D<float4> g_shadowMap : register(t4);		//todo シャドウマップ。
+Texture2D<float4> g_normalMap : register(t2);		//	法線マップ。
 //ボーン行列
 StructuredBuffer<float4x4> boneMatrix : register(t1);
 
@@ -31,6 +32,7 @@ cbuffer VSPSCb : register(b0){
 	float4x4 mLightView;	//ライトビュー行列。
 	float4x4 mLightProj;	//ライトプロジェクション行列。
 	int isShadowReciever;	//シャドウレシーバーフラグ。
+	int isHasNormalMap;	//法線マップある？
 };
 
 ////ライト用の定数バッファ
@@ -197,6 +199,26 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 float4 PSMain( PSInput In ) : SV_Target0
 {
 	float4 albedoColor = albedoTexture.Sample(Sampler, In.TexCoord);
+
+	//法線を計算する。
+	float3 normal = 0;
+	if (isHasNormalMap == 1) {
+		//法線マップがある。
+		//法線と接ベクトルの外積を計算して、従ベクトルを計算する。
+		float3 biNormal = cross(In.Normal, In.Tangent);
+		normal = g_normalMap.Sample(Sampler, In.TexCoord);
+		//0.0～1.0の範囲になっているタンジェントスペース法線を
+		//-1.0～1.0の範囲に変換する。
+		normal = (normal * 2.0f) - 1.0f;
+		//法線をタンジェントスペースから、ワールドスペースに変換する。
+		normal = In.Tangent
+			* normal.x + biNormal * normal.y + In.Normal * normal.z;
+	}
+	else {
+		//ない。
+		normal = In.Normal;
+	}
+
 	//ディレクションライトの拡散反射光を計算する。
 	float3 lig = max(0.0f, dot(In.Normal * -1.0f, directionLight.direction)) * directionLight.color.xyz;
 	if (isShadowReciever == 1) {	
@@ -254,8 +276,6 @@ float4 PSMain( PSInput In ) : SV_Target0
 
 	float4 finalColor = float4(0.0f, 0.0f,0.0f, 1.0f);
 	finalColor.xyz = albedoColor.xyz* lig+albedoColor.xyz*0.3;
-
-
 	return finalColor;
 }
 /// <summary>

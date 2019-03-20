@@ -10,6 +10,7 @@
 #include "Spring.h"
 #include "Coin.h"
 #include "Goal.h"
+#include "Gate.h"
 class Game;
 class Enemy;
 class Stage 
@@ -28,10 +29,17 @@ public:
 	{
 		return StageCount;
 	}
-
+	int GetCoinCount()
+	{
+		return CoinCount;
+	}
 	Scaffold* GetScaffold(int i)
 	{
 		return m_sacaffoldList[i];
+	}
+	Enemy* GetEnemyList(int j)
+	{
+		return m_enemyList[j];
 	}
 private:
 
@@ -42,7 +50,8 @@ private:
 	std::vector< Spring*> m_springList;   //バネリスト
 	std::vector< Coin*> m_coinList; //コインのリスト
 	std::vector<TurnScaffold*> m_turnscaffold; //回転足場のリスト
-
+	std::vector<Gate*> m_gateList;  //ゴールのリスト
+	int CoinCount = 0;
 
 };
 

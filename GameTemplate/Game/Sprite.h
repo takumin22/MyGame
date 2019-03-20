@@ -75,6 +75,10 @@ public:
 private:
 
 	/// <summary>
+	/// 初期化の共通処理。
+	/// </summary>
+	void InitCommon(float w, float h);
+	/// <summary>
 	/// 定数バッファの初期化。
 	/// </summary>
 	void InitConstantBuffer();

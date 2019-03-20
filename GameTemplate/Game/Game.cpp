@@ -7,6 +7,7 @@
 #include "Scaffold.h"
 #include "Goal.h"
 #include "Stage.h"
+#include "PostEffect.h"
 #include "Coin.h"
 #include "Title.h"
 #include "graphics/ShadowMap.h"
@@ -29,16 +30,13 @@ Game::Game()
 	m_mainRenderTarget.Create(
 		FRAME_BUFFER_W,
 		FRAME_BUFFER_H,
-		DXGI_FORMAT_R8G8B8A8_UNORM
+		DXGI_FORMAT_R16G16B16A16_FLOAT
 	);
+	m_postEffect = new PostEffect;
+	//メインレンダリングターゲットに描かれた絵を
+	//フレームバッファにコピーするためのスプライトを初期化する。
+	m_postEffect->SetPost(m_mainRenderTarget.GetRenderTargetSRV());
 
-	////メインレンダリングターゲットに描かれた絵を
-	////フレームバッファにコピーするためのスプライトを初期化する。
-	//m_copyMainRtToFrameBufferSprite.Init(
-	//	m_mainRenderTarget.GetRenderTargetSRV(),
-	//	FRAME_BUFFER_W,
-	//	FRAME_BUFFER_H
-	//);
 }
 
 
@@ -59,6 +57,7 @@ Game::~Game()
 
 void Game::Update()
 {
+	
 	switch (m_gstate)
 	{
 	case State_Default:
@@ -68,8 +67,6 @@ void Game::Update()
 		//カメラの更新
 		m_gameCamera.Update();
 		m_stage->Update();
-		//ポストエフェクトの更新。
-		m_postEffect.Update();
 		if (m_goal.GetGFlag() == false) {
 			//ゴールを更新
 			m_goal.Update();	
@@ -102,19 +99,49 @@ void Game::Update()
 		//現在のステージを消して次のステージを呼ぶ
 		delete m_stage;
 		m_stage = new Stage(No++);
+
 		m_goal.SetGFlag(false);
 		Goal = false;
 		GoalCount = 0;
 		m_gstate = State_Default;
 		break;
 	case State_TitleChange:
-		delete m_stage;
+		g_currentScene = new Title;
+		delete this;
 		break;
 	}
-
+}
+void Game::ChangeRenderTarget(ID3D11DeviceContext* d3dDeviceContext, RenderTarget* renderTarget, D3D11_VIEWPORT* viewport)
+{
+	ChangeRenderTarget(
+		d3dDeviceContext,
+		renderTarget->GetRenderTargetView(),
+		renderTarget->GetDepthStensilView(),
+		viewport
+	);
+}
+void Game::ChangeRenderTarget(ID3D11DeviceContext* d3dDeviceContext, ID3D11RenderTargetView* renderTarget, ID3D11DepthStencilView* depthStensil, D3D11_VIEWPORT* viewport)
+{
+	ID3D11RenderTargetView* rtTbl[] = {
+		renderTarget
+	};
+	//レンダリングターゲットの切り替え。
+	d3dDeviceContext->OMSetRenderTargets(1, rtTbl, depthStensil);
+	if (viewport != nullptr) {
+		//ビューポートが指定されていたら、ビューポートも変更する。
+		d3dDeviceContext->RSSetViewports(1, viewport);
+	}
 }
 void Game::Draw()
 {
+	////レンダリングターゲットをメインに変更する。
+	auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
+	ChangeRenderTarget(d3dDeviceContext, &m_mainRenderTarget,m_mainRenderTarget.GetViewport());
+	//メインレンダリングターゲットをクリアする。
+	float clearColor[] = { 1.0f, 0.0f, 0.0f, 1.0f };
+	m_mainRenderTarget.ClearRenderTarget(clearColor);
+
+	//g_graphicsEngine->ChangeBackBaffer();
 	//プレイヤーの描画。
 	m_player.Draw();
 	//ステージの描画
@@ -127,6 +154,5 @@ void Game::Draw()
 		//ゴールを表示
 		m_goal.Draw();
 	}
-	//ポストエフェクトの描画。
-	m_postEffect.Draw();
+	m_postEffect->Draw();
 }

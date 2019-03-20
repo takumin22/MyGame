@@ -1,4 +1,6 @@
 #pragma once
+#include "RenderTarget.h"
+#include "../Sprite.h"
 /// <summary>
 /// レンダリングモード。
 /// </summary>
@@ -43,6 +45,19 @@ public:
 	{
 		return m_pd3dDeviceContext;
 	}
+	void ChangeBackBaffer() {
+		//元に戻す。
+		m_pd3dDeviceContext->OMSetRenderTargets(
+			1,
+			&oldRenderTargetView,
+			oldDepthStencilView
+		);
+		m_pd3dDeviceContext->RSSetViewports(numViewport, &oldViewports);
+		//レンダリングターゲットとデプスステンシルの参照カウンタを下す。
+		oldRenderTargetView->Release();
+		oldDepthStencilView->Release();
+
+	}
 	/*!
 	 *@brief	描画開始。
 	 */
@@ -53,6 +68,7 @@ public:
 	void EndRender();
 	void ChangeRenderTarget(RenderTarget* renderTarget, D3D11_VIEWPORT* viewport);
 	void ChangeRenderTarget(ID3D11RenderTargetView* renderTarget, ID3D11DepthStencilView* depthStensil, D3D11_VIEWPORT* viewport);
+	void OldView();
 private:
 	D3D_FEATURE_LEVEL		m_featureLevel;				//Direct3D デバイスのターゲットとなる機能セット。
 	ID3D11Device*			m_pd3dDevice = NULL;		//D3D11デバイス。
@@ -62,7 +78,12 @@ private:
 	ID3D11RasterizerState*	m_rasterizerState = NULL;	//ラスタライザステート。
 	ID3D11Texture2D*		m_depthStencil = NULL;		//デプスステンシル。
 	ID3D11DepthStencilView* m_depthStencilView = NULL;	//デプスステンシルビュー。
-
+	ID3D11RenderTargetView* oldRenderTargetView;
+	ID3D11DepthStencilView* oldDepthStencilView;
+	unsigned int numViewport = 1;
+	D3D11_VIEWPORT oldViewports;
+	RenderTarget m_mainRenderTarget;
+	Sprite ka;			//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
 };
 
 extern GraphicsEngine* g_graphicsEngine;			//グラフィックスエンジン

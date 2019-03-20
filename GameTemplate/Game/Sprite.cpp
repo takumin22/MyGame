@@ -157,7 +157,7 @@ void Sprite::InitSamplerState()
 	desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 	g_graphicsEngine->GetD3DDevice()->CreateSamplerState(&desc, &m_samplerState);
 }
-void Sprite::Init(const wchar_t* texFilePath, float w, float h)
+void Sprite::InitCommon(float w, float h)
 {
 	m_size.x = w;
 	m_size.y = h;
@@ -170,6 +170,15 @@ void Sprite::Init(const wchar_t* texFilePath, float w, float h)
 	//シェーダーのロード。
 	m_vs.Load("Assets/shader/sprite.fx", "VSMain", Shader::EnType::VS);
 	m_ps.Load("Assets/shader/sprite.fx", "PSMain", Shader::EnType::PS);
+
+	//定数バッファを初期化。
+	InitConstantBuffer();
+
+}
+void Sprite::Init(const wchar_t* texFilePath, float w, float h)
+{
+
+	InitCommon(w, h);
 
 	//テクスチャをロード。
 	DirectX::CreateDDSTextureFromFileEx(
@@ -186,12 +195,11 @@ void Sprite::Init(const wchar_t* texFilePath, float w, float h)
 									//アクセスするためのインターフェースの格納先。
 	);
 	//定数バッファを初期化。
-	InitConstantBuffer();
+	//InitConstantBuffer();
 }
 void Sprite::Init(ID3D11ShaderResourceView* srv, float w, float h)
 {
-	m_size.x = w;
-	m_size.y = h;
+	InitCommon(w, h);
 	m_texture = srv;
 	if (m_texture != nullptr) {
 		m_texture->AddRef();	//参照カウンタを増やす。

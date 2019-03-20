@@ -2,6 +2,9 @@
 #include "sound/SoundEngine.h"
 #include "sound/SoundSource.h"
 #include "Player.h"
+#include "Gate.h"
+
+class Gate;
 class Game;
 class Player;
 class Coin
@@ -39,6 +42,5 @@ private:
 	Player* m_player = nullptr; //プレイヤー
 	bool CoinGetFlag = false; //コイン取得フラグ
 	Game* m_game = nullptr;
-
 };
 

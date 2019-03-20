@@ -1,5 +1,6 @@
 #pragma once
 #include "Bloom.h"
+#include "Sprite.h"
 
 /// <summary>
 /// ポストエフェクトクラス。
@@ -20,6 +21,10 @@ public:
 	/// </summary>
 	void Update();
 	/// <summary>
+	/// 
+	/// </summary>
+	void SetPost(ID3D11ShaderResourceView* srv);
+	/// <summary>
 	/// ドロー。
 	/// </summary>
 	void Draw();
@@ -37,5 +42,5 @@ private:
 						//フルスクリーン描画用のメンバ変数。
 	ID3D11Buffer*	m_vertexBuffer = nullptr;		//頂点バッファ。
 	ID3D11InputLayout* m_inputLayout = nullptr;		//入力レイアウト。
+	Sprite m_sprite;
 };
-

@@ -37,6 +37,14 @@ public:
 	{
 		m_player = player;
 	}
+	void SetPosition(CVector3 pos)
+	{
+		m_position = pos;
+	}
+	void SetRotation(CQuaternion rot)
+	{
+		m_rotation = rot;
+	}
 private:
 	SkinModel m_model;
 	CVector3 m_position = CVector3::Zero();     //ç¿ïWÅB

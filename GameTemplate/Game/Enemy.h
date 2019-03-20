@@ -1,6 +1,7 @@
 #pragma once
 #include "character/CharacterController.h"
 
+class Stage;
 class Player;
 class Enemy
 {
@@ -72,10 +73,11 @@ private:
 	CVector3 m_position = CVector3::Zero();     //座標。
 	CVector3 m_moveSpeed = CVector3::Zero();			//移動速度。
 	CVector3 m_scale = CVector3::One();					//拡大率。
+	int idoutime = 0;
 	CQuaternion m_rotation = CQuaternion::Identity();  //回転。
 	CharacterController m_charaCon;                  //キャラクターコントローラ
 	Player* m_player = nullptr;
-
+	Stage* m_enemylist[2];
 	bool EnemyDeth = false; //死亡状態
 };
 

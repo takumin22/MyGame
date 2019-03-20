@@ -19,6 +19,7 @@
 
 IScene* g_currentScene = nullptr;
 ShadowMap* g_shadowMap = nullptr;
+//Game* g_game = nullptr;
 ///////////////////////////////////////////////////////////////////
 //ゲームの更新処理。
 //座標の更新とかの処理はここで呼び出すとよいかも？
@@ -34,12 +35,6 @@ void UpdateGame()
 	g_physics.Update();
 	//現在のシーンの更新。
 	g_currentScene->Update();
-	//g_shadowMap->RegistShadowCaster(&);
-	//シャドウマップを更新。
-	//g_shadowMap->Update(
-	//	{ 0.0f, 1000.0f, 0.0f },
-	//	{0.0f,0.0f,0.0f}
-	//);*/
 }
 ///////////////////////////////////////////////////////////////////
 // ゲームの描画処理。
@@ -51,40 +46,16 @@ void RenderGame()
 
 	//描画開始。
 	g_graphicsEngine->BegineRender();
-    
-	auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
-	//現在のレンダリングターゲットをバックアップしておく。
-	ID3D11RenderTargetView* oldRenderTargetView;
-	ID3D11DepthStencilView* oldDepthStencilView;
-
-	d3dDeviceContext->OMGetRenderTargets(
-		1,
-		&oldRenderTargetView,
-		&oldDepthStencilView
-	);
-	//ビューポートもバックアップを取っておく。
-	unsigned int numViewport = 1;
-	D3D11_VIEWPORT oldViewports;
-	d3dDeviceContext->RSGetViewports(&numViewport, &oldViewports);
 
 
 	//シャドウマップにレンダリング
 	g_shadowMap->RenderToShadowMap();
 
-	//元に戻す。
-	d3dDeviceContext->OMSetRenderTargets(
-		1,
-		&oldRenderTargetView,
-		oldDepthStencilView
-	);
-	d3dDeviceContext->RSSetViewports(numViewport, &oldViewports);
-	//レンダリングターゲットとデプスステンシルの参照カウンタを下す。
-	oldRenderTargetView->Release();
-	oldDepthStencilView->Release();
-
 
 	//現在のシーンの描画。
 	g_currentScene->Draw();
+
+	
 
 	//描画終了。
 	g_graphicsEngine->EndRender();
