@@ -22,7 +22,7 @@ Gate::~Gate()
 
 void Gate::Open()
 {
-	if (m_stage->GetCoinCount() == 16) 
+	if (m_stage->GetCoinCount() == 0) 
 	{
 
 		GateFlag = true;

@@ -73,32 +73,49 @@ void Enemy::Tracking()
 	if (len > 200.0f) {
 		m_estate = State_LeftMove;
 	}
-	Damage();
+	
 	//向き
 	m_rotation.SetRotation(CVector3::AxisY(), atan2f(toPlayer.x, toPlayer.z));
 	//m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 }
 void Enemy::Damage()
 {
+	m_mRot.MakeRotationFromQuaternion(m_rotation);
+	m_up = { m_mRot.m[1][0] ,m_mRot.m[1][1] ,m_mRot.m[1][2] };
 	CVector3 springForward = CVector3::AxisY();
 	m_rotation.Multiply(springForward);
 	//エネミーからプレイヤーに伸びるベクトルを求める。
-	CVector3 toEnemyDir = m_position - m_player->GetPosition()  ;
+	CVector3 toEnemyDir = m_player->GetPosition()  -m_position ;
 	//エネミーまでの距離を求めておく。
 	float toEnemyLen = toEnemyDir.Length();
 	//正規化
 	toEnemyDir.Normalize();
 	//springForwardとtoEnemyDirとの内積を計算する。
-	float d = springForward.Dot(toEnemyDir);
+	float d = toEnemyDir.Dot(m_up);
 	//内積の結果をacos関数に渡して、springForwardとtoEnemyDirのなす角を求める。
-	float angle = acos(d);
+	float angle = acosf(d);
+	 angle = CMath::RadToDeg(angle);
+
+
+	////カメラからプレイヤーに向かうベクトルを計算する。
+	//CVector3 toPlayer = g_camera3D.GetPosition() - m_player->GetPosition();
+	//float toEnemyDir = toPlayer.Length();
+	////プレイヤーに向かうベクトルを正規化する(大きさ1にする)。
+	//toPlayer.Normalize();
+	////前方方向と、プレイヤーへの向きベクトルの内積を計算する。
+	//float forward = toPlayer.Dot((m_player->GetUp()));
+	////内積の結果はcosθになるため、なす角θを求めるためにacosを実行する。③
+	//forward = acosf(forward);
+	//forward = CMath::RadToDeg(forward);
+
 	//angle = CMath::RadToDeg(angle);
-	if ( toEnemyLen <= 700.0f && fabsf(angle) < CMath::DegToRad(45.0f)) {
+	if (toEnemyLen <= 60.0f &&  angle <= 65.0f) {
 		m_estate = State_EDamage;
 	}
 }
 void Enemy::Update()
 {
+	Damage();
 	switch (m_estate)
 	{
 	case State_LeftMove:
@@ -123,7 +140,7 @@ void Enemy::Update()
 		break;
 	}
 	
-	    m_moveSpeed.y -= 1800.0f * (1.0f / 60.0f);
+	    m_moveSpeed.y -= 1800.0f /** (1.0f / 60.0f)*/;
 		m_charaCon.SetPosition(m_position);
 		m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 		//ワールド行列の更新

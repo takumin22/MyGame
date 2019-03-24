@@ -1,6 +1,7 @@
 #pragma once
+//#include "Stage.h"
 class Player;
-
+class Stage;
 /// <summary>
 /// 
 /// </summary>
@@ -53,5 +54,6 @@ private:
 	CQuaternion m_rotation = CQuaternion::Identity();  //回転。
 	Player* m_player = nullptr;
 	bool GetFlag = false;              //ゴールフラグ
+	Stage* m_stage;
 };
 

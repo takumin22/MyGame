@@ -44,9 +44,17 @@ Game::~Game()
 {
 	
 	g_currentScene = new Title;
-	//動的に確保したインスタンスを破棄。
-
-		delete &m_goal;
+	//動的に確保したインスタンスを破棄
+		//delete &m_goal;
+		//delete m_coin;
+		//delete &m_level;
+		//delete &m_coinse;
+		//delete &m_bgm;
+		//delete m_postEffect;
+		//delete &m_goalsprite;
+		//delete &m_player;
+		//delete m_stage;
+		//delete &m_gameCamera;
 		if (m_frameBufferRenderTargetView != nullptr) {
 			m_frameBufferRenderTargetView->Release();
 		}
@@ -67,7 +75,7 @@ void Game::Update()
 		//カメラの更新
 		m_gameCamera.Update();
 		m_stage->Update();
-		if (m_goal.GetGFlag() == false) {
+		if (m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 0 ) {
 			//ゴールを更新
 			m_goal.Update();	
 		}
@@ -84,7 +92,7 @@ void Game::Update()
 
 				if (g_pad[0].IsPress(enButtonA) == true) {
 
-					m_gstate = State_StageChange;
+					m_gstate = State_TitleChange;
 				}
 			}
 			if (No > 1 && No <= 2 && GoalCount >= 120.0f) {
@@ -106,7 +114,8 @@ void Game::Update()
 		m_gstate = State_Default;
 		break;
 	case State_TitleChange:
-		g_currentScene = new Title;
+		//g_currentScene = new Title;
+		//delete m_stage;
 		delete this;
 		break;
 	}
@@ -138,7 +147,7 @@ void Game::Draw()
 	auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
 	ChangeRenderTarget(d3dDeviceContext, &m_mainRenderTarget,m_mainRenderTarget.GetViewport());
 	//メインレンダリングターゲットをクリアする。
-	float clearColor[] = { 1.0f, 0.0f, 0.0f, 1.0f };
+	float clearColor[] = { 1.0f, 0.0f, 1.0f, 1.0f };
 	m_mainRenderTarget.ClearRenderTarget(clearColor);
 
 	//g_graphicsEngine->ChangeBackBaffer();
@@ -150,7 +159,7 @@ void Game::Draw()
 		m_goalsprite.Draw();
 
 	}
-	if (m_goal.GetGFlag() == false) {
+	if (m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 0) {
 		//ゴールを表示
 		m_goal.Draw();
 	}

@@ -33,6 +33,10 @@ public:
 	{
 		return CoinCount;
 	}
+	int GetEnemyCount()
+	{
+		return EnemyCount;
+	}
 	Scaffold* GetScaffold(int i)
 	{
 		return m_sacaffoldList[i];
@@ -50,8 +54,10 @@ private:
 	std::vector< Spring*> m_springList;   //バネリスト
 	std::vector< Coin*> m_coinList; //コインのリスト
 	std::vector<TurnScaffold*> m_turnscaffold; //回転足場のリスト
-	std::vector<Gate*> m_gateList;  //ゴールのリスト
+	std::vector<Gate*> m_gateList;  //ゲートのリスト
+
 	int CoinCount = 0;
+	int EnemyCount = 0;
 
 };
 

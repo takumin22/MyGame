@@ -39,6 +39,7 @@ Stage::Stage(int No)
 				//バネ
 				auto spring = new Spring(objData.position, objData.rotation, g_game->GetPlayer());
 				m_springList.push_back(spring);
+
 				g_game->GetPlayer()->SetSpring(StageNo1++, spring);
 				return true;
 			}
@@ -162,7 +163,8 @@ void Stage::Draw()
 	for (auto& enemy : m_enemyList) {
 		enemy->Draw();
 	}
-	if (CoinCount >= 17) {
+	if (EnemyCount >= 2) {
+
 		//バネの描画。
 		for (auto& spring : m_springList) {
 			spring->Draw();
@@ -180,7 +182,7 @@ void Stage::Update()
 {
 
 	//バネの更新。
-	if (CoinCount == 17) {
+	if (EnemyCount == 2) {
 		for (auto& spring : m_springList) {
 			spring->Update();
 		}
@@ -197,6 +199,7 @@ void Stage::Update()
 		enemy->Update();
 		if (enemy->GetEnemyDeth() == true) 
 		{
+			EnemyCount++;
 			delete enemy;
 			m_enemyList.erase(std::remove(m_enemyList.begin(), m_enemyList.end(), enemy)
 				, m_enemyList.end());

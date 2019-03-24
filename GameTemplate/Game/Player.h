@@ -53,6 +53,9 @@ public:
 	CVector3 GetForWard() {
 		return m_forward;
 	}
+	CVector3 GetUp() {
+		return m_up;
+	}
 	void SetPosition(CVector3 pos)
 	{
 		m_position = pos;
