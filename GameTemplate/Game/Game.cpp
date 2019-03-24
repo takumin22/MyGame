@@ -75,7 +75,7 @@ void Game::Update()
 		//カメラの更新
 		m_gameCamera.Update();
 		m_stage->Update();
-		if (m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 0 ) {
+		if ( m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 0 ) {
 			//ゴールを更新
 			m_goal.Update();	
 		}

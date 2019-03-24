@@ -15,12 +15,12 @@
 Stage::Stage(int No)
 {
 
-	static int StageNo = 0;
-	static int StageNo1 = 0;
-	static int StageNo2 = 0;
-	static int StageNo3 = 0;
-	static int StageNo4 = 0;
-	static int StageNo5 = 0;
+	 int StageNo = 0;
+	 int StageNo1 = 0;
+	 int StageNo2 = 0;
+	 int StageNo3 = 0;
+	 int StageNo4 = 0;
+	 int StageNo5 = 0;
 	if (No == 0) {
 		m_level.Init(L"Assets/level/level00.tkl", [&](LevelObjectData& objData)->bool {
 			if (objData.EqualName(L"unityChan") == true) {
