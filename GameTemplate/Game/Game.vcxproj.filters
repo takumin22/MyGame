@@ -348,6 +348,13 @@
       <Filter>Assets\sprite</Filter>
     </Image>
     <Image Include="Assets\modelData\utc_nomal.tga" />
+    <Image Include="Assets\modelData\ASHSEN_2.GIF" />
+    <Image Include="Assets\modelData\104677.jpg" />
+    <Image Include="Assets\modelData\BUBINGA.JPG" />
+    <Image Include="Assets\modelData\ferns.tga" />
+    <Image Include="Assets\modelData\ground_grass.tga" />
+    <Image Include="Assets\modelData\MARBOCTB.GIF" />
+    <Image Include="Assets\modelData\PLASTERT.TGA" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\test.png">

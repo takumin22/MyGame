@@ -247,6 +247,13 @@
     <None Include="Assets\modelData\enemy_00.X" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Assets\modelData\104677.jpg" />
+    <Image Include="Assets\modelData\ASHSEN_2.GIF" />
+    <Image Include="Assets\modelData\BUBINGA.JPG" />
+    <Image Include="Assets\modelData\ferns.tga" />
+    <Image Include="Assets\modelData\ground_grass.tga" />
+    <Image Include="Assets\modelData\MARBOCTB.GIF" />
+    <Image Include="Assets\modelData\PLASTERT.TGA" />
     <Image Include="Assets\modelData\StoneMonster.png" />
     <ImageContentTask Include="Assets\sprite\taittol.png" />
     <Image Include="Assets\modelData\utc_nomal.tga" />
