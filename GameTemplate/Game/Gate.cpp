@@ -22,7 +22,7 @@ Gate::~Gate()
 
 void Gate::Open()
 {
-	if (m_stage->GetCoinCount() == 0) 
+	if (m_stage->GetCoinCount() == 1) 
 	{
 
 		GateFlag = true;
@@ -35,6 +35,8 @@ void Gate::Open()
 			qRot.SetRotationDeg(CVector3::AxisY(), 5.0f);
 			m_rotation.Multiply(qRot);
 			m_phyStaticObject.Releasehantei();
+			GateHantei = 1;
+
 		}
 		
 	}
@@ -46,6 +48,10 @@ void Gate::Open()
 void Gate::Update()
 {
 	Open();
+	if (GateHantei == 1) {
+		m_phyStaticObject.CreateMeshObject(m_model, m_position, m_rotation);
+		GateHantei = 0;
+	}
 	m_model.SetShadowReciever(true);
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 }

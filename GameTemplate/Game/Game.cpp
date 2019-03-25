@@ -75,7 +75,7 @@ void Game::Update()
 		//カメラの更新
 		m_gameCamera.Update();
 		m_stage->Update();
-		if ( m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 0 ) {
+		if ( m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 5 ) {
 			//ゴールを更新
 			m_goal.Update();	
 		}
@@ -147,7 +147,7 @@ void Game::Draw()
 	auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
 	ChangeRenderTarget(d3dDeviceContext, &m_mainRenderTarget,m_mainRenderTarget.GetViewport());
 	//メインレンダリングターゲットをクリアする。
-	float clearColor[] = { 1.0f, 0.0f, 1.0f, 1.0f };
+	float clearColor[] = { 0.0f, 0.7f, 1.0f, 1.0f };
 	m_mainRenderTarget.ClearRenderTarget(clearColor);
 
 	//g_graphicsEngine->ChangeBackBaffer();
@@ -159,7 +159,7 @@ void Game::Draw()
 		m_goalsprite.Draw();
 
 	}
-	if (m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 0) {
+	if (m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 5) {
 		//ゴールを表示
 		m_goal.Draw();
 	}

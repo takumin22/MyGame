@@ -28,5 +28,6 @@ private:
 	Player* m_player = nullptr;
 	bool GateFlag = false;
 	Stage* m_stage;
+	int GateHantei = 0;
 };
 

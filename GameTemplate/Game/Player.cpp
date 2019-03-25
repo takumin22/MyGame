@@ -84,7 +84,7 @@ Player::~Player()
 void Player::Move()
 {
 
-		auto MOVE_SPEED = 3000.0f;
+		auto MOVE_SPEED = 3500.0f;
 		static float MOVE_SPEED_JUMP = 1000.0f;
 
 		//左スティックの入力量を受け取る。

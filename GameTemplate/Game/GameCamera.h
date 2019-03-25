@@ -26,6 +26,12 @@ private:
 		a=min(max(angle,-1.0f), 1.0f);
 		return a;
 	}
+	float Acos2(float angle1)
+	{
+		float b;
+		b = min(max(angle1, -1.0f), 1.0f);
+		return b;
+	}
 	Player * m_player = nullptr;	//プレイヤー。
 	bool k = false;
 	int kkkkk = 0;

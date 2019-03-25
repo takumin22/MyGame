@@ -51,9 +51,12 @@ void GameCamera::Update()
 		toPlayer.Normalize();
 		//前方方向と、プレイヤーへの向きベクトルの内積を計算する。
 		float forward = toPlayer.Dot((m_player->GetForWard()));
+		float tatemuki = toPlayer.Dot((m_player->GetUp()));
 		//内積の結果はcosθになるため、なす角θを求めるためにacosを実行する。③
 		forward = acosf(Acos(forward));
 		forward = CMath::RadToDeg(forward);
+		tatemuki = acosf(Acos2(tatemuki));
+		tatemuki = CMath::RadToDeg(tatemuki);
 
 	if (g_game->GetGoal() == true)
 	{	
@@ -64,11 +67,17 @@ void GameCamera::Update()
 	{
 		k = false;
 	}
-	if (k == true && forward >= 25.0f) {
+	if (k == true && forward >= 25.0f && tatemuki >= -25.0) {
 		qRot.SetRotationDeg(CVector3::AxisY(), 5.0f);
 		qRot.Multiply(toCameraPos);
 
 	}	
+	//if (k == true && tatemuki >= 90.0f)
+	//{
+	//	qRot.SetRotationDeg(CVector3::AxisZ(), 5.0f);
+	//	qRot.Multiply(toCameraPos);
+
+	//}
 
 		if (toPosDir.y < 0.0f) {
 			//カメラが上向きすぎ。

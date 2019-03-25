@@ -56,6 +56,10 @@ public:
 	CVector3 GetUp() {
 		return m_up;
 	}
+	CVector3 GetRite()
+	{
+		return m_rite;
+	}
 	void SetPosition(CVector3 pos)
 	{
 		m_position = pos;
