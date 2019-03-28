@@ -139,6 +139,7 @@
     <ClCompile Include="GaussianBlur.cpp" />
     <ClCompile Include="ConstantBufferGPU.cpp" />
     <ClCompile Include="Gate.cpp" />
+    <ClCompile Include="HP.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -250,6 +251,7 @@
     <ClInclude Include="GaussianBlur.h" />
     <ClInclude Include="ConstantBufferGPU.h" />
     <ClInclude Include="Gate.h" />
+    <ClInclude Include="HP.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
@@ -355,6 +357,7 @@
     <Image Include="Assets\modelData\ground_grass.tga" />
     <Image Include="Assets\modelData\MARBOCTB.GIF" />
     <Image Include="Assets\modelData\PLASTERT.TGA" />
+    <Image Include="Assets\sprite\tairyoku.png" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\test.png">

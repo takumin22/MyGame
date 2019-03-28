@@ -11,6 +11,8 @@ Gate::Gate(CVector3 pos, CQuaternion rot, Player* player, Stage* stage) :
 	m_stage(stage)
 {
 	m_model.Init(L"Assets/modelData/fence_gate.cmo");
+	m_opense.Init(L"Assets/sound/gateopen.wav");
+	m_opense.SetVolume(0.2f);
 	//静的物理オブジェクトを作成
 	m_phyStaticObject.CreateMeshObject(m_model, m_position, CQuaternion::Identity());
 }
@@ -31,6 +33,7 @@ void Gate::Open()
 	if (GateFlag == true)
 	{
 		if (m_rotation.y <= 0.7f) {
+			m_opense.Play(false);
 			CQuaternion qRot;
 			qRot.SetRotationDeg(CVector3::AxisY(), 5.0f);
 			m_rotation.Multiply(qRot);

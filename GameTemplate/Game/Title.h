@@ -2,6 +2,9 @@
 
 #include "IScene.h"
 #include "Sprite.h"
+#include "sound/SoundEngine.h"
+#include "sound/SoundSource.h"
+
 class Title : public IScene
 {
 public:
@@ -18,4 +21,6 @@ private:
 	Sprite m_sprite;
 	float m_toumei = 0.0f;									//フェイドの度合い
 	float m_faderate = 0.0f;
+	CSoundSource m_titlebgm;
+	CSoundSource m_decisionse;  //決定音
 };

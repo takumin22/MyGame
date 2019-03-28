@@ -11,6 +11,8 @@
 #include "Coin.h"
 #include "Goal.h"
 #include "Gate.h"
+#include "sound/SoundEngine.h"
+#include "sound/SoundSource.h"
 class Game;
 class Enemy;
 class Stage 
@@ -55,7 +57,7 @@ private:
 	std::vector< Coin*> m_coinList; //コインのリスト
 	std::vector<TurnScaffold*> m_turnscaffold; //回転足場のリスト
 	std::vector<Gate*> m_gateList;  //ゲートのリスト
-
+	CSoundSource m_edamegese;
 	int CoinCount = 0;
 	int EnemyCount = 0;
 

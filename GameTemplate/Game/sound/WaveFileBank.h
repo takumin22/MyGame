@@ -1,6 +1,3 @@
-/*!
- *@brief	波形データバンク。
- */
 #pragma once
 
 #include <map>
@@ -9,20 +6,20 @@ using CWaveFilePtr = std::shared_ptr<CWaveFile>;
 using CWaveFilePtrMap = std::map<unsigned int, CWaveFilePtr>;
 
 /*!
-	*@brief	波形データバンク。
-	*@details
-	* 一度ロードされた波形データをバンクに登録することが出来ます。
-	* 登録された波形データは再読み込みを行う必要がなく、バンクから再利用することが出来ます。
-	*/
+*@brief	波形データバンク。
+*@details
+* 一度ロードされた波形データをバンクに登録することが出来ます。
+* 登録された波形データは再読み込みを行う必要がなく、バンクから再利用することが出来ます。
+*/
 class CWaveFileBank {
 public:
 	CWaveFileBank();
 	~CWaveFileBank();
 	/*!
-		*@brief	波形データを登録。
-		*@param[in]	groupID		グループＩＤ。指定できるＩＤの最大値はMAX_GROUP-1。
-		*@param[in]	waveFile	波形データ。
-		*/
+	*@brief	波形データを登録。
+	*@param[in]	groupID		グループＩＤ。指定できるＩＤの最大値はMAX_GROUP-1。
+	*@param[in]	waveFile	波形データ。
+	*/
 	void RegistWaveFile(int groupID, CWaveFilePtr waveFile);
 	/*!
 	*@brief	引数で指定したファイルパスの波形データがバンクに登録されているか検索する。
@@ -31,7 +28,7 @@ public:
 	*@return 波形データ。登録されていない場合はNULLが返る。
 	*/
 	CWaveFilePtr FindWaveFile(int groupID, const wchar_t* filePath);
-	
+
 	/*!
 	*@brief	波形データをバンクから登録解除。
 	*@param[in]	groupID		グループＩＤ。指定できるＩＤの最大値はMAX_GROUP-1。

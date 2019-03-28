@@ -15,6 +15,7 @@
 Stage::Stage(int No)
 {
 
+	m_edamegese.Init(L"Assets/sound/damage.wav");
 	 int StageNo = 0;
 	 int StageNo1 = 0;
 	 int StageNo2 = 0;
@@ -180,7 +181,6 @@ void Stage::Draw()
 
 void Stage::Update()
 {
-
 	//バネの更新。
 	if (EnemyCount == 2) {
 		for (auto& spring : m_springList) {
@@ -200,6 +200,8 @@ void Stage::Update()
 		if (enemy->GetEnemyDeth() == true) 
 		{
 			EnemyCount++;
+			m_edamegese.Play(false);
+			//enemy->SetEnemyDeth(false);
 			delete enemy;
 			m_enemyList.erase(std::remove(m_enemyList.begin(), m_enemyList.end(), enemy)
 				, m_enemyList.end());

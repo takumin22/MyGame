@@ -8,6 +8,7 @@
 #include "TurnScaffold.h"
 #include "Stage.h"
 #include "Coin.h"
+#include "HP.h"
 #include "graphics/animation/Animation.h"
 #include "graphics/animation/AnimationClip.h"
 
@@ -200,7 +201,8 @@ void Player::Damage()
 		//エネミーまでの距離を求めておく。
 		float toEnemyLan = toEnemyDlr.Length();
 		if (toEnemyLan <= 70.0f) {
-			DamageCount += 1;
+			DamageCount++;
+
 			if (DamageCount <= 3) {
 				m_pstate = State_Damage;
 			}

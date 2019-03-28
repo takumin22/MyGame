@@ -67,7 +67,7 @@ void GameCamera::Update()
 	{
 		k = false;
 	}
-	if (k == true && forward >= 25.0f && tatemuki >= -25.0) {
+	if (k == true && forward >= 25.0f ) {
 		qRot.SetRotationDeg(CVector3::AxisY(), 5.0f);
 		qRot.Multiply(toCameraPos);
 

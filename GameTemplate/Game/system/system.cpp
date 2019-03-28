@@ -108,6 +108,7 @@ void InitGame(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 	g_camera2D.SetNear(0.1f);
 	g_camera2D.SetFar(1000.0f);
 	g_camera2D.Update();
+
 }
 //ウィンドウメッセージをディスパッチ。falseが返ってきたら、ゲーム終了。
 bool DispatchWindowMessage()

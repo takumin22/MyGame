@@ -1,12 +1,14 @@
 #pragma once
 #include "character/CharacterController.h"
 #include "graphics/ShadowMap.h"
+#include "HP.h"
 
 class Enemy;
 class Spring;
 class Scaffold;
 class TurnScaffold;
 class Coin;
+class HP;
 
 class Player
 {
@@ -60,10 +62,22 @@ public:
 	{
 		return m_rite;
 	}
+	/// <summary>
+	/// プレイヤーのポジションを設定
+	/// </summary>
+	/// <param name="pos"></param>
 	void SetPosition(CVector3 pos)
 	{
 		m_position = pos;
 		m_charaCon.SetPosition(m_position);
+	}
+	/// <summary>
+	/// ダメージカウント数
+	/// </summary>
+	/// <returns></returns>
+	int GetDCount() 
+	{
+		return DamageCount;
 	}
 	CVector3 GetPosition()
 	{
@@ -138,11 +152,10 @@ private:
     Enemy* m_enemy[10]; //エネミー
 	Spring* m_spring[10];//ジャンプ台
 	Coin* m_coin[100];
-	
+	HP m_hp;
 	Scaffold* m_scaffold[2];//動く足場
 	TurnScaffold* m_turnscaffold[10];//回転する足場
 	bool kariflag = false;     //衝突フラグ
 	bool kariflag1 = false;     //衝突フラグ1
-	float k = 1.0f;
 };
 

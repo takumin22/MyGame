@@ -1,6 +1,8 @@
 #pragma once
 #include "physics/PhysicsStaticObject.h"
 #include "Coin.h"
+#include "sound/SoundEngine.h"
+#include "sound/SoundSource.h"
 
 class Player;
 class Stage;
@@ -29,5 +31,6 @@ private:
 	bool GateFlag = false;
 	Stage* m_stage;
 	int GateHantei = 0;
+	CSoundSource m_opense;
 };
 

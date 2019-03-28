@@ -1,5 +1,7 @@
 #pragma once
 #include "character/CharacterController.h"
+#include "sound/SoundEngine.h"
+#include "sound/SoundSource.h"
 
 class Stage;
 class Player;
@@ -59,6 +61,10 @@ public:
 	bool GetEnemyDeth() {
 		return EnemyDeth;
 	}
+	void SetEnemyDeth(bool deth)
+	{
+		EnemyDeth = deth;
+	}
 private:
 	enum EState {
 		State_RigthMove,
@@ -67,6 +73,7 @@ private:
 		State_Tracking
 	};
 	EState m_estate = State_LeftMove;
+	CSoundSource m_damegese;
 	SkinModel m_model;									//スキンモデル。
 	//Animation m_animation;                      //アニメーション
 	//AnimationClip  m_animationClip[3];          //アニメーションクリップ
@@ -81,5 +88,6 @@ private:
 	Player* m_player = nullptr;
 	Stage* m_enemylist[2];
 	bool EnemyDeth = false; //死亡状態
+
 };
 

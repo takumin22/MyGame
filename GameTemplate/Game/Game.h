@@ -12,6 +12,7 @@
 #include "Sprite.h"
 #include "PostEffect.h"
 #include "Gate.h"
+#include "HP.h"
 #include "sound/SoundEngine.h"
 #include "sound/SoundSource.h"
 #include "graphics/RenderTarget.h"
@@ -98,7 +99,6 @@ private:
 	GameState m_gstate = State_Default;
 	bool CoinGetFlag = false;
 	int No = 0;
-	CSoundEngine m_soundEngine;             //サウンドエンジン
 	Player m_player;						//プレイヤー
 	//Enemy m_enemy;
 	Goal m_goal;                            //ゴール
@@ -107,9 +107,10 @@ private:
 	GameCamera m_gameCamera;				//ゲームカメラ。
 	RenderTarget m_mainRenderTarget;		//メインレンダリングターゲット。
 	Level m_level;							//レベルを初期化。
+	HP m_hp;
 	bool Goal = false;  //ゴール判定
 	int GoalCount = 0;
-	CSoundSource m_bgm;//ステージBGM
+	CSoundSource m_stagebgm;//ステージBGM
 	CSoundSource m_coinse;//コインのSE
 	Sprite m_goalsprite;
 	PostEffect* m_postEffect;				//ポストエフェクト。

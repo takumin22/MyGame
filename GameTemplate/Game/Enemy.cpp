@@ -14,7 +14,8 @@ m_player(player)
 	m_model.Init(L"Assets/modelData/kkk.cmo");
 	//キャラコン設定
 	m_charaCon.Init(50.0f, 40.0f, m_position);
-	//m_position.y = 100.0f;
+
+
 }
 
 
@@ -115,6 +116,7 @@ void Enemy::Damage()
 }
 void Enemy::Update()
 {
+
 	Damage();
 	switch (m_estate)
 	{
@@ -139,10 +141,10 @@ void Enemy::Update()
 		EnemyDeth = true;
 		break;
 	}
-	
 	    m_moveSpeed.y -= 1800.0f /** (1.0f / 60.0f)*/;
 		m_charaCon.SetPosition(m_position);
 		m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
+		m_model.SetShadowReciever(true);
 		//ワールド行列の更新
 	    g_shadowMap->RegistShadowCaster(&m_model);
 		m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);

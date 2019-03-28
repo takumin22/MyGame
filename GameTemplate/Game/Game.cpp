@@ -20,12 +20,12 @@ Game::Game()
 {
 	g_game = this;
 	m_stage = new Stage(No++);
-	//static int count = 0;
 	m_goalsprite.Init(L"Resource/sprite/kari.dds", 1280, 720);
-	m_gameCamera.SetPlayer(&m_player);
+	m_gameCamera.SetPlayer(&m_player);	
 	m_goal.SetPlayer(&m_player);
-	m_soundEngine.Init();		
 	m_coinse.Init(L"Assets/sound/coinGet.wav");
+	m_stagebgm.Init(L"Assets/sound/bgm_00.wav");
+	m_stagebgm.SetVolume(0.5f);
 	//メインとなるレンダリングターゲットを作成する。
 	m_mainRenderTarget.Create(
 		FRAME_BUFFER_W,
@@ -44,17 +44,6 @@ Game::~Game()
 {
 	
 	g_currentScene = new Title;
-	//動的に確保したインスタンスを破棄
-		//delete &m_goal;
-		//delete m_coin;
-		//delete &m_level;
-		//delete &m_coinse;
-		//delete &m_bgm;
-		//delete m_postEffect;
-		//delete &m_goalsprite;
-		//delete &m_player;
-		//delete m_stage;
-		//delete &m_gameCamera;
 		if (m_frameBufferRenderTargetView != nullptr) {
 			m_frameBufferRenderTargetView->Release();
 		}
@@ -65,16 +54,16 @@ Game::~Game()
 
 void Game::Update()
 {
-	
 	switch (m_gstate)
 	{
 	case State_Default:
-		m_soundEngine.Update();
 		//プレイヤーの更新。
 		m_player.Update();
 		//カメラの更新
 		m_gameCamera.Update();
+		m_hp.Update();
 		m_stage->Update();
+	//	m_stagebgm.Play(true);
 		if ( m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 5 ) {
 			//ゴールを更新
 			m_goal.Update();	
@@ -155,6 +144,7 @@ void Game::Draw()
 	m_player.Draw();
 	//ステージの描画
 	m_stage->Draw();
+	m_hp.Draw();
 	if (m_goal.GetGFlag() == true && GoalCount >= 120.0f) {
 		m_goalsprite.Draw();
 

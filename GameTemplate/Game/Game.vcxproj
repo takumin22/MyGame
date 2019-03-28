@@ -122,6 +122,7 @@
     <ClCompile Include="graphics\SkinModelDataManager.cpp" />
     <ClCompile Include="graphics\SkinModelEffect.cpp" />
     <ClCompile Include="HID\Pad.cpp" />
+    <ClCompile Include="HP.cpp" />
     <ClCompile Include="level\Level.cpp" />
     <ClCompile Include="level\MapChip.cpp" />
     <ClCompile Include="main.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="graphics\SkinModelEffect.h" />
     <ClInclude Include="graphics\SkinModelShaderConst.h" />
     <ClInclude Include="HID\Pad.h" />
+    <ClInclude Include="HP.h" />
     <ClInclude Include="IScene.h" />
     <ClInclude Include="level\Level.h" />
     <ClInclude Include="level\MapChip.h" />
@@ -257,6 +259,7 @@
     <Image Include="Assets\modelData\StoneMonster.png" />
     <ImageContentTask Include="Assets\sprite\taittol.png" />
     <Image Include="Assets\modelData\utc_nomal.tga" />
+    <ImageContentTask Include="Assets\sprite\tairyoku.png" />
     <Image Include="Assets\sprite\White.png" />
     <ImageContentTask Include="Assets\sprite\test.png" />
     <ImageContentTask Include="Assets\sprite\kari.png" />

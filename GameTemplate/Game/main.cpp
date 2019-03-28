@@ -77,12 +77,15 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//ゲームエンジンの初期化。
 	InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game");
 	////タイトルシーンの作成。
+	CSoundEngine sound;
+	sound.Init();
 	g_currentScene = new Title;
 
 
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)
 	{
+		sound.Update();
 		//ゲームの更新。
 		UpdateGame();
 		//ゲームの描画処理。
