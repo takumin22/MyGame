@@ -14,6 +14,8 @@
 
 //todo 法線マップ。
 ID3D11ShaderResourceView* g_normalMapSRV = nullptr;
+//todo  ① スペキュラマップ
+ID3D11ShaderResourceView* g_specMapSRV = nullptr;
 Player::Player()
 {
 	//cmoファイルの読み込み。
@@ -55,20 +57,21 @@ Player::Player()
 
 	//todo Unityちゃんの法線マップをロード。
 	//ファイル名を使って、テクスチャをロードして、ShaderResrouceViewを作成する。
+	//todo Unityちゃんの法線マップをロード。
+	//ファイル名を使って、テクスチャをロードして、ShaderResrouceViewを作成する。
+	HRESULT hr = DirectX::CreateDDSTextureFromFileEx(
+		g_graphicsEngine->GetD3DDevice(), L"Resource/sprite/utc_nomal.dds", 0,
+		D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0,
+		false, nullptr, &g_normalMapSRV);
+	//Unityちゃんのスペキュラマップをロード。
+	//ファイル名を使って、テクスチャをロードして、ShaderResourceViewを作成する。
 	DirectX::CreateDDSTextureFromFileEx(
-		g_graphicsEngine->GetD3DDevice(),
-		L"Assets/modelData/utc_nomal.dds",	//ロードするテクスチャのパス。
-		0,
-		D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE,
-		0,
-		0,
-		false,
-		nullptr,
-		&g_normalMapSRV						//作成されたSRVのアドレスの格納先。
-	);
-
+		g_graphicsEngine->GetD3DDevice(), L"Resource/sprite/utc_spec.dds", 0,
+		D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0,
+		false, nullptr, &g_specMapSRV);
 	//モデルに法線マップを設定する。
 	m_model.SetNormalMap(g_normalMapSRV);
+	m_model.SetSpecularMap(g_specMapSRV);
 
 	
 	m_charaCon.Init(10.0f, 45.0f, m_position);

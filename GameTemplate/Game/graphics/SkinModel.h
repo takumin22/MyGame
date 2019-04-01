@@ -87,6 +87,14 @@ public:
 	{
 		m_normalMapSRV = srv;
 	}
+	/// <summary>
+	/// スペキュラマップを設定。
+	/// </summary>
+	/// <param name="srv"></param>
+	void SetSpecularMap(ID3D11ShaderResourceView* srv)
+	{
+		m_specularMapSRV = srv;
+	}
 	/*!
 	*@brief	スケルトンの取得。
 	*/
@@ -139,6 +147,7 @@ private:
 		CMatrix mLightProj;		//todo ライトプロジェクション行列。
 		int isShadowReciever;	//todo シャドウレシーバーのフラグ。
 		int isHasNormalMap;		//法線マップを保持している？
+		int isHasSpecuraMap;	//スペキュラマップを保持している？
 	};
 	//ディレクションライトの構造体
 	struct SDirectionLight {
@@ -165,4 +174,5 @@ private:
 	ID3D11SamplerState* m_samplerState = nullptr;		//!<サンプラステート。
 	bool m_isShadowReciever = false;						//シャドウレシーバーのフラグ。
 	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;		//線マップのSRV
+	ID3D11ShaderResourceView* m_specularMapSRV = nullptr;	//スペキュラマップのSRV
 };

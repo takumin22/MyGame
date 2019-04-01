@@ -16,6 +16,7 @@ Stage::Stage(int No)
 {
 
 	m_edamegese.Init(L"Assets/sound/damage.wav");
+	m_hakkense.Init(L"Assets/sound/hakken.wav");
 	 int StageNo = 0;
 	 int StageNo1 = 0;
 	 int StageNo2 = 0;
@@ -165,9 +166,10 @@ void Stage::Draw()
 		enemy->Draw();
 	}
 	if (EnemyCount >= 2) {
-
+	
 		//バネの描画。
 		for (auto& spring : m_springList) {
+		
 			spring->Draw();
 		}
 	}
@@ -182,7 +184,7 @@ void Stage::Draw()
 void Stage::Update()
 {
 	//バネの更新。
-	if (EnemyCount == 2) {
+	if (EnemyCount >= 2) {
 		for (auto& spring : m_springList) {
 			spring->Update();
 		}

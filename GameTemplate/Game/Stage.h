@@ -58,6 +58,7 @@ private:
 	std::vector<TurnScaffold*> m_turnscaffold; //回転足場のリスト
 	std::vector<Gate*> m_gateList;  //ゲートのリスト
 	CSoundSource m_edamegese;
+	CSoundSource m_hakkense;
 	int CoinCount = 0;
 	int EnemyCount = 0;
 

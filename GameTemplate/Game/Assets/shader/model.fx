@@ -10,6 +10,7 @@
 Texture2D<float4> albedoTexture : register(t3);	
 Texture2D<float4> g_shadowMap : register(t4);		//todo シャドウマップ。
 Texture2D<float4> g_normalMap : register(t2);		//	法線マップ。
+Texture2D<float4> g_specularMap : register(t5);		//スペキュラマップ。
 //ボーン行列
 StructuredBuffer<float4x4> boneMatrix : register(t1);
 
@@ -33,6 +34,7 @@ cbuffer VSPSCb : register(b0){
 	float4x4 mLightProj;	//ライトプロジェクション行列。
 	int isShadowReciever;	//シャドウレシーバーフラグ。
 	int isHasNormalMap;	//法線マップある？
+	int isHasSpecularMap;	//スペキュラマップある？
 };
 
 ////ライト用の定数バッファ
@@ -142,6 +144,16 @@ PSInput VSMain( VSInputNmTxVcTangent In )
 	psInput.TexCoord = In.TexCoord;
 	psInput.Normal = normalize(mul(mWorld, In.Normal));
 	psInput.Tangent = normalize(mul(mWorld, In.Tangent));
+	////UV座標はそのままピクセルシェーダーに渡す。
+	//psInput.TexCoord = In.TexCoord;
+	////法線をワールド行列で変換する。
+	////法線がfloat3の3要素のベクトルなので、回転と拡大の変換だけが行われる。
+	//psInput.Normal = mul(mWorld, In.Normal);
+	////拡大成分が入っているかもしれないので、正規化しとこ。
+	//psInput.Normal = normalize(psInput.Normal);
+	////接ベクトルも回す。
+	//psInput.Tangent = mul(mWorld, In.Tangent);
+	//psInput.Tangent = normalize(psInput.Tangent);
 	return psInput;
 }
 
@@ -211,8 +223,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 		//-1.0～1.0の範囲に変換する。
 		normal = (normal * 2.0f) - 1.0f;
 		//法線をタンジェントスペースから、ワールドスペースに変換する。
-		normal = In.Tangent
-			* normal.x + biNormal * normal.y + In.Normal * normal.z;
+		normal = In.Tangent * normal.x + biNormal * normal.y + In.Normal * normal.z;
 	}
 	else {
 		//ない。
@@ -220,7 +231,35 @@ float4 PSMain( PSInput In ) : SV_Target0
 	}
 
 	//ディレクションライトの拡散反射光を計算する。
-	float3 lig = max(0.0f, dot(In.Normal * -1.0f, directionLight.direction)) * directionLight.color.xyz;
+	float3 lig = max(0.0f, dot(normal * -1.0f, directionLight.direction)) * directionLight.color.xyz;
+	////ディレクションライトの鏡面反射光を計算する。
+	{
+		//実習　鏡面反射を計算しなさい。
+		//① ライトを当てる面から視点に伸びるベクトルtoEyeDirを求める。
+		//	 視点の座標は定数バッファで渡されている。LightCbを参照するように。
+
+		{
+			float3 toEyeDir = normalize(eyePos - In.worldPos);
+
+			//② １で求めたtoEyeDirの反射ベクトルを求める。
+			float3 reflectEyeDir = -toEyeDir + 2 * dot(normal, toEyeDir) * normal;
+
+			//③ ２で求めた反射ベクトルとディレクションライトの方向との内積を取って、スペキュラの強さを計算する。
+			float t = max(0.0f, dot(-directionLight.direction, reflectEyeDir));
+			float specPower = 1.0f;
+			if (isHasSpecularMap) {
+				//スペキュラマップがある。
+				specPower = g_specularMap.Sample(Sampler, In.TexCoord);
+			}
+			//④ pow関数を使って、スペキュラを絞る。絞りの強さは定数バッファで渡されている。
+			//	 LightCbを参照するように。
+			float3 specLig = pow(t, specPow) * directionLight.color.xyz* specPower;
+
+			//⑤ スペキュラ反射が求まったら、ligに加算する。
+			//鏡面反射を反射光に加算する。
+			lig += specLig;
+		}
+	}
 	if (isShadowReciever == 1) {	
 		//シャドウレシーバー。
 		//LVP空間から見た時の最も手前の深度値をシャドウマップから取得する。
@@ -249,33 +288,10 @@ float4 PSMain( PSInput In ) : SV_Target0
 		}
 	}
 
-	////ディレクションライトの鏡面反射光を計算する。
-	{
-		//実習　鏡面反射を計算しなさい。
-		//① ライトを当てる面から視点に伸びるベクトルtoEyeDirを求める。
-		//	 視点の座標は定数バッファで渡されている。LightCbを参照するように。
-		
-		{
-			float3 toEyeDir = normalize(eyePos - In.worldPos);
 
-			//② １で求めたtoEyeDirの反射ベクトルを求める。
-			float3 reflectEyeDir = -toEyeDir + 2 * dot(In.Normal, toEyeDir) * In.Normal;
-
-			//③ ２で求めた反射ベクトルとディレクションライトの方向との内積を取って、スペキュラの強さを計算する。
-			float t = max(0.0f, dot(-directionLight.direction, reflectEyeDir));
-
-			//④ pow関数を使って、スペキュラを絞る。絞りの強さは定数バッファで渡されている。
-			//	 LightCbを参照するように。
-			float3 specLig = pow(t, specPow) * directionLight.color.xyz;
-
-			//⑤ スペキュラ反射が求まったら、ligに加算する。
-			//鏡面反射を反射光に加算する。
-			lig += specLig;
-		}
-	}
 
 	float4 finalColor = float4(0.0f, 0.0f,0.0f, 1.0f);
-	finalColor.xyz = albedoColor.xyz* lig+albedoColor.xyz*0.3;
+	finalColor.xyz = albedoColor.xyz* lig +albedoColor.xyz*0.3;
 	return finalColor;
 }
 /// <summary>

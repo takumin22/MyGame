@@ -112,6 +112,7 @@ private:
 	int GoalCount = 0;
 	CSoundSource m_stagebgm;//ステージBGM
 	CSoundSource m_coinse;//コインのSE
+	CSoundSource m_hakkense;
 	Sprite m_goalsprite;
 	PostEffect* m_postEffect;				//ポストエフェクト。
 	Sprite m_copyMainRtToFrameBufferSprite;			//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。

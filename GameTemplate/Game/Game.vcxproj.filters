@@ -349,7 +349,6 @@
     <Image Include="Assets\sprite\White.png">
       <Filter>Assets\sprite</Filter>
     </Image>
-    <Image Include="Assets\modelData\utc_nomal.tga" />
     <Image Include="Assets\modelData\ASHSEN_2.GIF" />
     <Image Include="Assets\modelData\104677.jpg" />
     <Image Include="Assets\modelData\BUBINGA.JPG" />
@@ -357,7 +356,8 @@
     <Image Include="Assets\modelData\ground_grass.tga" />
     <Image Include="Assets\modelData\MARBOCTB.GIF" />
     <Image Include="Assets\modelData\PLASTERT.TGA" />
-    <Image Include="Assets\sprite\tairyoku.png" />
+    <Image Include="Assets\modelData\utc_nomal.tga" />
+    <Image Include="Assets\modelData\utc_spec.tga" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\test.png">
@@ -367,5 +367,6 @@
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\taittol.png" />
+    <ImageContentTask Include="Assets\sprite\tairyoku.png" />
   </ItemGroup>
 </Project>

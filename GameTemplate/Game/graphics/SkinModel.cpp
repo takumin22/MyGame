@@ -50,7 +50,7 @@ void SkinModel::InitDirectionLight(CVector3 color)
 {
 	m_light.directionlight.direction = { 0.707f,-0.707f,0.0f,1.0f };
 	m_light.directionlight.color = color;
-	m_light.specPow = 10.0f;
+	m_light.specPow = 100.0f;
 	/*m_light.eyePos = { 1.0f,1.0f,1.0f };*/
 
 	//m_dirLight.direction[1] = { -1.0f, 0.0f, 0.0f, 0.0f };
@@ -194,6 +194,13 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 	else {
 		vsCb.isHasNormalMap = false;
 	}
+	//スペキュラマップを使用するかどうかのフラグを送る。
+	if (m_specularMapSRV != nullptr) {
+		vsCb.isHasSpecuraMap = true;
+	}
+	else {
+		vsCb.isHasSpecuraMap = false;
+	}
 	//視点を設定。
 	m_light.eyePos = g_camera3D.GetPosition();
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
@@ -219,6 +226,10 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 	if (m_normalMapSRV != nullptr) {
 		//法線マップが設定されていたらをレジスタt2に設定する。
 		d3dDeviceContext->PSSetShaderResources(2, 1, &m_normalMapSRV);
+	}
+	if (m_specularMapSRV != nullptr) {
+		//スペキュラマップが設定されていたらレジスタt5に設定する。
+		d3dDeviceContext->PSSetShaderResources(5, 1, &m_specularMapSRV);
 	}
 	//描画。
 	m_modelDx->Draw(
