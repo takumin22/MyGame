@@ -50,7 +50,7 @@ void SkinModel::InitDirectionLight(CVector3 color)
 {
 	m_light.directionlight.direction = { 0.707f,-0.707f,0.0f,1.0f };
 	m_light.directionlight.color = color;
-	m_light.specPow = 100.0f;
+	m_light.specPow = 3.0f;
 	/*m_light.eyePos = { 1.0f,1.0f,1.0f };*/
 
 	//m_dirLight.direction[1] = { -1.0f, 0.0f, 0.0f, 0.0f };

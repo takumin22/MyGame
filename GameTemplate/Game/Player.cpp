@@ -18,9 +18,10 @@ ID3D11ShaderResourceView* g_normalMapSRV = nullptr;
 ID3D11ShaderResourceView* g_specMapSRV = nullptr;
 Player::Player()
 {
+
 	//cmoファイルの読み込み。
 	m_model.Init(L"Assets/modelData/unityChan.cmo", enFbxUpAxisY);
-
+	m_model.SetAmbientLight(ambientColor);
 
 	//tkaファイルの読み込み。
 	m_animationClips[enAnimationClip_idle].Load(L"Assets/animData/standing.tka");

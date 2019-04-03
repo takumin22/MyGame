@@ -82,6 +82,14 @@ public:
 	{
 		m_isShadowReciever = flag;
 	}
+	/// <summary>
+	/// 環境光の設定。
+	/// </summary>
+	/// <param name="ambinetLight"></param>
+	void SetAmbientLight(CVector3 ambinetLight)
+	{
+		m_light.directionlight.ambinetLight = ambinetLight;
+	}
 	//法線マップを設定
 	void SetNormalMap(ID3D11ShaderResourceView* srv)
 	{
@@ -153,11 +161,13 @@ private:
 	struct SDirectionLight {
 		CVector4 direction;		//ライトの方向。
 		CVector4 color;			//ライトのカラー。
+		CVector4 ambinetLight = { 0.4f, 0.4f, 0.4f, 1.0f };	//アンビエントライト。
 	};
 
 	//ライトの構造体
 	struct SLight {
 		SDirectionLight directionlight;   //ディレクションライト
+		//CVector4 ambinetLight = { 0.4f, 0.4f, 0.4f, 1.0f };	//アンビエントライト。
 		CVector3			eyePos;				//視点の座標。
 		float				specPow;			//鏡面反射の絞り。
 	};

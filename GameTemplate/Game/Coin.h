@@ -39,6 +39,7 @@ private:
 	CVector3 m_moveSpeed = CVector3::Zero();			//移動速度。
 	CVector3 m_scale = CVector3::One();					//拡大率。
 	CQuaternion m_rotation = CQuaternion::Identity();   //回転。
+	CVector3 ambientColor = { 1.0f, 1.0f, 1.0f };
 	Player* m_player = nullptr; //プレイヤー
 	bool CoinGetFlag = false; //コイン取得フラグ
 	Game* m_game = nullptr;

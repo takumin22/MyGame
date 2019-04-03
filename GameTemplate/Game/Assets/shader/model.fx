@@ -11,6 +11,8 @@ Texture2D<float4> albedoTexture : register(t3);
 Texture2D<float4> g_shadowMap : register(t4);		//todo シャドウマップ。
 Texture2D<float4> g_normalMap : register(t2);		//	法線マップ。
 Texture2D<float4> g_specularMap : register(t5);		//スペキュラマップ。
+Texture2D<float4> g_aoMap : register(t6);			//AOマップ。
+
 //ボーン行列
 StructuredBuffer<float4x4> boneMatrix : register(t1);
 
@@ -35,6 +37,7 @@ cbuffer VSPSCb : register(b0){
 	int isShadowReciever;	//シャドウレシーバーフラグ。
 	int isHasNormalMap;	//法線マップある？
 	int isHasSpecularMap;	//スペキュラマップある？
+	int isHasAoMap;	//AOマップある？
 };
 
 ////ライト用の定数バッファ
@@ -46,6 +49,7 @@ cbuffer VSPSCb : register(b0){
 struct SDirectionLight {
 	float4 direction;
 	float4 color;
+	float3 ambientLight;
 };
 /*!
 *@brief	ライト用の定数バッファ。
@@ -290,8 +294,9 @@ float4 PSMain( PSInput In ) : SV_Target0
 
 
 
-	float4 finalColor = float4(0.0f, 0.0f,0.0f, 1.0f);
-	finalColor.xyz = albedoColor.xyz* lig +albedoColor.xyz*0.3;
+	float4 finalColor = float4(0.0f, 0.0f,0.0f, 1.0f);   // finalColor.xyz = albedoColor.xyz * lig + albedoColor.xyz * directionLight.ambientLight.xyz;
+	finalColor.xyz = albedoColor.xyz * lig ;
+	finalColor.xyz += albedoColor.xyz* directionLight.ambientLight;
 	return finalColor;
 }
 /// <summary>

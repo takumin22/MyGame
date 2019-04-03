@@ -261,6 +261,7 @@
     <ImageContentTask Include="Assets\sprite\tairyoku.png" />
     <ImageContentTask Include="Assets\modelData\utc_nomal.tga" />
     <ImageContentTask Include="Assets\modelData\utc_spec.tga" />
+    <ImageContentTask Include="Assets\modelData\utc_ao.png" />
     <Image Include="Assets\sprite\White.png" />
     <ImageContentTask Include="Assets\sprite\test.png" />
     <ImageContentTask Include="Assets\sprite\kari.png" />

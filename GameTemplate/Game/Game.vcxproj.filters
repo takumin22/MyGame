@@ -358,6 +358,7 @@
     <Image Include="Assets\modelData\PLASTERT.TGA" />
     <Image Include="Assets\modelData\utc_nomal.tga" />
     <Image Include="Assets\modelData\utc_spec.tga" />
+    <Image Include="Assets\modelData\utc_ao.png" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\test.png">

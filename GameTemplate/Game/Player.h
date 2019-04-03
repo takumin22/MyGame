@@ -145,6 +145,7 @@ private:
 	CVector3 m_rite = CVector3::Zero();
 	CVector3 m_up = CVector3::Zero();
 	CVector3 m_forward = CVector3::Zero();
+	CVector3 ambientColor = { 0.4f, 0.4f, 0.4f };
 	CharacterController m_charaCon;   //キャラクターコントローラ
 	float m_moveSpeedWhenStartJump;
 	int Time = 0;//無敵時間
