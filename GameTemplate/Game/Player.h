@@ -2,6 +2,8 @@
 #include "character/CharacterController.h"
 #include "graphics/ShadowMap.h"
 #include "HP.h"
+#include "sound/SoundEngine.h"
+#include "sound/SoundSource.h"
 
 class Enemy;
 class Spring;
@@ -145,7 +147,7 @@ private:
 	CVector3 m_rite = CVector3::Zero();
 	CVector3 m_up = CVector3::Zero();
 	CVector3 m_forward = CVector3::Zero();
-	CVector3 ambientColor = { 0.4f, 0.4f, 0.4f };
+	CVector3 ambientColor = { 0.6f, 0.6f, 0.6f };
 	CharacterController m_charaCon;   //キャラクターコントローラ
 	float m_moveSpeedWhenStartJump;
 	int Time = 0;//無敵時間
@@ -158,5 +160,6 @@ private:
 	TurnScaffold* m_turnscaffold[10];//回転する足場
 	bool kariflag = false;     //衝突フラグ
 	bool kariflag1 = false;     //衝突フラグ1
+	CSoundSource m_spjumpse;
 };
 

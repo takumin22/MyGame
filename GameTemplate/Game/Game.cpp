@@ -25,7 +25,8 @@ Game::Game()
 	m_goal.SetPlayer(&m_player);
 	m_coinse.Init(L"Assets/sound/coinGet.wav");
 	m_stagebgm.Init(L"Assets/sound/bgm_00.wav");
-	m_hakkense.Init(L"Assets/sound/hakken.wav");
+	m_kirakirase.Init(L"Assets/sound/kirakira.wav");
+	m_kirakirase.SetVolume(0.4f);
 	m_stagebgm.SetVolume(0.5f);
 	//メインとなるレンダリングターゲットを作成する。
 	m_mainRenderTarget.Create(
@@ -152,7 +153,10 @@ void Game::Draw()
 	}
 	if (m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 5) {
 		//ゴールを表示
-		m_hakkense.Play(false);
+		if (SEflag == true) {
+			m_kirakirase.Play(false);
+			SEflag = false;
+		}
 		m_goal.Draw();
 	}
 	m_postEffect->Draw();

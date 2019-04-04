@@ -17,6 +17,7 @@ Stage::Stage(int No)
 
 	m_edamegese.Init(L"Assets/sound/damage.wav");
 	m_hakkense.Init(L"Assets/sound/hakken.wav");
+	
 	 int StageNo = 0;
 	 int StageNo1 = 0;
 	 int StageNo2 = 0;
@@ -150,6 +151,12 @@ void Stage::StageMove()
 {
 }
 
+void Stage::StageSE()
+{
+
+	m_hakkense.Play(false);
+}
+
 void Stage::Draw()
 {
 	m_level.Draw();
@@ -167,9 +174,13 @@ void Stage::Draw()
 	}
 	if (EnemyCount >= 2) {
 	
+	
+		if (SEflag == true) {
+			m_hakkense.Play(false);
+				SEflag = false;
+		}
 		//ƒoƒl‚Ì•`‰æB
 		for (auto& spring : m_springList) {
-		
 			spring->Draw();
 		}
 	}

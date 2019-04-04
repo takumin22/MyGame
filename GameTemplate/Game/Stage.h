@@ -23,6 +23,7 @@ public:
 	void Update();
 	void Draw();
 	void StageMove();
+	void StageSE();
 	void SetCount(int StageNo)
 	{
 		StageCount = StageNo;
@@ -59,8 +60,10 @@ private:
 	std::vector<Gate*> m_gateList;  //ゲートのリスト
 	CSoundSource m_edamegese;
 	CSoundSource m_hakkense;
+	CSoundSource m_kirakirase;
 	int CoinCount = 0;
 	int EnemyCount = 0;
+	bool SEflag = true;
 
 };
 

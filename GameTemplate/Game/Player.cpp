@@ -23,6 +23,8 @@ Player::Player()
 	m_model.Init(L"Assets/modelData/unityChan.cmo", enFbxUpAxisY);
 	m_model.SetAmbientLight(ambientColor);
 
+	m_spjumpse.Init(L"Assets/sound/springjump.wav");
+
 	//tkaファイルの読み込み。
 	m_animationClips[enAnimationClip_idle].Load(L"Assets/animData/standing.tka");
 	m_animationClips[enAnimationClip_idle].SetLoopFlag(true);
@@ -218,8 +220,8 @@ void Player::Damage()
 }
 void Player::SpringJump()
 {
-
 		m_animation.Play(enAnimationClip_jump, 0.2f);
+		m_spjumpse.Play(false);
 		m_moveSpeed.y += 1300.0f;
 		m_pstate = State_Idel;
 		
