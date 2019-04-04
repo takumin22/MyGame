@@ -31,7 +31,7 @@ public:
 	*@param[in]	filePath		ロードするcmoファイルのファイルパス。
 	*@param[in] enFbxUpAxis		fbxの上軸。デフォルトはenFbxUpAxisZ。
 	*/
-	void Init(const wchar_t* filePathEnFbxUpAxis, EnFbxUpAxis enFbxUpAxis = enFbxUpAxisZ, CVector3 lightcolor = CVector3::One());
+	void Init(const wchar_t* filePathEnFbxUpAxis, EnFbxUpAxis enFbxUpAxis = enFbxUpAxisZ, CVector4 lightcolor = CVector4::White());
 	/*!
 	*@brief	モデルをワールド座標系に変換するためのワールド行列を更新する。
 	*@param[in]	position	モデルの座標。
@@ -144,7 +144,7 @@ private:
 	*/
 	void InitSkeleton(const wchar_t* filePath);
 	
-	void InitDirectionLight(CVector3 color);
+	void InitDirectionLight(CVector4 color);
 
 	//定数バッファ。
 	struct SVSConstantBuffer {
@@ -161,13 +161,12 @@ private:
 	struct SDirectionLight {
 		CVector4 direction;		//ライトの方向。
 		CVector4 color;			//ライトのカラー。
-		CVector4 ambinetLight = { 0.4f, 0.4f, 0.4f, 1.0f };	//アンビエントライト。
+		CVector4 ambinetLight = { 0.2f, 0.2f, 0.2f, 1.0f };	//アンビエントライト。
 	};
 
 	//ライトの構造体
 	struct SLight {
 		SDirectionLight directionlight;   //ディレクションライト
-		//CVector4 ambinetLight = { 0.4f, 0.4f, 0.4f, 1.0f };	//アンビエントライト。
 		CVector3			eyePos;				//視点の座標。
 		float				specPow;			//鏡面反射の絞り。
 	};

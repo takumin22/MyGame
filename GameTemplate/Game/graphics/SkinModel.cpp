@@ -26,7 +26,7 @@ SkinModel::~SkinModel()
 	}
 
 }
-void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis, CVector3 lightcolor)
+void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis, CVector4 lightcolor)
 {
 	//スケルトンのデータを読み込む。
 	InitSkeleton(filePath);
@@ -46,12 +46,11 @@ void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis, CVector3 
 
 	m_enFbxUpAxis = enFbxUpAxis;
 }
-void SkinModel::InitDirectionLight(CVector3 color)
+void SkinModel::InitDirectionLight(CVector4 color)
 {
 	m_light.directionlight.direction = { 0.707f,-0.707f,0.0f,1.0f };
 	m_light.directionlight.color = color;
-	m_light.specPow = 3.0f;
-	/*m_light.eyePos = { 1.0f,1.0f,1.0f };*/
+	m_light.specPow = 100.0f;
 
 	//m_dirLight.direction[1] = { -1.0f, 0.0f, 0.0f, 0.0f };
 	//m_dirLight.color[1] = { 0.0f, 1.0f, 0.0f, 1.0f };

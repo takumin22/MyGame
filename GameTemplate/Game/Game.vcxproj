@@ -213,7 +213,9 @@
   <ItemGroup>
     <MeshContentTask Include="Assets\animData\UnityChanAnim.fbx" />
     <MeshContentTask Include="Assets\modelData\background.FBX" />
-    <MeshContentTask Include="Assets\modelData\Coin.FBX" />
+    <MeshContentTask Include="Assets\modelData\Coin.FBX">
+      <FileType>Document</FileType>
+    </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Dammy.FBX" />
     <MeshContentTask Include="Assets\modelData\enemy.FBX" />
     <MeshContentTask Include="Assets\modelData\enemy_00.FBX" />
