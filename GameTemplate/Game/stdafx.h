@@ -40,6 +40,8 @@
 #include "graphics/animation/AnimationClip.h"
 #include "graphics/Camera.h"
 
+#include"font.h"
+
 const float FRAME_BUFFER_W = 1280.0f;				//フレームバッファの幅。
 const float FRAME_BUFFER_H = 720.0f;				//フレームバッファの高さ。
 

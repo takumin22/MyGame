@@ -42,7 +42,7 @@ namespace MakeSpriteFont
             using (Bitmap bitmap = new Bitmap(MaxGlyphSize, MaxGlyphSize, PixelFormat.Format32bppArgb))
             using (Graphics graphics = Graphics.FromImage(bitmap))
             {
-                graphics.PixelOffsetMode = options.Sharp ? PixelOffsetMode.None : PixelOffsetMode.HighQuality;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
                 graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 graphics.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
 
@@ -52,33 +52,15 @@ namespace MakeSpriteFont
                 var glyphList = new List<Glyph>();
 
                 // Rasterize each character in turn.
-                int count = 0;
-
                 foreach (char character in characters)
                 {
-                    ++count;
-
-                    if (count == 500)
-                    {
-                        if (!options.FastPack)
-                        {
-                            Console.WriteLine("WARNING: capturing a large font. This may take a long time to complete and could result in too large a texture. Consider using /FastPack.");
-                        }
-                        Console.Write(".");
-                    }
-                    else if ((count % 500) == 0)
-                    {
-                        Console.Write(".");
-                    }
-
                     Glyph glyph = ImportGlyph(character, font, brush, stringFormat, bitmap, graphics);
 
                     glyphList.Add(glyph);
-                }
-
-                if (count > 500)
-                {
-                    Console.WriteLine();
+                    if ((glyphList.Count % 1000) == 0)
+                    {
+                        Console.WriteLine(glyphList.Count);
+                    }
                 }
 
                 Glyphs = glyphList;
@@ -167,8 +149,21 @@ namespace MakeSpriteFont
             BitmapUtils.ConvertGreyToAlpha(glyphBitmap);
 
             // Query its ABC spacing.
+#if false   //変更前
             float? abc = GetCharacterWidth(character, font, graphics);
-
+#else   //変更後
+            float? abc;
+            // GetCharacterWidthがいい加減な値を返すので
+            // 固定の幅に
+            if (character > 0xff)//むりやり全角文字判定
+            {
+                abc = (float)Math.Ceiling(font.Size);
+            }
+            else
+            {
+                abc = (float)Math.Ceiling(font.Size)/2.0f;
+            }
+#endif
             // Construct the output Glyph object.
             return new Glyph(character, glyphBitmap)
             {
@@ -236,7 +231,7 @@ namespace MakeSpriteFont
             [DllImport("gdi32.dll")]
             public static extern bool DeleteObject(IntPtr hObject);
 
-            [DllImport("gdi32.dll", CharSet = CharSet.Unicode)]
+            [DllImport("gdi32.dll")]
             public static extern bool GetCharABCWidthsFloat(IntPtr hdc, uint iFirstChar, uint iLastChar, [Out] ABCFloat[] lpABCF);
 
 

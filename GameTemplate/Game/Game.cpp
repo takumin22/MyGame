@@ -134,6 +134,8 @@ void Game::ChangeRenderTarget(ID3D11DeviceContext* d3dDeviceContext, ID3D11Rende
 }
 void Game::Draw()
 {
+	m_font.BeginDraw();	//フォントの描画開始。
+
 	////レンダリングターゲットをメインに変更する。
 	auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
 	ChangeRenderTarget(d3dDeviceContext, &m_mainRenderTarget,m_mainRenderTarget.GetViewport());
@@ -160,4 +162,16 @@ void Game::Draw()
 		m_goal.Draw();
 	}
 	m_postEffect->Draw();
+	wchar_t toubatu[256];
+	swprintf_s(toubatu, L"コイン %d",m_stage->GetCoinCount());
+	m_font.Draw(
+		toubatu,		//表示する文字列。
+		{ -FRAME_BUFFER_W / 2.0f,FRAME_BUFFER_H / 2.0f },			//表示する座標。0.0f, 0.0が画面の中心。
+		{ 0.0f,1.0f,0.0f,1.0f },
+		0.0f,
+		1.5f,
+		{ 0.0f,1.0f }
+	);
+
+	m_font.EndDraw();
 }

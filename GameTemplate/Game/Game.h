@@ -115,6 +115,7 @@ private:
 	CSoundSource m_kirakirase;
 	bool SEflag = true;
 	Sprite m_goalsprite;
+	Font m_font;
 	PostEffect* m_postEffect;				//ポストエフェクト。
 	Sprite m_copyMainRtToFrameBufferSprite;			//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
 	D3D11_VIEWPORT m_frameBufferViewports;			//フレームバッファのビューポート。

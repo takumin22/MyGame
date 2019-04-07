@@ -67,6 +67,16 @@ void GraphicsEngine::Release()
 		m_pd3dDevice->Release();
 		m_pd3dDevice = NULL;
 	}
+	if (m_SpriteBatch != NULL)
+	{
+		delete m_SpriteBatch;
+		m_SpriteBatch = NULL;
+	}
+	if (m_SpriteFont != NULL)
+	{
+		delete m_SpriteFont;
+		m_SpriteFont = NULL;
+	}
 }
 void GraphicsEngine::Init(HWND hWnd)
 {
@@ -162,6 +172,8 @@ void GraphicsEngine::Init(HWND hWnd)
 	viewport.MaxDepth = 1.0f;
 	m_pd3dDeviceContext->RSSetViewports(1, &viewport);
 	m_pd3dDeviceContext->RSSetState(m_rasterizerState);
+	m_SpriteBatch = new DirectX::SpriteBatch(m_pd3dDeviceContext);
+	m_SpriteFont = new DirectX::SpriteFont(m_pd3dDevice, L"Assets/font/myfile.spritefont");
 }
 void GraphicsEngine::ChangeRenderTarget(RenderTarget* renderTarget, D3D11_VIEWPORT* viewport)
 {

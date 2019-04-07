@@ -46,8 +46,9 @@ void Title::Update()
 }
 void Title::Draw()
 {
-	
 	g_graphicsEngine->ChangeBackBaffer();
+
+	
     //m_hp.Draw();
 	m_sprite.Draw();
 	//m_fadeSprite.Draw();

@@ -140,6 +140,7 @@
     <ClCompile Include="ConstantBufferGPU.cpp" />
     <ClCompile Include="Gate.cpp" />
     <ClCompile Include="HP.cpp" />
+    <ClCompile Include="font.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -252,6 +253,7 @@
     <ClInclude Include="ConstantBufferGPU.h" />
     <ClInclude Include="Gate.h" />
     <ClInclude Include="HP.h" />
+    <ClInclude Include="font.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">

@@ -105,6 +105,7 @@
     <ClCompile Include="ConstantBufferGPU.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Fade.cpp" />
+    <ClCompile Include="font.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="Gate.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="ConstantBufferGPU.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Fade.h" />
+    <ClInclude Include="font.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="Gate.h" />

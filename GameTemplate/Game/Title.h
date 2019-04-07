@@ -23,4 +23,5 @@ private:
 	float m_faderate = 0.0f;
 	CSoundSource m_titlebgm;
 	CSoundSource m_decisionse;  //Œˆ’è‰¹
+	Font m_font;
 };
