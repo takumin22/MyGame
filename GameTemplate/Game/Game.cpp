@@ -66,7 +66,7 @@ void Game::Update()
 		m_gameCamera.Update();
 		m_hp.Update();
 		m_stage->Update();
-	//	m_stagebgm.Play(true);
+		m_stagebgm.Play(true);
 		if ( m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 5 ) {
 			//ƒS[ƒ‹‚ğXV
 			m_goal.Update();	
