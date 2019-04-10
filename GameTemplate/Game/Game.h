@@ -116,6 +116,11 @@ private:
 	bool SEflag = true;
 	Sprite m_goalsprite;
 	Font m_font;
+	Timer m_time;
+	int GAMETIME = 200;//残り時間
+	int TimeScore = 0;//タイムのスコア
+	int taim;  //経過時間
+	wchar_t toubatu[256];
 	PostEffect* m_postEffect;				//ポストエフェクト。
 	Sprite m_copyMainRtToFrameBufferSprite;			//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
 	D3D11_VIEWPORT m_frameBufferViewports;			//フレームバッファのビューポート。

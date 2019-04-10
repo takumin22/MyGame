@@ -23,10 +23,6 @@ public:
 	/// </summary>
 	void RigthMove();
 	/// <summary>
-	/// エネミーの移動処理(左)
-	/// </summary>
-	void LeftMove();
-	/// <summary>
 	/// ダメージ処理
 	/// </summary>
 	void Damage();
@@ -67,12 +63,11 @@ public:
 	}
 private:
 	enum EState {
-		State_RigthMove,
-		State_LeftMove,
+		State_Move,
 		State_EDamage,
 		State_Tracking
 	};
-	EState m_estate = State_LeftMove;
+	EState m_estate = State_Move;
 	CSoundSource m_damegese;
 	SkinModel m_model;									//スキンモデル。
 	//Animation m_animation;                      //アニメーション
@@ -88,6 +83,6 @@ private:
 	Player* m_player = nullptr;
 	Stage* m_enemylist[2];
 	bool EnemyDeth = false; //死亡状態
-
+	int i = 1;
 };
 

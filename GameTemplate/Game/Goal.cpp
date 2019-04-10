@@ -12,6 +12,10 @@ Goal::Goal()
 		m_position.z =-5199.0f;
 		m_position.y = 1000.0f;
 		m_position.x = -332.0f;
+
+		//m_position.z = 0.0f;
+		//m_position.y = 10.0f;
+		//m_position.x = 0.0f;
 	
 }
 

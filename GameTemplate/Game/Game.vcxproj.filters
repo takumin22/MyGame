@@ -141,6 +141,7 @@
     <ClCompile Include="Gate.cpp" />
     <ClCompile Include="HP.cpp" />
     <ClCompile Include="font.cpp" />
+    <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -254,6 +255,7 @@
     <ClInclude Include="Gate.h" />
     <ClInclude Include="HP.h" />
     <ClInclude Include="font.h" />
+    <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">

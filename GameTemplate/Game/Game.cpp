@@ -28,6 +28,7 @@ Game::Game()
 	m_kirakirase.Init(L"Assets/sound/kirakira.wav");
 	m_kirakirase.SetVolume(0.4f);
 	m_stagebgm.SetVolume(0.5f);
+	m_time.TimerStart();
 	//メインとなるレンダリングターゲットを作成する。
 	m_mainRenderTarget.Create(
 		FRAME_BUFFER_W,
@@ -142,17 +143,14 @@ void Game::Draw()
 	//メインレンダリングターゲットをクリアする。
 	float clearColor[] = { 0.0f, 0.7f, 1.0f, 1.0f };
 	m_mainRenderTarget.ClearRenderTarget(clearColor);
-
+	
 	//g_graphicsEngine->ChangeBackBaffer();
 	//プレイヤーの描画。
 	m_player.Draw();
 	//ステージの描画
 	m_stage->Draw();
 	m_hp.Draw();
-	if (m_goal.GetGFlag() == true && GoalCount >= 120.0f) {
-		m_goalsprite.Draw();
 
-	}
 	if (m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 5) {
 		//ゴールを表示
 		if (SEflag == true) {
@@ -162,24 +160,75 @@ void Game::Draw()
 		m_goal.Draw();
 	}
 	m_postEffect->Draw();
-	wchar_t toubatu[256];
-	swprintf_s(toubatu, L"コイン %d",m_stage->GetCoinCount());
-	m_font.Draw(
-		toubatu,		//表示する文字列。
-		{ -FRAME_BUFFER_W / 2.0f,FRAME_BUFFER_H / 2.0f },			//表示する座標。0.0f, 0.0が画面の中心。
-		{ 0.0f,1.0f,0.0f,1.0f },
-		0.0f,
-		1.5f,
-		{ 0.0f,1.0f }
-	);
-	swprintf_s(toubatu, L"スコア %d", m_stage->GetScore());
-	m_font.Draw(
-		toubatu,		//表示する文字列。
-		{ -FRAME_BUFFER_W / 2.0f,300.0f},			//表示する座標。0.0f, 0.0が画面の中心。
-		{ 0.0f,1.0f,0.0f,1.0f },
-		0.0f,
-		1.5f,
-		{ 0.0f,1.0f }
-	);
+	//制限時間のタイマーをラップでストップさせる。
+	m_time.TimerStop();
+	if (m_goal.GetGFlag() == false) {
+		swprintf_s(toubatu, L"コイン %d", m_stage->GetCoinCount());
+		m_font.Draw(
+			toubatu,		//表示する文字列。
+			{ -FRAME_BUFFER_W / 2.0f,FRAME_BUFFER_H / 2.0f },			//表示する座標。0.0f, 0.0が画面の中心。
+			{ 0.0f,1.0f,0.0f,1.0f },
+			0.0f,
+			1.5f,
+			{ 0.0f,1.0f }
+		);
+		swprintf_s(toubatu, L"スコア %d", m_stage->GetScore());
+		m_font.Draw(
+			toubatu,		//表示する文字列。
+			{ -FRAME_BUFFER_W / 2.0f,300.0f },			//表示する座標。0.0f, 0.0が画面の中心。
+			{ 0.0f,1.0f,0.0f,1.0f },
+			0.0f,
+			1.5f,
+			{ 0.0f,1.0f }
+		);
+		
+		//秒の計算をする
+		 taim = (int)m_time.GetAllSeconds() % 200;
+		swprintf_s(toubatu, L"残り時間%d秒", (GAMETIME - taim));		//表示用にデータを加工
+		m_font.Draw(
+			toubatu,		//表示する文字列。
+			{ -200.0f,FRAME_BUFFER_H / 2.0f },			//表示する座標。0.0f, 0.0が画面の中心。
+			{ 1.0f,0.0f,0.0f,1.0f },
+			0.0f,
+			1.5f,
+			{ 0.0f,1.0f }
+		);
+	}
+
+
+	if (m_goal.GetGFlag() == true && GoalCount >= 120.0f) {
+		m_goalsprite.Draw();
+		TimeScore = GAMETIME - taim;
+		swprintf_s(toubatu, L"スコア %d", m_stage->GetScore());
+		m_font.Draw(
+			toubatu,		//表示する文字列。
+			{ -200.0f , 100.0f },			//表示する座標。0.0f, 0.0が画面の中心。
+			{ 0.0f,0.0f,0.0f,1.0f },
+			0.0f,
+			1.5f,
+			{ 0.0f,1.0f }
+		);
+		swprintf_s(toubatu, L"タイムスコア %d", TimeScore);
+		m_font.Draw(
+			toubatu,		//表示する文字列。
+			{ -300.0f , 30.0f },			//表示する座標。0.0f, 0.0が画面の中心。
+			{ 0.0f,0.0f,0.0f,1.0f },
+			0.0f,
+			1.5f,
+			{ 0.0f,1.0f }
+		);
+		swprintf_s(toubatu, L"合計スコア %d", m_stage->GetScore() + TimeScore);
+		m_font.Draw(
+			toubatu,		//表示する文字列。
+			{ -250.0f , -50.0f },			//表示する座標。0.0f, 0.0が画面の中心。
+			{ 0.0f,0.0f,0.0f,1.0f },
+			0.0f,
+			1.5f,
+			{ 0.0f,1.0f }
+		);
+	}
+
+	//タイマーを再開させる
+	m_time.TimerRestart();
 	m_font.EndDraw();
 }
