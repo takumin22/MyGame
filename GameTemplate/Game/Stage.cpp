@@ -212,6 +212,7 @@ void Stage::Update()
 		enemy->Update();
 		if (enemy->GetEnemyDeth() == true) 
 		{
+			Score += 10;
 			EnemyCount++;
 			m_edamegese.Play(false);
 			//enemy->SetEnemyDeth(false);
@@ -224,7 +225,7 @@ void Stage::Update()
 		coin->Update();
 		if (coin->GetCoinGet() == true) 
 		{
-			
+			Score += 100;
 			delete coin;
 			CoinCount++;
 			m_coinList.erase(std::remove(m_coinList.begin(), m_coinList.end(), coin)

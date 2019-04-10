@@ -40,6 +40,10 @@ public:
 	{
 		return EnemyCount;
 	}
+	int GetScore() 
+	{
+		return Score;
+	}
 	Scaffold* GetScaffold(int i)
 	{
 		return m_sacaffoldList[i];
@@ -64,6 +68,6 @@ private:
 	int CoinCount = 0;
 	int EnemyCount = 0;
 	bool SEflag = true;
-
+	int Score = 0;
 };
 

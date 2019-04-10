@@ -172,6 +172,14 @@ void Game::Draw()
 		1.5f,
 		{ 0.0f,1.0f }
 	);
-
+	swprintf_s(toubatu, L"スコア %d", m_stage->GetScore());
+	m_font.Draw(
+		toubatu,		//表示する文字列。
+		{ -FRAME_BUFFER_W / 2.0f,300.0f},			//表示する座標。0.0f, 0.0が画面の中心。
+		{ 0.0f,1.0f,0.0f,1.0f },
+		0.0f,
+		1.5f,
+		{ 0.0f,1.0f }
+	);
 	m_font.EndDraw();
 }
