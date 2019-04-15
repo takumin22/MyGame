@@ -15,7 +15,13 @@ class HP;
 class Player
 {
 public:
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
 	Player();
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
 	~Player();
 	/// <summary>
 	/// 更新
@@ -48,12 +54,18 @@ public:
 	/// 足場上の処理
 	/// </summary>
 	void Scafflod();
+	/// <summary>
+	/// 簡易的なAABB
+	/// </summary>
 	void AABB();
 	/// <summary>
 	/// 描画
 	/// </summary>
 	void Draw();
-
+	/// <summary>
+	/// プレイヤーの前方向
+	/// </summary>
+	/// <returns>現在の前方向</returns>
 	CVector3 GetForWard() {
 		return m_forward;
 	}
@@ -81,6 +93,10 @@ public:
 	{
 		return DamageCount;
 	}
+	/// <summary>
+	/// プレイヤーのポジション
+	/// </summary>
+	/// <returns>現在のポジション</returns>
 	CVector3 GetPosition()
 	{
 		return m_position;
@@ -124,8 +140,8 @@ private:
 
 	enum PState {
 		State_Idel, //基本ステート(歩)
-		State_MoveRun,
-		State_Jump,
+		State_MoveRun,//走りステート
+		State_Jump,   //ジャンプステート
 		State_Damage,  //ダメージステート
 		State_Scaffold, //足場上ステート
 		State_Scaffold1,
@@ -133,7 +149,7 @@ private:
 		State_SpringJump, //バネジャンプステート
 		State_Return,    //復帰ステート
 		State_Deth ,      //死亡ステート
-		State_Goal
+		State_Goal //ゴール時ステート
 	};
 	PState m_pstate = State_Idel;
 	SkinModel m_model;									//スキンモデル。
@@ -145,21 +161,21 @@ private:
 	CQuaternion m_rotation = CQuaternion::Identity();   //回転。
 	CMatrix m_mRot;
 	CVector3 m_rite = CVector3::Zero();
-	CVector3 m_up = CVector3::Zero();
-	CVector3 m_forward = CVector3::Zero();
+	CVector3 m_up = CVector3::Zero();  //上方向
+	CVector3 m_forward = CVector3::Zero();//前方向
 	CVector3 ambientColor = { 0.6f, 0.6f, 0.6f };
 	CharacterController m_charaCon;   //キャラクターコントローラ
-	float m_moveSpeedWhenStartJump;
+	float m_moveSpeedWhenStartJump;//ジャンプ前の移動速度
 	int Time = 0;//無敵時間
 	int DamageCount = 0;//ダメージ量のカウント
     Enemy* m_enemy[10]; //エネミー
 	Spring* m_spring[10];//ジャンプ台
-	Coin* m_coin[100];
-	HP m_hp;
+	Coin* m_coin[100]; //コイン
+	HP m_hp;//HP
 	Scaffold* m_scaffold[2];//動く足場
 	TurnScaffold* m_turnscaffold[10];//回転する足場
 	bool kariflag = false;     //衝突フラグ
 	bool kariflag1 = false;     //衝突フラグ1
-	CSoundSource m_spjumpse;
+	CSoundSource m_spjumpse; //ジャンプ台に乗った時の音
 };
 

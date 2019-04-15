@@ -62,12 +62,11 @@ private:
 	std::vector< Coin*> m_coinList; //コインのリスト
 	std::vector<TurnScaffold*> m_turnscaffold; //回転足場のリスト
 	std::vector<Gate*> m_gateList;  //ゲートのリスト
-	CSoundSource m_edamegese;
-	CSoundSource m_hakkense;
-	CSoundSource m_kirakirase;
-	int CoinCount = 0;
-	int EnemyCount = 0;
+	CSoundSource m_edamegese;//エネミーのダメージSE
+	CSoundSource m_hakkense;//ジャンプ台出現時のSE
+	int CoinCount = 0;//取得コイン数
+	int EnemyCount = 0;//倒したエネミー数
 	bool SEflag = true;
-	int Score = 0;
+	int Score = 0;//スコア
 };
 

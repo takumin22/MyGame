@@ -112,7 +112,7 @@ private:
 	int GoalCount = 0;
 	CSoundSource m_stagebgm;//ステージBGM
 	CSoundSource m_coinse;//コインのSE
-	CSoundSource m_kirakirase;
+	CSoundSource m_kirakirase; //ゴール出現時のSE
 	bool SEflag = true;
 	Sprite m_goalsprite;
 	Font m_font;

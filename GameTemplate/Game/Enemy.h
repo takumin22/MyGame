@@ -8,7 +8,16 @@ class Player;
 class Enemy
 {
 public:
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	/// <param name="pos"></param>
+	/// <param name="rot"></param>
+	/// <param name="player"></param>
 	Enemy(CVector3 pos, CQuaternion rot, Player* player);
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
 	~Enemy();
 	/// <summary>
 	/// 更新
@@ -19,9 +28,9 @@ public:
 	/// </summary>
 	void Draw();
 	/// <summary>
-	/// エネミーの移動処理(右)
+	/// エネミーの移動処理
 	/// </summary>
-	void RigthMove();
+	void Move();
 	/// <summary>
 	/// ダメージ処理
 	/// </summary>
@@ -34,7 +43,7 @@ public:
 	/// <summary>
 	/// エネミーのポジションを設定
 	/// </summary>
-	/// <param name="epos"></param>
+	/// <param name="epos">設定したいポジション</param>
 	void SetEPosition(CVector3 epos)
 	{
 		m_position = epos;
@@ -42,7 +51,7 @@ public:
 	/// <summary>
 	/// ポジションを取得
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>取得したポジション</returns>
 	CVector3 GetEPosition()
 	{
 		return m_position;
@@ -57,18 +66,22 @@ public:
 	bool GetEnemyDeth() {
 		return EnemyDeth;
 	}
+	/// <summary>
+	/// 死亡判定を設定
+	/// </summary>
+	/// <param name="deth">設定したい死亡判定</param>
 	void SetEnemyDeth(bool deth)
 	{
 		EnemyDeth = deth;
 	}
 private:
+//エネミーのステート
 	enum EState {
-		State_Move,
-		State_EDamage,
-		State_Tracking
+		State_Move, //移動ステート
+		State_EDamage,//ダメージステート
+		State_Tracking//追跡ステート
 	};
-	EState m_estate = State_Move;
-	CSoundSource m_damegese;
+	EState m_estate = State_Move;//初期ステート
 	SkinModel m_model;									//スキンモデル。
 	//Animation m_animation;                      //アニメーション
 	//AnimationClip  m_animationClip[3];          //アニメーションクリップ
@@ -77,11 +90,10 @@ private:
 	CVector3 m_scale = CVector3::One();					//拡大率。
 	CVector3 m_up = CVector3::Zero();
 	CMatrix m_mRot;
-	int idoutime = 0;
+	int idoutime = 0;  //移動時間
 	CQuaternion m_rotation = CQuaternion::Identity();  //回転。
 	CharacterController m_charaCon;                  //キャラクターコントローラ
 	Player* m_player = nullptr;
-	Stage* m_enemylist[2];
 	bool EnemyDeth = false; //死亡状態
 	int i = 1;
 };

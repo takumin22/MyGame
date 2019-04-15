@@ -7,11 +7,27 @@ class Stage;
 class Scaffold
 {
 public:
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	/// <param name="pos"></param>
+	/// <param name="rot"></param>
+	/// <param name="player"></param>
 	Scaffold(CVector3 pos, CQuaternion rot, Player* player);
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
 	~Scaffold();
+
+	/// <summary>
+	/// 更新
+	/// </summary>
 	void Update();
 	void FrontMove();
 	void BackMove();
+	/// <summary>
+	/// 描画
+	/// </summary>
 	void Draw();
 	void SetScaPos(CVector3 spos)
 	{
@@ -43,6 +59,5 @@ private:
 	PhysicsStaticObject m_phyStaticObject;      //静的物理オブジェクト
 	int Hantei = 0;
 	Stage* m_stage;
-	Scaffold* m_scaffold[2];
 
 };

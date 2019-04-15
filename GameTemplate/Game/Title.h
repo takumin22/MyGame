@@ -4,6 +4,7 @@
 #include "Sprite.h"
 #include "sound/SoundEngine.h"
 #include "sound/SoundSource.h"
+#include "Fade.h"
 
 class Title : public IScene
 {
@@ -19,9 +20,8 @@ public:
 	void Draw() override;
 private:
 	Sprite m_sprite;
-	float m_toumei = 0.0f;									//フェイドの度合い
-	float m_faderate = 0.0f;
-	CSoundSource m_titlebgm;
+	CSoundSource m_titlebgm;    //タイトルBGM
 	CSoundSource m_decisionse;  //決定音
 	Font m_font;
+	Fade m_fade;
 };

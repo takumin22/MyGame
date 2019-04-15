@@ -244,7 +244,7 @@ void Player::PlayerPosRetrun()
 }
 void Player::AABB()
 {
- 
+ //簡易的なAABB
 	auto vMax=	m_scaffold[1]->GetScaPosition();
 	auto vMin = vMax;
 	vMax.x += 100.0f;
@@ -360,6 +360,7 @@ void Player::Update()
 			m_pstate = State_SpringJump;
 		}
 		if (m_position.y <= -500.0f) {
+			//プレイヤーをスタート位置に戻す
 			m_pstate = State_Return;
 		}
 		break;
@@ -378,6 +379,7 @@ void Player::Update()
 			m_pstate = State_Jump;
 		}
 		if (m_position.y <= -500.0f) {
+			//プレイヤーをスタート位置に戻す
 			m_pstate = State_Return;
 		}
 		if (fabsf(angle) < CMath::DegToRad(50.0f)

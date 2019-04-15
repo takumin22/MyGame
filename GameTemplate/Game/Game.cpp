@@ -46,7 +46,7 @@ Game::Game()
 Game::~Game()
 {
 	
-	g_currentScene = new Title;
+
 		if (m_frameBufferRenderTargetView != nullptr) {
 			m_frameBufferRenderTargetView->Release();
 		}
@@ -106,8 +106,7 @@ void Game::Update()
 		m_gstate = State_Default;
 		break;
 	case State_TitleChange:
-		//g_currentScene = new Title;
-		//delete m_stage;
+		g_currentScene = new Title;
 		delete this;
 		break;
 	}
@@ -230,5 +229,6 @@ void Game::Draw()
 
 	//タイマーを再開させる
 	m_time.TimerRestart();
+	//文字表示の終了
 	m_font.EndDraw();
 }

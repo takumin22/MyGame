@@ -4,9 +4,10 @@
 
 Title::Title()
 {
-	//MessageBox(nullptr, "Aボタン押してね（´・ω・｀）", "通知", MB_YESNO);
+
 	//2Dを初期化。
 	m_sprite.Init(L"Resource/sprite/taittol.dds", 1280, 720);
+	//m_sprite.SetclearColor(0.0f);
 	m_sprite.Update(CVector3::Zero(), CQuaternion::Identity(), CVector3::One());
 	m_decisionse.Init(L"Assets/sound/Decision.wav");
 	m_decisionse.SetVolume(0.5f);
@@ -23,33 +24,44 @@ void Title::Update()
 {
 	//g_camera2D.Update();
 	m_sprite.Update(CVector3::Zero(), CQuaternion::Identity(), CVector3::One());
-	if (m_toumei >= 1.0f) {
-	  //ゲームシーンを作成する
-		g_currentScene = new Game;
-		m_sprite.SetclearColor(0.0f);
-		m_faderate *= -1;
-		m_titlebgm.Stop();
+
+	if (g_pad[0].IsTrigger(enButtonA)  && m_fade.GetState() == Fade::idel) {
+	
+		//スタートの条件になったのでフェードを開始する
+		m_fade.Fadein();
+		m_decisionse.Play(false);
+
+
+	}	
+
+
+	if (m_fade.Update())
+	{
+		//フェードの状態遷移
+		switch (m_fade.GetState())
+		{
+		case Fade::fadein:
+			//フェードが完了し見えない状態になっているので
+			//ゲーム読み込みをスタートさせる
+			g_currentScene = new Game;
+			m_titlebgm.Stop();
+			m_sprite.SetclearColor(0.0f);
+			//フェードを明ける
+			m_fade.Fadeout();
+			break;
+		case Fade::fadeout:
+			//すべての処理が終了したのでタイトルをDeleteする
+			delete this;
+			break;
+		default:
+			break;
+		}
 	}
 
-	
-	m_toumei += m_faderate;
-
-	if (g_pad[0].IsTrigger(enButtonA)  && m_toumei == 0.0f) {
-		m_decisionse.Play(false);
-		m_faderate = 0.02f;
-		m_toumei += m_faderate;
-	}	
-	if (m_toumei < 0.0f) {
-	
-			delete this;
-		}
 }
 void Title::Draw()
 {
 	g_graphicsEngine->ChangeBackBaffer();
-
-	
-    //m_hp.Draw();
 	m_sprite.Draw();
-	//m_fadeSprite.Draw();
+	m_fade.Draw();
 }

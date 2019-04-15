@@ -42,6 +42,7 @@ void Coin::Update()
 
 
 	CoinGet();
+	//ƒRƒCƒ“‚ð‰ñ“]
 	CQuaternion qRot;
 	qRot.SetRotationDeg(CVector3::AxisY(), 10.0f);
 	m_rotation.Multiply(qRot);

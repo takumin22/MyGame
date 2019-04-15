@@ -215,7 +215,6 @@ void Stage::Update()
 			Score += 10;
 			EnemyCount++;
 			m_edamegese.Play(false);
-			//enemy->SetEnemyDeth(false);
 			delete enemy;
 			m_enemyList.erase(std::remove(m_enemyList.begin(), m_enemyList.end(), enemy)
 				, m_enemyList.end());

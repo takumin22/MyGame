@@ -12,6 +12,9 @@ public:
 	{
 		m_player = player;
 	}
+	/// <summary>
+	/// XV
+	/// </summary>
 	void Update();
 private:
 	//enum CameraState

@@ -5,6 +5,7 @@
 
 HP::HP()
 {
+	//HP用のデータを生成
 	m_hp.Init(L"Resource/sprite/tairyoku.dds", 60, 60);
 	m_hp2.Init(L"Resource/sprite/tairyoku.dds", 60, 60);
 	m_hp3.Init(L"Resource/sprite/tairyoku.dds", 60, 60);

@@ -22,7 +22,7 @@ Enemy::~Enemy()
 	g_shadowMap->UnregistShadowCaster(&m_model);
 }
 
-void Enemy::RigthMove()
+void Enemy::Move()
 {
 	idoutime++;
 	m_position.x += 5.0f*i;
@@ -107,8 +107,12 @@ void Enemy::Update()
 	case State_Move:
 		m_moveSpeed.x = 0.0f;
 	    m_moveSpeed.z = 0.0f;
-		RigthMove();
+		Move();
 	    Search();
+		if (m_position.y <= -500.0f) {
+			m_estate = State_EDamage;
+		
+		}
 		break;
 	case State_Tracking:
 		Tracking();

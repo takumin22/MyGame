@@ -28,6 +28,13 @@ public:
 	/// コイン取得処理
 	/// </summary>
 	void CoinGet();
+	/// <summary>
+	/// コイン取得状態
+	/// </summary>
+	/// <returns>
+	/// true 取得
+	/// false　未取得
+	/// </returns>
 	bool GetCoinGet()
 	{
 		return CoinGetFlag;
@@ -39,7 +46,7 @@ private:
 	CVector3 m_moveSpeed = CVector3::Zero();			//移動速度。
 	CVector3 m_scale = CVector3::One();					//拡大率。
 	CQuaternion m_rotation = CQuaternion::Identity();   //回転。
-	CVector3 ambientColor = { 1.0f, 1.0f, 1.0f };
+	CVector3 ambientColor = { 1.0f, 1.0f, 1.0f };//	環境光のカラー
 	Player* m_player = nullptr; //プレイヤー
 	bool CoinGetFlag = false; //コイン取得フラグ
 	Game* m_game = nullptr;

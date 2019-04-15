@@ -103,7 +103,7 @@ private:
 private:
 	struct ConstantBuffer {
 		CMatrix WVP;		//ワールドビュープロジェクション行列。
-		float alpha;		//α値。
+		CVector4 S_mulcolor; //乗算カラー
 	};
 	ID3D11Buffer*				m_vertexBuffer = NULL;					//頂点バッファ。
 	ID3D11Buffer*				m_indexBuffer = NULL;					//インデックスバッファ。

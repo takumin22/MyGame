@@ -11,9 +11,22 @@ class Gate
 public:
 	Gate(CVector3 pos, CQuaternion rot, Player* player, Stage* stage);
 	~Gate();
+/// <summary>
+/// 更新
+/// </summary>
 	void Update();
+	/// <summary>
+	/// 描画
+	/// </summary>
 	void Draw();
 	void Open();
+	/// <summary>
+	/// ゲートのオープンフラグ
+	/// </summary>
+	/// <param name="flag">
+	/// ture 開く
+	/// false 開く動作停止
+	/// </param>
 	void SetOpenFlag(bool flag)
 	{
 		GateFlag = flag;
@@ -22,13 +35,13 @@ public:
 
 private:
 	SkinModel m_model;
-	CQuaternion m_rotation = CQuaternion::Identity();
-	CVector3 m_position = CVector3::Zero();
+	CQuaternion m_rotation = CQuaternion::Identity();//回転
+	CVector3 m_position = CVector3::Zero();             //座標
 	CVector3 m_moveSpeed = CVector3::Zero();			//移動速度。
 	CVector3 m_scale = CVector3::One();					//拡大率。
 	PhysicsStaticObject m_phyStaticObject;      //静的物理オブジェクト
 	Player* m_player = nullptr;
-	bool GateFlag = false;
+	bool GateFlag = false;//ゲートを開く際のフラグ
 	Stage* m_stage;
 	int GateHantei = 0;
 	CSoundSource m_opense;

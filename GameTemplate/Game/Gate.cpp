@@ -34,9 +34,11 @@ void Gate::Open()
 	{
 		if (m_rotation.y <= 0.7f) {
 			m_opense.Play(false);
+			//ゲートを開く
 			CQuaternion qRot;
 			qRot.SetRotationDeg(CVector3::AxisY(), 5.0f);
 			m_rotation.Multiply(qRot);
+			//剛体を消す
 			m_phyStaticObject.Releasehantei();
 			GateHantei = 1;
 
@@ -52,6 +54,7 @@ void Gate::Update()
 {
 	Open();
 	if (GateHantei == 1) {
+		//ゲートが開いた後のポジションに剛体生成
 		m_phyStaticObject.CreateMeshObject(m_model, m_position, m_rotation);
 		GateHantei = 0;
 	}
