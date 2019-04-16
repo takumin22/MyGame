@@ -26,7 +26,7 @@ public:
 	/// Update関数
 	/// 状態変化でtrue
 	/// </summary>
-	bool Update();
+	void Update();
 	/// <summary>
 	/// Draw関数
 	/// </summary>
@@ -37,7 +37,7 @@ public:
 	/// <param name="taim">
 	/// フェードにかける時間（1/taim）
 	/// </param>
-	void Fadein(float taim = 20.0f)
+	void Fadein(float taim = 30.0f)
 	{
 		m_faderate = 1 / taim;
 		m_fadestate = fadein;
@@ -48,7 +48,7 @@ public:
 	/// <param name="taim">
 	/// フェードにかける時間（1/taim）
 	/// </param>
-	void Fadeout(float taim = 20.0f)
+	void Fadeout(float taim = 30.0f)
 	{
 		m_faderate = 1 / taim;
 		m_faderate *= -1;
@@ -79,4 +79,4 @@ private:
 	float m_toumei = 0.0f;										//フェイドの度合い
 	Fade_State m_fadestate = idel;								//現在の状態
 };
-
+extern Fade* g_fade;

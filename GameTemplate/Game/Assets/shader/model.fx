@@ -294,7 +294,8 @@ float4 PSMain( PSInput In ) : SV_Target0
 
 
 
-	float4 finalColor = float4(0.0f, 0.0f,0.0f, 1.0f);   // finalColor.xyz = albedoColor.xyz * lig + albedoColor.xyz * directionLight.ambientLight.xyz;
+	float4 finalColor = float4(0.0f, 0.0f,0.0f, 1.0f);
+   // finalColor.xyz = albedoColor.xyz * lig + albedoColor.xyz * directionLight.ambientLight.xyz;
 	finalColor.xyz = albedoColor.xyz * lig;
 	finalColor.xyz += albedoColor.xyz* directionLight.ambientLight;
 	return finalColor;

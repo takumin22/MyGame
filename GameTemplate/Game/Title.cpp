@@ -19,49 +19,44 @@ Title::Title()
 
 Title::~Title()
 {
+
+
 }
 void Title::Update()
-{
+
+{	
+	
 	//g_camera2D.Update();
 	m_sprite.Update(CVector3::Zero(), CQuaternion::Identity(), CVector3::One());
 
-	if (g_pad[0].IsTrigger(enButtonA)  && m_fade.GetState() == Fade::idel) {
+	if (g_pad[0].IsTrigger(enButtonA) && g_fade->GetState() == Fade::idel) {
 	
 		//スタートの条件になったのでフェードを開始する
-		m_fade.Fadein();
+		g_fade->Fadein();
 		m_decisionse.Play(false);
-
+		StratFlag = true;
 
 	}	
-
-
-	if (m_fade.Update())
+	else if (StratFlag==true&&g_fade->GetState() == Fade::idel)
 	{
-		//フェードの状態遷移
-		switch (m_fade.GetState())
-		{
-		case Fade::fadein:
-			//フェードが完了し見えない状態になっているので
-			//ゲーム読み込みをスタートさせる
-			g_currentScene = new Game;
-			m_titlebgm.Stop();
-			m_sprite.SetclearColor(0.0f);
-			//フェードを明ける
-			m_fade.Fadeout();
-			break;
-		case Fade::fadeout:
-			//すべての処理が終了したのでタイトルをDeleteする
-			delete this;
-			break;
-		default:
-			break;
-		}
-	}
 
+		g_currentScene = new Game;
+		m_titlebgm.Stop();
+		g_fade->Fadeout();
+		delete this;
+	}
+	//else if (g_pad[0].IsTrigger(enButtonA) && g_fade->GetState() == Fade::fadein) {
+
+	//	//スタートの条件になったのでフェードを開始する
+	//	g_fade->Fadeout();
+	//	m_decisionse.Play(false);
+
+	//}
 }
 void Title::Draw()
 {
 	g_graphicsEngine->ChangeBackBaffer();
+	 
 	m_sprite.Draw();
-	m_fade.Draw();
+    //g_fade->Draw();
 }

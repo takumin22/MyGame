@@ -13,34 +13,32 @@ Fade::Fade()
 Fade::~Fade()
 {
 }
-bool Fade::Update()
+void Fade::Update()
 {
 	m_texture_fade.SetclearColor(m_toumei);
 	//ó‘Ô‚Ì‘JˆÚ
 	switch (m_fadestate)
 	{
 	case fadein:
-		if (m_toumei >= 1.0f)
+		if (m_toumei >= 1.1f)
 		{
 			m_toumei = 1.0f;
-			return true;
+			m_fadestate = idel;
 		}
 		break;
 	case fadeout:
 		if (m_toumei <= 0.0f)
 		{
 			m_toumei = 0.0f;
-			return true;
+			m_fadestate = idel;
 		}
 		break;
 	case idel:
-		return false;
 		break;
 	default:
 		break;
 	}
 	m_toumei += m_faderate;
-	return false;
 }
 void Fade::Draw()
 {

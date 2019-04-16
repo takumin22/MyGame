@@ -23,5 +23,5 @@ private:
 	CSoundSource m_titlebgm;    //ƒ^ƒCƒgƒ‹BGM
 	CSoundSource m_decisionse;  //Œˆ’è‰¹
 	Font m_font;
-	Fade m_fade;
+	bool StratFlag = false;
 };
