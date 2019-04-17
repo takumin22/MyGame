@@ -24,10 +24,10 @@ void TurnScaffold::Update()
 
 
 	m_phyStaticObject.Releasehantei();
-	Hantei++;
-	if (Hantei == 1) {
+	Hantei = true;
+	if (Hantei == true) {
 		m_phyStaticObject.CreateMeshObject(m_model, m_position, m_rotation);
-		Hantei = 0;
+		Hantei = false;
 	}
 	CQuaternion qRot;
 	qRot.SetRotationDeg(CVector3::AxisY(), 2.0f);

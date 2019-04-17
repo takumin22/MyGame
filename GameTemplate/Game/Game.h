@@ -46,6 +46,15 @@ public:
 	*/
 	void Draw() override;
 	/// <summary>
+	/// ゲームのステートのenum
+	/// </summary>
+	enum GameState {
+		State_Default, //デフォルト状態
+		State_StageChange,//ステージ遷移中
+		State_TitleChange //タイトル遷移中
+	};
+
+	/// <summary>
 	/// ゴール判定
 	/// </summary>
 	/// <returns>
@@ -56,14 +65,14 @@ public:
 	{
 		return Goal;
 	}
+	/// <summary>
+	/// プレイヤーのインスタンスのゲット
+	/// </summary>
+	/// <returns>プレイヤーのインスタンス</returns>
 	Player* GetPlayer()
 	{
 		return &m_player;
 	}
-	//Enemy* GetEnemy()
-	//{
-	//	return &m_enemy;
-	//}
 
 	Stage* GetStage()
 	{
@@ -77,8 +86,13 @@ public:
 	{
 		return No;
 	}
-	void SetGetCoin(bool N) {
-		CoinGetFlag = N;
+	/// <summary>
+	/// ゲームのステートをゲット
+	/// </summary>
+	/// <returns>現在のステート</returns>
+	const GameState GetState()
+	{
+		return m_gstate;
 	}
 	/// <summary>
 	/// メインレンダリングターゲットを取得。
@@ -91,32 +105,26 @@ public:
 	void ChangeRenderTarget(ID3D11DeviceContext* d3dDeviceContext, RenderTarget* renderTarget, D3D11_VIEWPORT* viewport);
 	void ChangeRenderTarget(ID3D11DeviceContext* d3dDeviceContext, ID3D11RenderTargetView* renderTarget, ID3D11DepthStencilView* depthStensil, D3D11_VIEWPORT* viewport);
 private:
-	enum GameState {
-		State_Default,
-		State_StageChange,
-		State_TitleChange
-};
+
 	GameState m_gstate = State_Default;
-	bool CoinGetFlag = false;
 	int No = 0;
 	Player m_player;						//プレイヤー
-	//Enemy m_enemy;
 	Goal m_goal;                            //ゴール
-	Coin* m_coin;
+	Coin* m_coin;                           //コイン
 	Stage* m_stage;                         //ステージ
 	GameCamera m_gameCamera;				//ゲームカメラ。
 	RenderTarget m_mainRenderTarget;		//メインレンダリングターゲット。
 	Level m_level;							//レベルを初期化。
-	HP m_hp;
+	HP m_hp; //プレイヤーのHP
 	bool Goal = false;  //ゴール判定
 	int GoalCount = 0;
 	CSoundSource m_stagebgm;//ステージBGM
 	CSoundSource m_coinse;//コインのSE
 	CSoundSource m_kirakirase; //ゴール出現時のSE
-	bool SEflag = true;
-	Sprite m_goalsprite;
-	Font m_font;
-	Timer m_time;
+	bool SEflag = true;//SEを鳴らすためのフラグ
+	Sprite m_goalsprite;//ゴールのスプライト
+	Font m_font;//フォント
+	Timer m_time;//タイマー
 	int GAMETIME = 200;//残り時間
 	int TimeScore = 0;//タイムのスコア
 	int taim;  //経過時間

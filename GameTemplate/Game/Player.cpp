@@ -418,11 +418,11 @@ void Player::Update()
 	case State_Scaffold://‘«êã
 	    Move();
 		Scafflod();
-	if (m_scaffold[1]->m_sstate == m_scaffold[1]->State_FrontMove) {
+	if (m_scaffold[1]->GetState() == m_scaffold[1]->State_FrontMove) {
 		m_position.z -= 5.0f;
 
     }
-	else if (m_scaffold[1]->m_sstate == m_scaffold[1]->State_BackMove) {
+	else if (m_scaffold[1]->GetState() == m_scaffold[1]->State_BackMove) {
 		m_position.z += 5.0f;
 	}
 	if (g_pad[0].IsTrigger(enButtonA)) {
@@ -436,12 +436,12 @@ void Player::Update()
 	case State_Scaffold1:
 		Move();
 		Scafflod();
-		if (m_scaffold[0]->m_sstate == m_scaffold[0]->State_FrontMove) {
+		if (m_scaffold[0]->GetState() == m_scaffold[0]->State_FrontMove) {
 			m_position.z -= 5.0f;
 
 
 		}
-		else if (m_scaffold[0]->m_sstate == m_scaffold[0]->State_BackMove) {
+		else if (m_scaffold[0]->GetState() == m_scaffold[0]->State_BackMove) {
 				m_position.z += 5.0f;
 		}
 	 if (g_pad[0].IsTrigger(enButtonA)) {

@@ -13,7 +13,6 @@ Coin::Coin(CVector3 pos, CQuaternion rot,Player* player):
 	m_model.Init(L"Assets/modelData/Coin.cmo", enFbxUpAxisZ, { 1.0f,1.0f,1.0f,1.0f});
 	m_model.SetAmbientLight(ambientColor);
 
-
 }
 
 
@@ -24,14 +23,13 @@ Coin::~Coin()
 
 void Coin::CoinGet() 
 {
-	//エネミーからプレイヤーに伸びるベクトルを求める。
+	//コインからプレイヤーに伸びるベクトルを求める。
 	CVector3 toCoin = m_player->GetPosition() - m_position;
-	//プレイヤーまでの距離を求める
+	//コインまでの距離を求める
 	float len = toCoin.Length();
 	if (len <= 70.0f) {
 	
 			CoinGetFlag = true;
-			g_game->SetGetCoin(true);
 		
 	}
 

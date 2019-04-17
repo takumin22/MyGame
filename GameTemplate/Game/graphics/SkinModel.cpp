@@ -51,15 +51,6 @@ void SkinModel::InitDirectionLight(CVector4 color)
 	m_light.directionlight.direction = { 0.707f,-0.707f,0.0f,1.0f };
 	m_light.directionlight.color = color;
 	m_light.specPow = 100.0f;
-
-	//m_dirLight.direction[1] = { -1.0f, 0.0f, 0.0f, 0.0f };
-	//m_dirLight.color[1] = { 0.0f, 1.0f, 0.0f, 1.0f };
-
-	//m_dirLight.direction[2] = { 0.0f, 0.0f, 1.0f, 0.0f };
-	//m_dirLight.color[2] = { 1.0f, 0.0f, 1.0f, 1.0f };
-
-	//m_dirLight.direction[3] = { 1.0f, 0.0f, -1.0f, 0.0f };
-	//m_dirLight.color[3] = { 1.0f, 1.0f, 0.0f, 1.0f };
 }
 
 void SkinModel::InitSkeleton(const wchar_t* filePath)

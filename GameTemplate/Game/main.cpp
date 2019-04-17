@@ -35,6 +35,7 @@ void UpdateGame()
 	}
 	//物理エンジンの更新。
 	g_physics.Update();
+	//フェードの更新
 	g_fade->Update();
 	//現在のシーンの更新。
 	g_currentScene->Update();
@@ -58,6 +59,7 @@ void RenderGame()
 
 	//現在のシーンの描画。
 	g_currentScene->Draw();
+	//フェードの描画
 	g_fade->Draw();
 	
 
@@ -88,7 +90,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)
 	{
-	
+		//サウンドの更新
 		sound.Update();
 		//ゲームの更新。
 		UpdateGame();

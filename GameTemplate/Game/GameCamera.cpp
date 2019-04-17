@@ -60,24 +60,18 @@ void GameCamera::Update()
 
 	if (g_game->GetGoal() == true)
 	{	
-		k = true;
+		GoalCamera = true;
 
 	}	
 	else if (g_game->GetGoal() == false) 
 	{
-		k = false;
+		GoalCamera = false;
 	}
-	if (k == true && forward >= 25.0f ) {
+	if (GoalCamera == true && forward >= 25.0f ) {
 		qRot.SetRotationDeg(CVector3::AxisY(), 5.0f);
 		qRot.Multiply(toCameraPos);
 
 	}	
-	//if (k == true && tatemuki >= 90.0f)
-	//{
-	//	qRot.SetRotationDeg(CVector3::AxisZ(), 5.0f);
-	//	qRot.Multiply(toCameraPos);
-
-	//}
 
 		if (toPosDir.y < 0.0f) {
 			//ƒJƒƒ‰‚ªãŒü‚«‚·‚¬B

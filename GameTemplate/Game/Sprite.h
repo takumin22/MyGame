@@ -113,12 +113,12 @@ private:
 	ID3D11SamplerState*			m_samplerState = NULL;					//サンプラステート。
 	CVector3					m_position = CVector3::Zero();			//座標。
 	CQuaternion					m_rotation = CQuaternion::Identity();	//回転
-	CVector3					m_scale = CVector3::One();
+	CVector3					m_scale = CVector3::One();				//拡大率
 	CMatrix						m_world = CMatrix::Identity();			//ワールド行列。
 	CVector2					m_size = CVector2::Zero();				//画像のサイズ。
 	ID3D11Buffer*				m_cb = nullptr;							//定数バッファ。
 	float						m_alpha = 1.0f;							//スプライトのα値。
-	CVector4				m_mulColor = CVector4::White();					//!<乗算カラー。
+	CVector4				m_mulColor = CVector4::White();				//!<乗算カラー。
 
 };
 

@@ -5,9 +5,8 @@
 Title::Title()
 {
 
-	//2Dを初期化。
+	//タイトルのスプライトを初期化。
 	m_sprite.Init(L"Resource/sprite/taittol.dds", 1280, 720);
-	//m_sprite.SetclearColor(0.0f);
 	m_sprite.Update(CVector3::Zero(), CQuaternion::Identity(), CVector3::One());
 	m_decisionse.Init(L"Assets/sound/Decision.wav");
 	m_decisionse.SetVolume(0.5f);
@@ -25,8 +24,6 @@ Title::~Title()
 void Title::Update()
 
 {	
-	
-	//g_camera2D.Update();
 	m_sprite.Update(CVector3::Zero(), CQuaternion::Identity(), CVector3::One());
 
 	if (g_pad[0].IsTrigger(enButtonA) && g_fade->GetState() == Fade::idel) {
@@ -45,18 +42,9 @@ void Title::Update()
 		g_fade->Fadeout();
 		delete this;
 	}
-	//else if (g_pad[0].IsTrigger(enButtonA) && g_fade->GetState() == Fade::fadein) {
-
-	//	//スタートの条件になったのでフェードを開始する
-	//	g_fade->Fadeout();
-	//	m_decisionse.Play(false);
-
-	//}
 }
 void Title::Draw()
 {
 	g_graphicsEngine->ChangeBackBaffer();
-	 
 	m_sprite.Draw();
-    //g_fade->Draw();
 }

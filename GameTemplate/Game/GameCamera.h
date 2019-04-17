@@ -17,13 +17,7 @@ public:
 	/// </summary>
 	void Update();
 private:
-	//enum CameraState
-	//{
-	//	State_Default,
-	//	State_GoalCamera
-	//};
-	//CameraState m_cmarastate = State_Default;
-	float Acos(float angle)
+	float Acos(float angle)  //前方方向の値が一定距離を超えないように
 	{
 		float a;
 		a=min(max(angle,-1.0f), 1.0f);
@@ -36,7 +30,6 @@ private:
 		return b;
 	}
 	Player * m_player = nullptr;	//プレイヤー。
-	bool k = false;
-	int kkkkk = 0;
+	bool GoalCamera = false;		//ゴールカメラ用のフラグ
 	
 };

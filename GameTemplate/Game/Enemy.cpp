@@ -61,7 +61,6 @@ void Enemy::Tracking()
 	
 	//向き
 	m_rotation.SetRotation(CVector3::AxisY(), atan2f(toPlayer.x, toPlayer.z));
-	//m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 }
 void Enemy::Damage()
 {
@@ -81,19 +80,6 @@ void Enemy::Damage()
 	float angle = acosf(d);
 	 angle = CMath::RadToDeg(angle);
 
-
-	////カメラからプレイヤーに向かうベクトルを計算する。
-	//CVector3 toPlayer = g_camera3D.GetPosition() - m_player->GetPosition();
-	//float toEnemyDir = toPlayer.Length();
-	////プレイヤーに向かうベクトルを正規化する(大きさ1にする)。
-	//toPlayer.Normalize();
-	////前方方向と、プレイヤーへの向きベクトルの内積を計算する。
-	//float forward = toPlayer.Dot((m_player->GetUp()));
-	////内積の結果はcosθになるため、なす角θを求めるためにacosを実行する。③
-	//forward = acosf(forward);
-	//forward = CMath::RadToDeg(forward);
-
-	//angle = CMath::RadToDeg(angle);
 	if (toEnemyLen <= 60.0f &&  angle <= 65.0f) {
 		m_estate = State_EDamage;
 	}

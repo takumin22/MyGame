@@ -23,7 +23,6 @@ Game::Game()
 	m_goalsprite.Init(L"Resource/sprite/kari.dds", 1280, 720);
 	m_gameCamera.SetPlayer(&m_player);	
 	m_goal.SetPlayer(&m_player);
-	m_coinse.Init(L"Assets/sound/coinGet.wav");
 	m_stagebgm.Init(L"Assets/sound/bgm_00.wav");
 	m_kirakirase.Init(L"Assets/sound/kirakira.wav");
 	m_kirakirase.SetVolume(0.4f);
@@ -39,7 +38,6 @@ Game::Game()
 	//メインレンダリングターゲットに描かれた絵を
 	//フレームバッファにコピーするためのスプライトを初期化する。
 	m_postEffect->SetPost(m_mainRenderTarget.GetRenderTargetSRV());
-
 }
 
 
@@ -67,14 +65,9 @@ void Game::Update()
 		m_hp.Update();
 		m_stage->Update();
 		m_stagebgm.Play(true);
-		if ( m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 5 ) {
+		if ( m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 0 ) {
 			//ゴールを更新
 			m_goal.Update();	
-		}
-		if (CoinGetFlag == true) {
-			//コインの音を鳴らす
-			m_coinse.Play(false);
-			CoinGetFlag = false;
 		}
 		if (m_goal.GetGFlag() == true)
 		{
@@ -83,7 +76,6 @@ void Game::Update()
 			if (No <= 1 && GoalCount >= 120.0f) {
 
 				if (g_pad[0].IsPress(enButtonA) == true) {
-
 					m_gstate = State_TitleChange;
 				}
 			}
@@ -99,8 +91,6 @@ void Game::Update()
 		//現在のステージを消して次のステージを呼ぶ
 		delete m_stage;
 		m_stage = new Stage(No++);
-
-		m_goal.SetGFlag(false);
 		Goal = false;
 		GoalCount = 0;
 		m_gstate = State_Default;
@@ -142,15 +132,13 @@ void Game::Draw()
 	//メインレンダリングターゲットをクリアする。
 	float clearColor[] = { 0.0f, 0.7f, 1.0f, 1.0f };
 	m_mainRenderTarget.ClearRenderTarget(clearColor);
-	
-	//g_graphicsEngine->ChangeBackBaffer();
 	//プレイヤーの描画。
 	m_player.Draw();
 	//ステージの描画
 	m_stage->Draw();
 	m_hp.Draw();
 
-	if (m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 5) {
+	if (m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 0) {
 		//ゴールを表示
 		if (SEflag == true) {
 			m_kirakirase.Play(false);

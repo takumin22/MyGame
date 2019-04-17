@@ -101,10 +101,6 @@ public:
 	{
 		return m_position;
 	}
-	CQuaternion GetRotation()
-	{
-		return m_rotation;
-	}
 	void SetEnemy(int N, Enemy* enemy)
 	{
 		m_enemy[N] = enemy;
@@ -126,30 +122,35 @@ public:
 		m_coin[N] = coin;
 	}
 private:
+	/// <summary>
+	/// アニメーションのenum
+	/// </summary>
 	enum EnAnimationClip {
-		enAnimationClip_idle,	//待機アニメーション。
-		enAnimationClip_run,	//走りアニメーション。
-		enAnimationClip_walk,	//歩きアニメーション。
-		enAnimationClip_jump,   //ジャンプアニメーション。
-		enAnimationClip_damage,  //ダメージアニメーション
-		enAnimationClip_godown,  //ダウンアニメーション
+		enAnimationClip_idle,		//待機アニメーション。
+		enAnimationClip_run,		//走りアニメーション。
+		enAnimationClip_walk,		//歩きアニメーション。
+		enAnimationClip_jump,		//ジャンプアニメーション。
+		enAnimationClip_damage,		//ダメージアニメーション
+		enAnimationClip_godown,		//ダウンアニメーション
 		enAnimationClip_toptojump,
 		enAnimationClip_salute,
-		enAnimationClip_Num,	//アニメーションクリップの総数。
+		enAnimationClip_Num,		//アニメーションクリップの総数。
 	};
-
+	/// <summary>
+	/// プレイヤーのステートのenum
+	/// </summary>
 	enum PState {
-		State_Idel, //基本ステート(歩)
-		State_MoveRun,//走りステート
-		State_Jump,   //ジャンプステート
-		State_Damage,  //ダメージステート
-		State_Scaffold, //足場上ステート
+		State_Idel,					//基本状態(歩)
+		State_MoveRun,				//ダッシ状態
+		State_Jump,					//ジャンプ状態
+		State_Damage,				//ダメージ状態
+		State_Scaffold,				//足場上状態
 		State_Scaffold1,
-		State_InvincibleCount, //無敵時間ステート
-		State_SpringJump, //バネジャンプステート
-		State_Return,    //復帰ステート
-		State_Deth ,      //死亡ステート
-		State_Goal //ゴール時ステート
+		State_InvincibleCount,		//無敵時間状態
+		State_SpringJump,			//バネジャンプ状態
+		State_Return,				//復帰状態
+		State_Deth ,				//死亡状態
+		State_Goal					//ゴール時状態
 	};
 	PState m_pstate = State_Idel;
 	SkinModel m_model;									//スキンモデル。
@@ -159,23 +160,23 @@ private:
 	CVector3 m_moveSpeed = CVector3::Zero();			//移動速度。
 	CVector3 m_scale = CVector3::One();					//拡大率。
 	CQuaternion m_rotation = CQuaternion::Identity();   //回転。
-	CMatrix m_mRot;
+	CMatrix m_mRot;										//方向
 	CVector3 m_rite = CVector3::Zero();
-	CVector3 m_up = CVector3::Zero();  //上方向
-	CVector3 m_forward = CVector3::Zero();//前方向
-	CVector3 ambientColor = { 0.6f, 0.6f, 0.6f };
-	CharacterController m_charaCon;   //キャラクターコントローラ
-	float m_moveSpeedWhenStartJump;//ジャンプ前の移動速度
-	int Time = 0;//無敵時間
-	int DamageCount = 0;//ダメージ量のカウント
-    Enemy* m_enemy[10]; //エネミー
-	Spring* m_spring[10];//ジャンプ台
-	Coin* m_coin[100]; //コイン
-	HP m_hp;//HP
-	Scaffold* m_scaffold[2];//動く足場
-	TurnScaffold* m_turnscaffold[10];//回転する足場
-	bool kariflag = false;     //衝突フラグ
-	bool kariflag1 = false;     //衝突フラグ1
-	CSoundSource m_spjumpse; //ジャンプ台に乗った時の音
+	CVector3 m_up = CVector3::Zero();					//上方向
+	CVector3 m_forward = CVector3::Zero();				//前方向
+	CVector3 ambientColor = { 0.6f, 0.6f, 0.6f };		//環境光のカラー
+	CharacterController m_charaCon;						//キャラクターコントローラ
+	float m_moveSpeedWhenStartJump;						//ジャンプ前の移動速度
+	int Time = 0;										//無敵時間
+	int DamageCount = 0;								//ダメージ量のカウント
+    Enemy* m_enemy[10];									//エネミー
+	Spring* m_spring[10];								//ジャンプ台
+	Coin* m_coin[100];									//コイン
+	HP m_hp;											//HP
+	Scaffold* m_scaffold[2];							//動く足場
+	TurnScaffold* m_turnscaffold[10];					//回転する足場
+	bool kariflag = false;								//衝突フラグ
+	bool kariflag1 = false;								//衝突フラグ1
+	CSoundSource m_spjumpse;							//ジャンプ台に乗った時の音
 };
 

@@ -81,20 +81,18 @@ private:
 		State_EDamage,//ダメージステート
 		State_Tracking//追跡ステート
 	};
-	EState m_estate = State_Move;//初期ステート
+	EState m_estate = State_Move;						//初期ステート
 	SkinModel m_model;									//スキンモデル。
-	//Animation m_animation;                      //アニメーション
-	//AnimationClip  m_animationClip[3];          //アニメーションクリップ
-	CVector3 m_position = CVector3::Zero();     //座標。
+	CVector3 m_position = CVector3::Zero();				//座標。
 	CVector3 m_moveSpeed = CVector3::Zero();			//移動速度。
 	CVector3 m_scale = CVector3::One();					//拡大率。
-	CVector3 m_up = CVector3::Zero();
+	CVector3 m_up = CVector3::Zero();					//上方向
 	CMatrix m_mRot;
-	int idoutime = 0;  //移動時間
-	CQuaternion m_rotation = CQuaternion::Identity();  //回転。
-	CharacterController m_charaCon;                  //キャラクターコントローラ
-	Player* m_player = nullptr;
-	bool EnemyDeth = false; //死亡状態
+	int idoutime = 0;									//移動時間
+	CQuaternion m_rotation = CQuaternion::Identity();	//回転。
+	CharacterController m_charaCon;						//キャラクターコントローラ
+	Player* m_player = nullptr;							//プレイヤー
+	bool EnemyDeth = false;								//死亡状態
 	int i = 1;
 };
 

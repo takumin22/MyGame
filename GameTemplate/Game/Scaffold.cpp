@@ -15,7 +15,6 @@ Scaffold::Scaffold(CVector3 pos, CQuaternion rot, Player* player):
 	//m_model.UpdateWorldMatrix(m_position, CQuaternion::Identity(), m_scale);
 	//静的物理オブジェクトを作成
 	m_phyStaticObject.CreateMeshObject(m_model, m_position, CQuaternion::Identity());
-	//m_charaCon.Init(10.0f, 50.0f, m_position);
 }
 
 

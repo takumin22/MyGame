@@ -246,7 +246,6 @@ void Sprite::Draw()
 	cb.WVP = m_world;
 	cb.WVP.Mul(cb.WVP, g_camera2D.GetViewMatrix());
 	cb.WVP.Mul(cb.WVP, g_camera2D.GetProjectionMatrix());
-	//cb.alpha = m_alpha;
 	cb.S_mulcolor = m_mulColor;
 
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, NULL, &cb, 0, 0);

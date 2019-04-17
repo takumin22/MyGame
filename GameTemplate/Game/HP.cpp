@@ -10,6 +10,7 @@ HP::HP()
 	m_hp2.Init(L"Resource/sprite/tairyoku.dds", 60, 60);
 	m_hp3.Init(L"Resource/sprite/tairyoku.dds", 60, 60);
 	m_hp4.Init(L"Resource/sprite/tairyoku.dds", 60, 60);
+	//HPのデータを更新
 	m_hp.Update(m_hppos, CQuaternion::Identity(), CVector3::One());
 	m_hp2.Update(m_hppos2, CQuaternion::Identity(), CVector3::One());
 	m_hp3.Update(m_hppos3, CQuaternion::Identity(), CVector3::One());
@@ -24,15 +25,11 @@ HP::~HP()
 
 void HP::Update()
 {
-	//if (m_player->GetDCount() > 0)
-	//{
-	//	delete &m_hp4;
-	//}
 }
 
 void HP::Draw()
 {
-	//g_graphicsEngine->ChangeBackBaffer();
+	//プレイヤーがダメージを受けたらHPを消す
 	if (g_game->GetPlayer()->GetDCount() <= 3)
 	{
 		m_hp.Draw();

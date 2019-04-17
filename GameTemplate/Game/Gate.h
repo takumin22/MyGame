@@ -9,7 +9,17 @@ class Stage;
 class Gate
 {
 public:
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	/// <param name="pos"></param>
+	/// <param name="rot"></param>
+	/// <param name="player"></param>
+	/// <param name="stage"></param>
 	Gate(CVector3 pos, CQuaternion rot, Player* player, Stage* stage);
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
 	~Gate();
 /// <summary>
 /// 更新
@@ -34,7 +44,7 @@ public:
 
 
 private:
-	SkinModel m_model;
+	SkinModel m_model;//モデルデータ
 	CQuaternion m_rotation = CQuaternion::Identity();//回転
 	CVector3 m_position = CVector3::Zero();             //座標
 	CVector3 m_moveSpeed = CVector3::Zero();			//移動速度。
@@ -43,7 +53,7 @@ private:
 	Player* m_player = nullptr;
 	bool GateFlag = false;//ゲートを開く際のフラグ
 	Stage* m_stage;
-	int GateHantei = 0;
-	CSoundSource m_opense;
+	int GateHantei = 0;							//ゲートの当たり判定付け外し用
+	CSoundSource m_opense;						//ゲートの開閉音
 };
 

@@ -9,13 +9,13 @@ Goal::Goal()
 {
 	//cmoファイルの読み込み。
 	m_model.Init(L"Assets/modelData/star1.cmo", enFbxUpAxisZ ,{2.0f,2.0f,2.0f,1.0f});
-		m_position.z =-5199.0f;
-		m_position.y = 1000.0f;
-		m_position.x = -332.0f;
+		//m_position.z =-5199.0f;
+		//m_position.y = 1000.0f;
+		//m_position.x = -332.0f;
 
-		//m_position.z = 0.0f;
-		//m_position.y = 10.0f;
-		//m_position.x = 0.0f;
+		m_position.z = 0.0f;
+		m_position.y = 10.0f;
+		m_position.x = 0.0f;
 	
 }
 
@@ -32,12 +32,9 @@ void Goal::GoalGet()
 	//ゴールまでの距離を求めておく。
 	float toGoalLen = toGoalDir.Length();
 	if (toGoalLen <= 80.0f) {
-		GetFlag = true;
-		
+		GetFlag = true;	
 	}
-	else {
-		GetFlag = false;
-	}
+
 }
 
 void Goal::Update()

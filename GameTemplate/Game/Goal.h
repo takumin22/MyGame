@@ -24,27 +24,9 @@ public:
 	{
 		return GetFlag;
 	}
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <remarks>
-	/// </remarks>
-	/// <param name="gflag"></param>
-	void SetGFlag(bool gflag)
-	{
-		GetFlag = gflag;
-	}
 	void SetPlayer(Player* player)
 	{
 		m_player = player;
-	}
-	void SetPosition(CVector3 pos)
-	{
-		m_position = pos;
-	}
-	void SetRotation(CQuaternion rot)
-	{
-		m_rotation = rot;
 	}
 private:
 	SkinModel m_model;
@@ -52,7 +34,7 @@ private:
 	CVector3 m_moveSpeed = CVector3::Zero();			//移動速度。
 	CVector3 m_scale = CVector3::One();					//拡大率。
 	CQuaternion m_rotation = CQuaternion::Identity();  //回転。
-	Player* m_player = nullptr;
+	Player* m_player = nullptr;			//プレイヤー
 	bool GetFlag = false;              //ゴールフラグ
 	Stage* m_stage;
 };

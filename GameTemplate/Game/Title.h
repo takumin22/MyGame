@@ -9,19 +9,25 @@
 class Title : public IScene
 {
 public:
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
 	Title();
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
 	~Title();
-	//オーバーライドした関数にはoverride修飾子をつけていると幸せになれる。
+	/// <summary>
+	/// 更新
+	/// </summary>
 	void Update() override;
-	//オーバーライドした関数にはoverride修飾子をつけていると幸せになれる。
-	
-
-	//タイプミスをしたときにコンパイルエラーになって教えてくれる。
+	/// <summary>
+	/// 描画
+	/// </summary>
 	void Draw() override;
 private:
-	Sprite m_sprite;
+	Sprite m_sprite;			//タイトルのスプライトデータ
 	CSoundSource m_titlebgm;    //タイトルBGM
 	CSoundSource m_decisionse;  //決定音
-	Font m_font;
-	bool StratFlag = false;
+	bool StratFlag = false;		//スタートフラグ
 };

@@ -115,7 +115,6 @@ private:
 	unsigned int numViewport = 1;
 	D3D11_VIEWPORT oldViewports;
 	RenderTarget m_mainRenderTarget;
-	Sprite ka;			//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
 };
 
 extern GraphicsEngine* g_graphicsEngine;			//グラフィックスエンジン

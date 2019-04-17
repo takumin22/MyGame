@@ -17,7 +17,7 @@ Stage::Stage(int No)
 
 	m_edamegese.Init(L"Assets/sound/damage.wav");
 	m_hakkense.Init(L"Assets/sound/hakken.wav");
-	
+	m_coinse.Init(L"Assets/sound/coinGet.wav");
 	 int StageNo = 0;
 	 int StageNo1 = 0;
 	 int StageNo2 = 0;
@@ -224,6 +224,8 @@ void Stage::Update()
 		coin->Update();
 		if (coin->GetCoinGet() == true) 
 		{
+			//ƒRƒCƒ“‚Ì‰¹‚ð–Â‚ç‚·
+			m_coinse.Play(false);
 			Score += 100;
 			delete coin;
 			CoinCount++;
