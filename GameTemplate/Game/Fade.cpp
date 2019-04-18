@@ -20,6 +20,7 @@ void Fade::Update()
 	switch (m_fadestate)
 	{
 	case fadein:
+	m_toumei += m_faderate;
 		if (m_toumei >= 1.1f)
 		{
 			m_toumei = 1.0f;
@@ -27,6 +28,7 @@ void Fade::Update()
 		}
 		break;
 	case fadeout:
+		m_toumei += m_faderate;
 		if (m_toumei <= 0.0f)
 		{
 			m_toumei = 0.0f;
@@ -38,7 +40,6 @@ void Fade::Update()
 	default:
 		break;
 	}
-	m_toumei += m_faderate;
 }
 void Fade::Draw()
 {
