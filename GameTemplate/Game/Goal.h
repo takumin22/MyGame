@@ -36,6 +36,10 @@ public:
 	{
 		return GetFlag;
 	}
+	void SetGoalFlag(bool flag)
+	{
+		GetFlag = flag;
+	}
 	void SetPlayer(Player* player)
 	{
 		m_player = player;

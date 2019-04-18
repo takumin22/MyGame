@@ -37,7 +37,7 @@ public:
 	/// <param name="taim">
 	/// フェードにかける時間（1/taim）
 	/// </param>
-	void Fadein(float taim = 20.0f)
+	void Fadein(float taim = 30.0f)
 	{
 		m_faderate = 1 / taim;
 		m_fadestate = fadein;
@@ -48,7 +48,7 @@ public:
 	/// <param name="taim">
 	/// フェードにかける時間（1/taim）
 	/// </param>
-	void Fadeout(float taim = 20.0f)
+	void Fadeout(float taim = 30.0f)
 	{
 		m_faderate = 1 / taim;
 		m_faderate *= -1;

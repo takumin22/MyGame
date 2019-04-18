@@ -8,20 +8,23 @@
 Goal::Goal()
 {
 	//cmoファイルの読み込み。
-	m_model.Init(L"Assets/modelData/star1.cmo", enFbxUpAxisZ ,{2.0f,2.0f,2.0f,1.0f});
-		m_position.z =-5199.0f;
-		m_position.y = 1000.0f;
-		m_position.x = -332.0f;
+	m_model.Init(L"Assets/modelData/star1.cmo", enFbxUpAxisZ ,{2.5f,2.5f,2.5f,1.0f});
+		//m_position.z = -5199.0f;
+		//m_position.y = 1000.0f;
+		//m_position.x = -332.0f;
+	
 
-		//m_position.z = 0.0f;
-		//m_position.y = 10.0f;
-		//m_position.x = 0.0f;
+	    m_position.z = 0.0f;
+	    m_position.y = 40.0f;
+		m_position.x = 0.0f;
+		
 	
 }
 
 
 Goal::~Goal()
 {
+	
 	g_shadowMap->UnregistShadowCaster(&m_model);
 
 }
@@ -33,6 +36,10 @@ void Goal::GoalGet()
 	float toGoalLen = toGoalDir.Length();
 	if (toGoalLen <= 80.0f) {
 		GetFlag = true;	
+	}
+	else if (GetFlag == true)
+	{
+		GetFlag = false;
 	}
 
 }

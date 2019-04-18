@@ -12,6 +12,21 @@ m_player(player)
 {
 	//cmoファイルの読み込み。
 	m_model.Init(L"Assets/modelData/kkk.cmo");
+
+	m_animationClips[enAnimationClip_walk].Load(L"Assets/animData/enemywalk1.tka");
+	m_animationClips[enAnimationClip_walk].SetLoopFlag(true);
+	
+	m_animationClips[enAnimation_Damage].Load(L"Assets/animData/enemydeth.tka");
+	m_animationClips[enAnimation_Damage].SetLoopFlag(false);
+
+	//アニメーションの初期化。
+	m_animation.Init(
+		m_model,			//アニメーションを流すスキンモデル。
+							//これでアニメーションとスキンモデルが関連付けされる。
+		m_animationClips,	//アニメーションクリップの配列。
+		enAnimationClip_Num					//アニメーションクリップの数。
+	);
+
 	//キャラコン設定
 	m_charaCon.Init(50.0f, 40.0f, m_position);
 }
@@ -84,10 +99,22 @@ void Enemy::Damage()
 		m_estate = State_EDamage;
 	}
 }
+void Enemy::EnemyAnimation()
+{
+	if (m_estate == State_Move)
+	{
+		m_animation.Play(enAnimationClip_walk,0.2f);
+	}
+	if (m_estate == State_EDamage)
+	{
+		m_animation.Play(enAnimation_Damage,0.2f);
+	}
+}
 void Enemy::Update()
 {
 
 	Damage();
+	EnemyAnimation();
 	switch (m_estate)
 	{
 	case State_Move:
@@ -104,7 +131,14 @@ void Enemy::Update()
 		Tracking();
 		break;
 	case State_EDamage:
-		EnemyDeth = true;
+		m_moveSpeed.x = 0.0f;
+		m_moveSpeed.z = 0.0f;
+		m_moveSpeed.y = 0.0f;
+		AnimPlayTime++;
+		if (AnimPlayTime >= 50) {
+			EnemyDeth = true;
+			AnimPlayTime = 0;
+		}
 		break;
 	}
 	    m_moveSpeed.y -= 1800.0f /** (1.0f / 60.0f)*/;
@@ -114,6 +148,7 @@ void Enemy::Update()
 		//ワールド行列の更新
 	    g_shadowMap->RegistShadowCaster(&m_model);
 		m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+		m_animation.Update(1.0f / 60.0f);
 
 }
 

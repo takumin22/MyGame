@@ -188,5 +188,7 @@ private:
 	bool syoutotuflag1 = false;							//衝突フラグ1
 	CSoundSource m_spjumpse;							//ジャンプ台に乗った時の音
 	float m_deltatime = 1.0f / 30.0f;                   //1フレームの経過時間
+	CVector3 Stick = CVector3::Zero();
+
 };
 

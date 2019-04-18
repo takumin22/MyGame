@@ -18,12 +18,7 @@ Stage::Stage(int No)
 	m_edamegese.Init(L"Assets/sound/damage.wav");
 	m_hakkense.Init(L"Assets/sound/hakken.wav");
 	m_coinse.Init(L"Assets/sound/coinGet.wav");
-	 int StageNo = 0;
-	 int StageNo1 = 0;
-	 int StageNo2 = 0;
-	 int StageNo3 = 0;
-	 int StageNo4 = 0;
-	 int StageNo5 = 0;
+
 	if (No == 0) {
 		m_level.Init(L"Assets/level/level00.tkl", [&](LevelObjectData& objData)->bool {
 			if (objData.EqualName(L"unityChan") == true) {
@@ -82,40 +77,6 @@ Stage::Stage(int No)
 				g_game->GetPlayer()->SetPosition(objData.position);
 				return true;
 			}
-			else if (objData.EqualName(L"Dammy") == true) {
-				//エネミー
-				auto enemy = new Enemy(objData.position, objData.rotation, g_game->GetPlayer());
-				m_enemyList.push_back(enemy);
-				g_game->GetPlayer()->SetEnemy( StageNo5++, enemy);
-				return true;
-			}
-			//else if (objData.EqualName(L"Spring") == true) {
-			//	//バネ
-			//	auto spring = new Spring(objData.position, objData.rotation, g_game->GetPlayer());
-			//	m_springList.push_back(spring);
-			//	g_game->GetPlayer()->SetSpring(StageNo1++, spring);
-			//	return true;
-			//}
-			//else if (objData.EqualName(L"karasiba") == true) {
-			//	//移動する足場
-			//	auto scaffold = new Scaffold(objData.position, objData.rotation, g_game->GetPlayer());
-			//	m_sacaffoldList.push_back(scaffold);
-			//	g_game->GetPlayer()->SetScaffold(StageNo2++, scaffold);
-			//	return true;
-			//}
-			else if (objData.EqualName(L"turnasiba") == true) {
-				auto turnscaffold = new TurnScaffold(objData.position, objData.rotation, g_game->GetPlayer());
-				m_turnscaffold.push_back(turnscaffold);
-				g_game->GetPlayer()->SetTurnScaffold(StageNo3++, turnscaffold);
-				return true;
-			}
-			else if (objData.EqualName(L"Coin") == true) {
-				//コイン
-				auto coin = new Coin(objData.position, objData.rotation, g_game->GetPlayer());
-				m_coinList.push_back(coin);
-				g_game->GetPlayer()->SetCoin(StageNo4++, coin);
-				return true;
-			}
 			return false;
 		});
 	}
@@ -145,6 +106,15 @@ Stage::~Stage()
 	for (auto& coin : m_coinList) {
 		delete coin;
 	}
+	Score = 0;
+	EnemyCount = 0;
+	CoinCount = 0;
+	StageNo = 0;
+	StageNo1 = 0;
+	StageNo2 = 0;
+	StageNo3 = 0;
+	StageNo4 = 0;
+	StageNo5 = 0;
 }
 
 void Stage::StageMove()

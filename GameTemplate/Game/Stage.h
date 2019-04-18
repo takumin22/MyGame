@@ -90,5 +90,11 @@ private:
 	int EnemyCount = 0;							//倒したエネミー数
 	bool SEflag = true;							//SEを鳴らすかのフラグ
 	int Score = 0;								//スコア
+	int StageNo = 0;
+	int StageNo1 = 0;
+	int StageNo2 = 0;
+	int StageNo3 = 0;
+	int StageNo4 = 0;
+	int StageNo5 = 0;
 };
 

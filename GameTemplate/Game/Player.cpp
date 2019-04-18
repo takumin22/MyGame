@@ -93,7 +93,7 @@ void Player::Move()
 
 		auto MOVE_SPEED = 2500.0f;
 		static float MOVE_SPEED_JUMP = 1000.0f;
-
+		
 		//左スティックの入力量を受け取る。
 		auto lStick_x = g_pad[0].GetLStickXF();
 		auto lStick_y = g_pad[0].GetLStickYF();
@@ -166,19 +166,19 @@ void Player::Turn()
 }
 void Player::AnimationControl()
 {
-	CVector3 stick;
-
-	if (m_pstate == State_Jump) {
+	float stickx = g_pad[0].GetLStickXF();
+	float stick = g_pad[0].GetLStickYF();
+	if ( m_charaCon.IsJump() == true) {
 		m_animation.Play(enAnimationClip_jump,0.2);
 	}
 	else if (m_pstate == State_MoveRun
 		|| m_pstate == State_Idel
 		) {
-		if (m_moveSpeed.Length() > 300.0f /** 300.0f*/) {
+		if (m_moveSpeed.LengthSq() > 300.0f * 300.0f) {
 			//走りモーション。
 			m_animation.Play(enAnimationClip_run, 0.15f);
 		}
-		else if (m_moveSpeed.Length() > 30.0f /** 30.0f*/) {
+		else if (m_moveSpeed.LengthSq() > 30.0f * 30.0f) {
 			//走りモーション。
 			m_animation.Play(enAnimationClip_walk, 0.15f);
 		}
@@ -202,7 +202,6 @@ void Player::Damage()
 		float toEnemyLan = toEnemyDlr.Length();
 		if (toEnemyLan <= 70.0f) {
 			DamageCount++;
-
 			if (DamageCount <= 3) {
 				m_pstate = State_Damage;
 			}
@@ -214,7 +213,6 @@ void Player::Damage()
 }
 void Player::SpringJump()
 {
-		m_animation.Play(enAnimationClip_jump, 0.2f);
 		m_spjumpse.Play(false);
 		m_moveSpeed.y += 1300.0f;
 		m_pstate = State_Idel;
@@ -244,12 +242,12 @@ void Player::AABB()
  //簡易的なAABB
 	auto vMax=	m_scaffold[1]->GetScaPosition();
 	auto vMin = vMax;
-	vMax.x += 100.0f;
+	vMax.x += 200.0f;
 	vMax.y += 50.0f;
-	vMax.z += 100.0f;
-	vMin.x -= 100.0f;
+	vMax.z += 200.0f;
+	vMin.x -= 200.0f;
 	vMin.y -= 50.0f;
-	vMin.z -= 100.0f;
+	vMin.z -= 200.0f;
 	if (m_position.x <= vMax.x && m_position.x >= vMin.x &&
 		m_position.y <= vMax.y && m_position.y >= vMin.y &&
 		m_position.z >= vMin.z && m_position.z <= vMax.z  ) {
@@ -262,12 +260,12 @@ void Player::AABB()
 
 	auto vMax1 = m_scaffold[0]->GetScaPosition();
 	auto vMin1 = vMax1;
-	vMax1.x += 100.0f;
+	vMax1.x += 200.0f;
 	vMax1.y += 50.0f;
-	vMax1.z += 100.0f;
-	vMin1.x -= 100.0f;
+	vMax1.z += 200.0f;
+	vMin1.x -= 200.0f;
 	vMin1.y -= 50.0f;
-	vMin1.z -= 100.0f;
+	vMin1.z -= 200.0f;
 	if (m_position.x <= vMax1.x && m_position.x >= vMin1.x &&
 		m_position.y <= vMax1.y && m_position.y >= vMin1.y &&
 		m_position.z >= vMin1.z && m_position.z <= vMax1.z) {
@@ -292,7 +290,7 @@ void Player::Scafflod()
 		m_pstate = State_MoveRun;
 	}
 
-    if (syoutotuflag == true) {
+    if (syoutotuflag1 == true) {
 
 		m_pstate = State_Scaffold1;
 

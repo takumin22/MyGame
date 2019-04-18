@@ -17,10 +17,10 @@ void Gameover::Update()
 {
 	m_oversprite.Update(CVector3::Zero(), CQuaternion::Identity(), CVector3::One());
 
-	//if (g_fade->GetState() == Fade::idel) 
-	//{
-	//	//g_fade->Fadeout();
-	//}
+	if (g_pad[0].IsTrigger(enButtonA) && g_fade->GetState() == Fade::idel)
+	{
+		g_fade->Fadein();
+	}
 }
 
 void Gameover::Draw()

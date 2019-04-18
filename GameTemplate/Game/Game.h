@@ -86,7 +86,7 @@ public:
 	/// <returns></returns>
 	int GetNo()
 	{
-		return No;
+		return 	StageNo;
 	}
 	/// <summary>
 	/// ゲームのステートをゲット
@@ -109,7 +109,7 @@ public:
 private:
 
 	GameState m_gstate = State_Default;
-	int No = 0;
+	int StageNo = 0;
 	Player m_player;						//プレイヤー
 	Goal m_goal;                            //ゴール
 	Coin* m_coin;                           //コイン
@@ -117,20 +117,20 @@ private:
 	GameCamera m_gameCamera;				//ゲームカメラ。
 	RenderTarget m_mainRenderTarget;		//メインレンダリングターゲット。
 	Level m_level;							//レベルを初期化。
-	Gameover m_over;
-	HP m_hp; //プレイヤーのHP
-	bool Goal = false;  //ゴール判定
-	int GoalCount = 0;
-	CSoundSource m_stagebgm;//ステージBGM
-	CSoundSource m_coinse;//コインのSE
-	CSoundSource m_kirakirase; //ゴール出現時のSE
-	bool SEflag = true;//SEを鳴らすためのフラグ
-	Sprite m_goalsprite;//ゴールのスプライト
-	Font m_font;//フォント
-	Timer m_time;//タイマー
-	int GAMETIME = 200;//残り時間
-	int TimeScore = 0;//タイムのスコア
-	int taim;  //経過時間
+	Gameover m_over;						//ゲームオーバー
+	HP m_hp;								//プレイヤーのHP
+	bool Goal = false;						//ゴール判定
+	int GoalCount = 0;						//ゴール画面への遷移までの時間
+	CSoundSource m_stagebgm;				//ステージBGM
+	CSoundSource m_coinse;					//コインのSE
+	CSoundSource m_kirakirase;				//ゴール出現時のSE
+	bool SEflag = true;						//SEを鳴らすためのフラグ
+	Sprite m_goalsprite;					//ゴールのスプライト
+	Font m_font;					//フォント
+	Timer m_time;					//タイマー
+	int GAMETIME = 200;				//残り時間
+	int TimeScore = 0;				//タイムのスコア
+	int taim;						//経過時間
 	wchar_t toubatu[256];
 	PostEffect* m_postEffect;				//ポストエフェクト。
 	Sprite m_copyMainRtToFrameBufferSprite;			//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。

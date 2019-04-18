@@ -73,6 +73,6 @@ public:
 private:
 	DirectX::SpriteBatch*	m_spriteBatch = nullptr;	//スプライトバッチ。
 	DirectX::SpriteFont*	m_spriteFont = nullptr;		//スプライトフォント。
-	CMatrix m_scaleMat = CMatrix::Identity();				//拡大行列
+	CMatrix m_scaleMat = CMatrix::Identity();			//拡大行列
 };
 

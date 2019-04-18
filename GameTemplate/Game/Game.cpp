@@ -20,7 +20,7 @@ Game* g_game = nullptr;
 Game::Game()
 {
 	g_game = this;
-	m_stage = new Stage(No++);
+	m_stage = new Stage(StageNo++);
 	m_goalsprite.Init(L"Resource/sprite/kari.dds", 1280, 720);
 	m_gameCamera.SetPlayer(&m_player);	
 	m_goal.SetPlayer(&m_player);
@@ -66,28 +66,33 @@ void Game::Update()
 		m_hp.Update();
 		m_stage->Update();
 		m_stagebgm.Play(true);
-		if ( m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 5 ) {
+		if ( m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 0 ) {
 			
 			//ゴールを更新
 			m_goal.Update();	
 		}
 		if (m_player.GetZanki() <= 0 || m_time.GetAllSeconds() >= GAMETIME) {
-			
+		
 			m_gstate = State_GameOver;
 		}
 		if (m_goal.GetGFlag() == true)
 		{
 			GoalCount++;
 			Goal = true;
-			if (No <= 1 && GoalCount >= 120.0f) {
+			if (StageNo <= 1 && GoalCount >= 120.0f) {
 
 				if (g_pad[0].IsPress(enButtonA) == true) {
+					m_gstate = State_StageChange /*State_TitleChange*/;
+				}
+				if (g_pad[0].IsPress(enButtonB) == true)
+				{
 					m_gstate = State_TitleChange;
 				}
 			}
-			if (No > 1 && No <= 2 && GoalCount >= 120.0f) {
+			if (StageNo > 1 && StageNo <= 2 && GoalCount >= 120.0f) {
 
 				if (g_pad[0].IsPress(enButtonA) == true) {
+				
 					m_gstate = State_TitleChange;
 				}
 			}
@@ -95,16 +100,16 @@ void Game::Update()
 		break;
 	case State_StageChange:
 		//現在のステージを消して次のステージを呼ぶ
+		m_goal.SetGoalFlag(false);
 		delete m_stage;
-		m_stage = new Stage(No++);
+		m_stage = new Stage(StageNo++);
 		Goal = false;
 		GoalCount = 0;
 		m_gstate = State_Default;
 		break;
 	case State_TitleChange:
-
+		StageNo = 0;
 		g_currentScene = new Title;
-	
 		delete this;
 		break;
 	case State_GameOver:
@@ -156,7 +161,7 @@ void Game::Draw()
 	m_stage->Draw();
 	m_hp.Draw();
 
-	if (m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 5) {
+	if (m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 0) {
 		//ゴールを表示
 		if (SEflag == true) {
 			m_kirakirase.Play(false);

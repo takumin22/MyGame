@@ -75,4 +75,5 @@ private:
 	LONGLONG m_fleam = 0;				//ストップした時のフレーム数
 	double m_elapsed = 0;				//経過時間(単位：秒)
 	double m_Allelapsed = 0.0;			//すべての経過時間(単位：秒)
+
 };
