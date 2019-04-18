@@ -14,6 +14,7 @@
 #include "graphics/Camera.h"
 
 
+
 Game* g_game = nullptr;
 
 Game::Game()
@@ -23,7 +24,7 @@ Game::Game()
 	m_goalsprite.Init(L"Resource/sprite/kari.dds", 1280, 720);
 	m_gameCamera.SetPlayer(&m_player);	
 	m_goal.SetPlayer(&m_player);
-	m_stagebgm.Init(L"Assets/sound/bgm_00.wav");
+	m_stagebgm.Init(L"Assets/sound/stagebgm.wav");
 	m_kirakirase.Init(L"Assets/sound/kirakira.wav");
 	m_kirakirase.SetVolume(0.4f);
 	m_stagebgm.SetVolume(0.5f);
@@ -44,7 +45,7 @@ Game::Game()
 Game::~Game()
 {
 	
-
+	delete m_stage;
 		if (m_frameBufferRenderTargetView != nullptr) {
 			m_frameBufferRenderTargetView->Release();
 		}
@@ -65,9 +66,14 @@ void Game::Update()
 		m_hp.Update();
 		m_stage->Update();
 		m_stagebgm.Play(true);
-		if ( m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 0 ) {
+		if ( m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 5 ) {
+			
 			//ゴールを更新
 			m_goal.Update();	
+		}
+		if (m_player.GetZanki() <= 0 || m_time.GetAllSeconds() >= GAMETIME) {
+			
+			m_gstate = State_GameOver;
 		}
 		if (m_goal.GetGFlag() == true)
 		{
@@ -96,8 +102,19 @@ void Game::Update()
 		m_gstate = State_Default;
 		break;
 	case State_TitleChange:
+
 		g_currentScene = new Title;
+	
 		delete this;
+		break;
+	case State_GameOver:
+		m_over.Update();
+
+		if (g_pad[0].IsTrigger(enButtonA))
+		{
+			
+			m_gstate = State_TitleChange;
+		}
 		break;
 	}
 }
@@ -132,13 +149,14 @@ void Game::Draw()
 	//メインレンダリングターゲットをクリアする。
 	float clearColor[] = { 0.0f, 0.7f, 1.0f, 1.0f };
 	m_mainRenderTarget.ClearRenderTarget(clearColor);
+
 	//プレイヤーの描画。
 	m_player.Draw();
 	//ステージの描画
 	m_stage->Draw();
 	m_hp.Draw();
 
-	if (m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 0) {
+	if (m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 5) {
 		//ゴールを表示
 		if (SEflag == true) {
 			m_kirakirase.Play(false);
@@ -170,7 +188,7 @@ void Game::Draw()
 		);
 		
 		//秒の計算をする
-		 taim = (int)m_time.GetAllSeconds() % 200;
+		 taim = (int)m_time.GetAllSeconds() % 201;
 		swprintf_s(toubatu, L"残り時間%d秒", (GAMETIME - taim));		//表示用にデータを加工
 		m_font.Draw(
 			toubatu,		//表示する文字列。
@@ -214,9 +232,13 @@ void Game::Draw()
 			{ 0.0f,1.0f }
 		);
 	}
-
 	//タイマーを再開させる
 	m_time.TimerRestart();
 	//文字表示の終了
 	m_font.EndDraw();
+	if (m_gstate == State_GameOver) {
+
+		m_over.Draw();
+	}
+	
 }

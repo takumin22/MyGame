@@ -8,13 +8,25 @@ class Stage;
 class Goal
 {
 public:
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
 	Goal();
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
 	~Goal();
 	/// <summary>
 	/// ゴール取得判定
 	/// </summary>
 	void GoalGet();
+	/// <summary>
+	/// 更新
+	/// </summary>
 	void Update();
+	/// <summary>
+	/// 描画
+	/// </summary>
 	void Draw();
 	/// <summary>
 	/// ゴールフラグを取得 
@@ -30,12 +42,12 @@ public:
 	}
 private:
 	SkinModel m_model;
-	CVector3 m_position = CVector3::Zero();     //座標。
+	CVector3 m_position = CVector3::Zero();				//座標。
 	CVector3 m_moveSpeed = CVector3::Zero();			//移動速度。
 	CVector3 m_scale = CVector3::One();					//拡大率。
-	CQuaternion m_rotation = CQuaternion::Identity();  //回転。
-	Player* m_player = nullptr;			//プレイヤー
-	bool GetFlag = false;              //ゴールフラグ
-	Stage* m_stage;
+	CQuaternion m_rotation = CQuaternion::Identity();	//回転。
+	Player* m_player = nullptr;							//プレイヤー
+	bool GetFlag = false;								//ゴールフラグ
+	Stage* m_stage;										//ステージ
 };
 

@@ -13,6 +13,7 @@
 #include "PostEffect.h"
 #include "Gate.h"
 #include "HP.h"
+#include "Gameover.h"
 #include "sound/SoundEngine.h"
 #include "sound/SoundSource.h"
 #include "graphics/RenderTarget.h"
@@ -51,7 +52,8 @@ public:
 	enum GameState {
 		State_Default, //デフォルト状態
 		State_StageChange,//ステージ遷移中
-		State_TitleChange //タイトル遷移中
+		State_TitleChange, //タイトル遷移中
+		State_GameOver
 	};
 
 	/// <summary>
@@ -115,6 +117,7 @@ private:
 	GameCamera m_gameCamera;				//ゲームカメラ。
 	RenderTarget m_mainRenderTarget;		//メインレンダリングターゲット。
 	Level m_level;							//レベルを初期化。
+	Gameover m_over;
 	HP m_hp; //プレイヤーのHP
 	bool Goal = false;  //ゴール判定
 	int GoalCount = 0;

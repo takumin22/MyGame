@@ -94,6 +94,14 @@ public:
 		return DamageCount;
 	}
 	/// <summary>
+	/// プレイヤーの残機をゲット
+	/// </summary>
+	/// <returns>プレイヤーの残機</returns>
+	int GetZanki()
+	{
+		return Zanki;
+	}
+	/// <summary>
 	/// プレイヤーのポジション
 	/// </summary>
 	/// <returns>現在のポジション</returns>
@@ -169,14 +177,16 @@ private:
 	float m_moveSpeedWhenStartJump;						//ジャンプ前の移動速度
 	int Time = 0;										//無敵時間
 	int DamageCount = 0;								//ダメージ量のカウント
+	int Zanki = 4;										//残機
     Enemy* m_enemy[10];									//エネミー
 	Spring* m_spring[10];								//ジャンプ台
 	Coin* m_coin[100];									//コイン
 	HP m_hp;											//HP
 	Scaffold* m_scaffold[2];							//動く足場
 	TurnScaffold* m_turnscaffold[10];					//回転する足場
-	bool kariflag = false;								//衝突フラグ
-	bool kariflag1 = false;								//衝突フラグ1
+	bool syoutotuflag = false;							//衝突フラグ
+	bool syoutotuflag1 = false;							//衝突フラグ1
 	CSoundSource m_spjumpse;							//ジャンプ台に乗った時の音
+	float m_deltatime = 1.0f / 30.0f;                   //1フレームの経過時間
 };
 

@@ -18,7 +18,6 @@ public:
 	/// デストラクタ
 	/// </summary>
 	~Scaffold();
-
 	/// <summary>
 	/// 更新
 	/// </summary>

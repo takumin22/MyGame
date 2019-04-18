@@ -142,6 +142,7 @@
     <ClCompile Include="HP.cpp" />
     <ClCompile Include="font.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="Gameover.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -256,6 +257,7 @@
     <ClInclude Include="HP.h" />
     <ClInclude Include="font.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="Gameover.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
@@ -350,9 +352,6 @@
     <Image Include="Assets\modelData\StoneMonster.png">
       <Filter>Assets\modelData</Filter>
     </Image>
-    <Image Include="Assets\sprite\White.png">
-      <Filter>Assets\sprite</Filter>
-    </Image>
     <Image Include="Assets\modelData\ASHSEN_2.GIF" />
     <Image Include="Assets\modelData\104677.jpg" />
     <Image Include="Assets\modelData\BUBINGA.JPG" />
@@ -373,5 +372,7 @@
     <ImageContentTask Include="Assets\modelData\utc_nomal.tga" />
     <ImageContentTask Include="Assets\modelData\utc_spec.tga" />
     <ImageContentTask Include="Assets\modelData\utc_ao.png" />
+    <ImageContentTask Include="Assets\sprite\White.png" />
+    <ImageContentTask Include="Assets\sprite\gameover.png" />
   </ItemGroup>
 </Project>

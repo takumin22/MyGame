@@ -10,7 +10,7 @@ Coin::Coin(CVector3 pos, CQuaternion rot,Player* player):
 	m_rotation(rot),
 	m_player(player)
 {
-	m_model.Init(L"Assets/modelData/Coin.cmo", enFbxUpAxisZ, { 1.0f,1.0f,1.0f,1.0f});
+	m_model.Init(L"Assets/modelData/Coin.cmo", enFbxUpAxisZ, { 2.0f,2.0f,2.0f,1.0f});
 	m_model.SetAmbientLight(ambientColor);
 
 }

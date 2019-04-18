@@ -91,7 +91,7 @@ Player::~Player()
 void Player::Move()
 {
 
-		auto MOVE_SPEED = 3500.0f;
+		auto MOVE_SPEED = 2500.0f;
 		static float MOVE_SPEED_JUMP = 1000.0f;
 
 		//左スティックの入力量を受け取る。
@@ -107,12 +107,12 @@ void Player::Move()
 		cameraRight.Normalize();
 		if (m_pstate == State_Jump) {
 			//ジャンプ中でも緩く方向転換できるようにする。
-			cameraForward *= lStick_y * MOVE_SPEED_JUMP * (1.0f / 60.0f);
-			cameraRight *= lStick_x * MOVE_SPEED_JUMP * (1.0f / 60.0f);
+			cameraForward *= lStick_y * MOVE_SPEED_JUMP * m_deltatime;
+			cameraRight *= lStick_x * MOVE_SPEED_JUMP * m_deltatime;
 		}
 		else {
-			cameraForward *= lStick_y * MOVE_SPEED * (1.0f / 60.0f);
-			cameraRight *= lStick_x * MOVE_SPEED * (1.0f / 60.0f);
+			cameraForward *= lStick_y * MOVE_SPEED * m_deltatime;
+			cameraRight *= lStick_x * MOVE_SPEED * m_deltatime;
 		}
 
 		//摩擦力。
@@ -124,12 +124,12 @@ void Player::Move()
 		else {
 			friction *= -5.0f;
 		}
-		m_moveSpeed.x += friction.x * (1.0f / 60.0f);
-		m_moveSpeed.z += friction.z * (1.0f / 60.0f);
+		m_moveSpeed.x += friction.x * m_deltatime;
+		m_moveSpeed.z += friction.z * m_deltatime;
 		//加速度を加える。
 		m_moveSpeed += cameraForward;
 		m_moveSpeed += cameraRight;
-		m_moveSpeed.y += -1800.0f * (1.0f / 60.0f);
+		m_moveSpeed.y += -1800.0f * m_deltatime;
 		if (m_pstate == State_Jump) {
 			//移動速度に制限を加える。
 			//ジャンプ中にジャンプ前より早くなることはない。
@@ -143,13 +143,7 @@ void Player::Move()
 
 			}
 		}
-				//m_moveSpeed.y -= 1800.0f * (1.0f / 60.0f);
-				//キャラクターコントローラーに１フレームの経過時間:秒(第一引数)、時間ベースの移動速度(第二引数)を渡している。
-				//Execute関数の中で行っている計算は下記のようなもの。
-				//
-				// CVector3 addPos = m_moveSpeed * ( 1.0f / 60.0f ); //１フレームで移動する量を計算する。
-				// m_position += addPos;  //1フレームの移動量を座標に加算する。これをオイラー積分という。
-				//m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
+
 				
 			
 		}
@@ -175,22 +169,22 @@ void Player::AnimationControl()
 	CVector3 stick;
 
 	if (m_pstate == State_Jump) {
-		m_animation.Play(enAnimationClip_jump, 0.1f);
+		m_animation.Play(enAnimationClip_jump,0.2);
 	}
 	else if (m_pstate == State_MoveRun
 		|| m_pstate == State_Idel
 		) {
 		if (m_moveSpeed.Length() > 300.0f /** 300.0f*/) {
 			//走りモーション。
-			m_animation.Play(enAnimationClip_run, 0.2f);
+			m_animation.Play(enAnimationClip_run, 0.15f);
 		}
 		else if (m_moveSpeed.Length() > 30.0f /** 30.0f*/) {
 			//走りモーション。
-			m_animation.Play(enAnimationClip_walk, 0.2f);
+			m_animation.Play(enAnimationClip_walk, 0.15f);
 		}
 		else {
 			//待機モーション
-			m_animation.Play(enAnimationClip_idle, 0.2f);
+			m_animation.Play(enAnimationClip_idle, 0.15f);
 		}
 	}
 
@@ -229,18 +223,21 @@ void Player::SpringJump()
 }
 void Player::PlayerPosRetrun()
 {
-	if (g_game->GetNo() == 1) {
-		m_position.x = 0.0f;
-		m_position.y = 15.0f;
-		m_position.z = 456.7f;
-		m_charaCon.SetPosition(m_position);
+	if (Zanki >= 1) {
+		if (g_game->GetNo() == 1) {
+			m_position.x = 0.0f;
+			m_position.y = 15.0f;
+			m_position.z = 456.7f;
+			m_charaCon.SetPosition(m_position);
+		}
+		else if (g_game->GetNo() == 2) {
+			m_position.x = -315.0f;
+			m_position.y = 2.5f;
+			m_position.z = 214.0f;
+			m_charaCon.SetPosition(m_position);
+		}
 	}
-	else if (g_game->GetNo() == 2) {
-		m_position.x = -315.0f;
-		m_position.y = 2.5f;
-		m_position.z = 214.0f;
-		m_charaCon.SetPosition(m_position);
-	}
+	Zanki -= 1;
 }
 void Player::AABB()
 {
@@ -256,10 +253,10 @@ void Player::AABB()
 	if (m_position.x <= vMax.x && m_position.x >= vMin.x &&
 		m_position.y <= vMax.y && m_position.y >= vMin.y &&
 		m_position.z >= vMin.z && m_position.z <= vMax.z  ) {
-		kariflag = true;   // 衝突！！
+		syoutotuflag = true;   // 衝突！！
 	}
 	else {
-		kariflag = false; //衝突していない
+		syoutotuflag = false; //衝突していない
 	}
 
 
@@ -274,28 +271,28 @@ void Player::AABB()
 	if (m_position.x <= vMax1.x && m_position.x >= vMin1.x &&
 		m_position.y <= vMax1.y && m_position.y >= vMin1.y &&
 		m_position.z >= vMin1.z && m_position.z <= vMax1.z) {
-		kariflag1 = true;   // 衝突！！
+		syoutotuflag1 = true;   // 衝突！！
 	}
 	else {
-		kariflag1 = false; //衝突していない
+		syoutotuflag1 = false; //衝突していない
 	}
 }
 void Player::Scafflod()
 {
 
 	AABB();
-	if (kariflag == true) {
+	if (syoutotuflag == true) {
 
 		m_pstate = State_Scaffold;
 	}
-	else if (kariflag == false&&kariflag1 == false && m_moveSpeed.LengthSq() < 50.0f * 50.0f) {
+	else if (syoutotuflag == false&& syoutotuflag1 == false && m_moveSpeed.LengthSq() < 50.0f * 50.0f) {
 		m_pstate = State_Idel;
 	}
-	else if (kariflag == false && kariflag1 == false && m_moveSpeed.LengthSq() > 0.001f) {
+	else if (syoutotuflag == false && syoutotuflag1 == false && m_moveSpeed.LengthSq() > 0.001f) {
 		m_pstate = State_MoveRun;
 	}
 
-    if (kariflag1 == true) {
+    if (syoutotuflag == true) {
 
 		m_pstate = State_Scaffold1;
 
@@ -330,7 +327,7 @@ void Player::Update()
 		float e = springForward.Dot(toPlayerDjr);
 		//内積の結果をacos関数に渡して、springForwardとtoPlayerDirのなす角を求める。
 		float ange = acos(e);
-		static float JUMP_SPEED = 500.0f;
+		static float JUMP_SPEED = 700.0f;
 		Turn();
 		AnimationControl();
 	switch (m_pstate)
@@ -403,7 +400,7 @@ void Player::Update()
 				m_pstate = State_MoveRun;
 			}
 		}
-		if (m_position.y <= -500.0f) {
+		if (m_position.y <= -500.0f ) {
 			m_pstate = State_Return;
 		}
 		break;
@@ -412,6 +409,7 @@ void Player::Update()
 		break;
 	case State_Return://スタートに戻る
 		PlayerPosRetrun();
+		m_moveSpeed.y = 0.0f;
 		DamageCount = 0;
 		m_pstate = State_Idel;
 		break;
@@ -468,7 +466,7 @@ void Player::Update()
 		}
 		break;
 	case State_Deth:  //死亡
-		m_animation.Play(5, 0.3);
+		m_animation.Play(enAnimationClip_godown, 0.3);
 		Time++;
 		if (Time >= 60.0f) {
 			m_pstate = State_Return;
@@ -495,7 +493,7 @@ void Player::Update()
 	g_shadowMap->Update(r_pos, m_position);
 
 	//キャラクタを移動させる。
-	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
+	m_position = m_charaCon.Execute(1.0f / 30.0f, m_moveSpeed);
 	m_mRot.MakeRotationFromQuaternion(m_rotation);
 	m_rite = { m_mRot.m[0][0] ,m_mRot.m[0][1],m_mRot.m[0][2] };
 	m_up = { m_mRot.m[1][0] ,m_mRot.m[1][1] ,m_mRot.m[1][2] };

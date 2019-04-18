@@ -65,7 +65,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>DirectXTK.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;d3d11.lib;d3dcompiler.lib;%(AdditionalDependencies);xinput.lib;xaudio2.lib;Winmm.lib;BulletCollision_Debug.lib;BulletDynamics_Debug.lib;LinearMath_Debug.lib</AdditionalDependencies>
+      <AdditionalDependencies>DirectXTK.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;d3d11.lib;d3dcompiler.lib;%(AdditionalDependencies);xinput.lib;xaudio2.lib;Winmm.lib;BulletCollision_Debug.lib;BulletDynamics_Debug.lib;LinearMath_Debug.lib;Effekseer.Debug.lib;EffekseerRendererDX11.Debug.lib</AdditionalDependencies>
     </Link>
     <ImageContentTask>
       <ContentOutput>$(ProjectDir)\Resource\sprite\%(Filename).dds</ContentOutput>
@@ -89,7 +89,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>DirectXTK.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;d3d11.lib;d3dcompiler.lib;%(AdditionalDependencies);xinput.lib;xaudio2.lib;Winmm.lib;BulletCollision.lib;BulletDynamics.lib;LinearMath.lib;dxguid.lib</AdditionalDependencies>
+      <AdditionalDependencies>DirectXTK.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;d3d11.lib;d3dcompiler.lib;%(AdditionalDependencies);xinput.lib;xaudio2.lib;Winmm.lib;BulletCollision.lib;BulletDynamics.lib;LinearMath.lib;dxguid.lib;Effekseer.Release.lib;EffekseerRendererDX11.Release.lib</AdditionalDependencies>
     </Link>
     <ImageContentTask>
       <ContentOutput>$(ProjectDir)\Resource\sprite\%(Filename).dds</ContentOutput>
@@ -108,6 +108,7 @@
     <ClCompile Include="font.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCamera.cpp" />
+    <ClCompile Include="Gameover.cpp" />
     <ClCompile Include="Gate.cpp" />
     <ClCompile Include="GaussianBlur.cpp" />
     <ClCompile Include="Goal.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="font.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCamera.h" />
+    <ClInclude Include="Gameover.h" />
     <ClInclude Include="Gate.h" />
     <ClInclude Include="GaussianBlur.h" />
     <ClInclude Include="Goal.h" />
@@ -263,6 +265,7 @@
     <Image Include="Assets\modelData\MARBOCTB.GIF" />
     <Image Include="Assets\modelData\PLASTERT.TGA" />
     <Image Include="Assets\modelData\StoneMonster.png" />
+    <ImageContentTask Include="Assets\sprite\gameover.png" />
     <ImageContentTask Include="Assets\sprite\taittol.png" />
     <ImageContentTask Include="Assets\sprite\tairyoku.png" />
     <ImageContentTask Include="Assets\modelData\utc_nomal.tga" />

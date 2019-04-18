@@ -54,7 +54,6 @@ private:
 	CVector3 ambientColor = { 1.0f, 1.0f, 1.0f };		//環境光のカラー
 	Player* m_player = nullptr;							//プレイヤー
 	bool CoinGetFlag = false;							//コイン取得フラグ
-	Game* m_game = nullptr;
 
 };
 

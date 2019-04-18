@@ -38,8 +38,8 @@ private:
 	/// </summary>
 	void InitFullScreenQuadPrimitive();
 private:
-	Bloom	m_bloom;	//ブルーム。
-						//フルスクリーン描画用のメンバ変数。
+	Bloom	m_bloom;								//ブルーム。
+													//フルスクリーン描画用のメンバ変数。
 	ID3D11Buffer*	m_vertexBuffer = nullptr;		//頂点バッファ。
 	ID3D11InputLayout* m_inputLayout = nullptr;		//入力レイアウト。
 	Sprite m_sprite;
