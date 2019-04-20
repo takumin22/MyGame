@@ -19,7 +19,7 @@ void Gameover::Update()
 
 	if (g_pad[0].IsTrigger(enButtonA) && g_fade->GetState() == Fade::idel)
 	{
-		g_fade->Fadein();
+		//g_fade->Fadein();
 	}
 }
 

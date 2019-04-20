@@ -126,11 +126,12 @@ private:
 	CSoundSource m_kirakirase;				//ゴール出現時のSE
 	bool SEflag = true;						//SEを鳴らすためのフラグ
 	Sprite m_goalsprite;					//ゴールのスプライト
+	Sprite m_stagecrear;
 	Font m_font;					//フォント
 	Timer m_time;					//タイマー
 	int GAMETIME = 200;				//残り時間
 	int TimeScore = 0;				//タイムのスコア
-	int taim;						//経過時間
+	int taim = 0;						//経過時間
 	wchar_t toubatu[256];
 	PostEffect* m_postEffect;				//ポストエフェクト。
 	Sprite m_copyMainRtToFrameBufferSprite;			//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。

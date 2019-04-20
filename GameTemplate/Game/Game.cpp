@@ -22,6 +22,7 @@ Game::Game()
 	g_game = this;
 	m_stage = new Stage(StageNo++);
 	m_goalsprite.Init(L"Resource/sprite/kari.dds", 1280, 720);
+	m_stagecrear.Init(L"Resource/sprite/stagecrear.dds", 1280, 720);
 	m_gameCamera.SetPlayer(&m_player);	
 	m_goal.SetPlayer(&m_player);
 	m_stagebgm.Init(L"Assets/sound/stagebgm.wav");
@@ -56,6 +57,8 @@ Game::~Game()
 
 void Game::Update()
 {
+
+	
 	switch (m_gstate)
 	{
 	case State_Default:
@@ -66,7 +69,15 @@ void Game::Update()
 		m_hp.Update();
 		m_stage->Update();
 		m_stagebgm.Play(true);
-		if ( m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 0 ) {
+		if (m_stage->GetEnemyCount() == 5)
+		{
+
+			if (SEflag == true) {
+				m_kirakirase.Play(false);
+				SEflag = false;
+			}
+		}
+		if ( m_goal.GetGFlag() == false && m_stage->GetEnemyCount() >= 0 ) {
 			
 			//ゴールを更新
 			m_goal.Update();	
@@ -82,12 +93,10 @@ void Game::Update()
 			if (StageNo <= 1 && GoalCount >= 120.0f) {
 
 				if (g_pad[0].IsPress(enButtonA) == true) {
+					taim = 0;
 					m_gstate = State_StageChange /*State_TitleChange*/;
 				}
-				if (g_pad[0].IsPress(enButtonB) == true)
-				{
-					m_gstate = State_TitleChange;
-				}
+		
 			}
 			if (StageNo > 1 && StageNo <= 2 && GoalCount >= 120.0f) {
 
@@ -161,12 +170,9 @@ void Game::Draw()
 	m_stage->Draw();
 	m_hp.Draw();
 
-	if (m_goal.GetGFlag() == false && m_stage->GetEnemyCount() == 0) {
+	if (m_goal.GetGFlag() == false && m_stage->GetEnemyCount() >= 0) {
 		//ゴールを表示
-		if (SEflag == true) {
-			m_kirakirase.Play(false);
-			SEflag = false;
-		}
+
 		m_goal.Draw();
 	}
 	m_postEffect->Draw();
@@ -207,7 +213,8 @@ void Game::Draw()
 
 
 	if (m_goal.GetGFlag() == true && GoalCount >= 120.0f) {
-		m_goalsprite.Draw();
+			m_goalsprite.Draw();
+		
 		TimeScore = GAMETIME - taim;
 		swprintf_s(toubatu, L"スコア %d", m_stage->GetScore());
 		m_font.Draw(

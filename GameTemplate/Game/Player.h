@@ -109,22 +109,47 @@ public:
 	{
 		return m_position;
 	}
+	/// <summary>
+	/// エネミーのインスタンスをセット
+	/// </summary>
+	/// <param name="N"></param>
+	/// <param name="enemy"></param>
 	void SetEnemy(int N, Enemy* enemy)
 	{
 		m_enemy[N] = enemy;
 	}
+	/// <summary>
+	/// ジャンプ台のインスタンスをセット
+	/// </summary>
+	/// <param name="N"></param>
+	/// <param name="spring"></param>
 	void SetSpring(int N, Spring* spring)
 	{
 		m_spring[N] = spring;
 	}
+	/// <summary>
+	/// 足場のインスタンスをセット
+	/// </summary>
+	/// <param name="N"></param>
+	/// <param name="scaffold"></param>
 	void SetScaffold(int N, Scaffold* scaffold)
 	{
 		m_scaffold[N] = scaffold;
 	}
+	/// <summary>
+	/// 回る足場のインスタンスをセット
+	/// </summary>
+	/// <param name="N"></param>
+	/// <param name="turnscaffold"></param>
 	void SetTurnScaffold(int N, TurnScaffold* turnscaffold)
 	{
 		m_turnscaffold[N] = turnscaffold;
 	}
+	/// <summary>
+	/// コインのインスタンスをセット
+	/// </summary>
+	/// <param name="N"></param>
+	/// <param name="coin"></param>
 	void SetCoin(int N, Coin* coin)
 	{
 		m_coin[N] = coin;

@@ -88,6 +88,10 @@ public:
 	{
 		EnemyDeth = deth;
 	}
+/// <summary>
+/// エネミーの状態をゲット
+/// </summary>
+/// <returns>エネミーの状態</returns>
 	const EState GetEState()
 	{
 		return m_estate;
@@ -115,7 +119,6 @@ private:
 	CharacterController m_charaCon;						//キャラクターコントローラ
 	Player* m_player = nullptr;							//プレイヤー
 	bool EnemyDeth = false;								//死亡状態
-	int i = 1;
 	int AnimPlayTime = 0;								//アニメーションの再生時間
 	float m_deltatime = 1.0f / 30.0f;                   //1フレームの経過時間
 };

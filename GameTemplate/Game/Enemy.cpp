@@ -39,6 +39,7 @@ Enemy::~Enemy()
 
 void Enemy::Move()
 {
+	int i = 1;
 	idoutime++;
 	m_position.x += 5.0f*i;
 		//Y方向の移動速度は重力加速を行う。

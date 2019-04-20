@@ -31,6 +31,6 @@ private:
 	CQuaternion m_rotation = CQuaternion::Identity();	//回転。
 	PhysicsStaticObject m_phyStaticObject;				//静的物理オブジェクト
 	Player* m_player = nullptr;							//プレイヤー
-	bool Hantei = false;
+	bool Hantei = false; //判定用のフラグ
 };
 

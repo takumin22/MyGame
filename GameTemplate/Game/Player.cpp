@@ -166,25 +166,34 @@ void Player::Turn()
 }
 void Player::AnimationControl()
 {
-	float stickx = g_pad[0].GetLStickXF();
-	float stick = g_pad[0].GetLStickYF();
+
 	if ( m_charaCon.IsJump() == true) {
 		m_animation.Play(enAnimationClip_jump,0.2);
 	}
-	else if (m_pstate == State_MoveRun
-		|| m_pstate == State_Idel
-		) {
-		if (m_moveSpeed.LengthSq() > 300.0f * 300.0f) {
+	else if (m_pstate) {
+		if ( m_moveSpeed.Length() >= 300.0f ) {
 			//走りモーション。
-			m_animation.Play(enAnimationClip_run, 0.15f);
+			m_animation.Play(enAnimationClip_run, 0.2f);
 		}
-		else if (m_moveSpeed.LengthSq() > 30.0f * 30.0f) {
+		else if (m_moveSpeed.Length() >= 30.0f) {
 			//走りモーション。
-			m_animation.Play(enAnimationClip_walk, 0.15f);
+			m_animation.Play(enAnimationClip_walk, 0.2f);
+		}
+		else if (m_pstate == State_Goal)
+		{
+			m_animation.Play(enAnimationClip_salute, 0.2f);
+		}
+		else if (m_pstate == State_Damage)
+		{
+			m_animation.Play(enAnimationClip_damage, 0.2f);
+		}
+		else if (m_pstate == State_Deth)
+		{
+			m_animation.Play(enAnimationClip_godown, 0.3);
 		}
 		else {
 			//待機モーション
-			m_animation.Play(enAnimationClip_idle, 0.15f);
+			m_animation.Play(enAnimationClip_idle, 0.2f);
 		}
 	}
 
@@ -451,7 +460,7 @@ void Player::Update()
 	case State_Damage: //ダメージ(仮)
 		Time++;
 		Move();
-		 m_animation.Play(enAnimationClip_damage, 0.01f);
+		
 		 if (Time == 30.0f) {
 			 m_pstate = State_InvincibleCount;
 		 }
@@ -464,7 +473,7 @@ void Player::Update()
 		}
 		break;
 	case State_Deth:  //死亡
-		m_animation.Play(enAnimationClip_godown, 0.3);
+	
 		Time++;
 		if (Time >= 60.0f) {
 			m_pstate = State_Return;
@@ -473,7 +482,7 @@ void Player::Update()
 	case State_Goal:
 		m_moveSpeed.x = 0.0f;
 		m_moveSpeed.z = 0.0f;
-		m_animation.Play(enAnimationClip_salute, 0.2f);
+
 		if (g_game->GetGoal() == false) {
 			m_pstate = State_Idel;
 		}

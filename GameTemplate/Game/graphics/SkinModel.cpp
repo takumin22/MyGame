@@ -192,7 +192,7 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 		vsCb.isHasSpecuraMap = false;
 	}
 	//視点を設定。
-	m_light.eyePos = g_camera3D.GetPosition();
+	m_light.eyePos = g_camera3D.GetTarget();
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
 	//定数バッファをGPUに転送。
 	//ライト用の定数バッファを更新。

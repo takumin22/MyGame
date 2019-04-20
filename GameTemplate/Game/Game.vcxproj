@@ -265,6 +265,7 @@
     <Image Include="Assets\modelData\MARBOCTB.GIF" />
     <Image Include="Assets\modelData\PLASTERT.TGA" />
     <Image Include="Assets\modelData\StoneMonster.png" />
+    <ImageContentTask Include="Assets\sprite\stagecrear.png" />
     <ImageContentTask Include="Assets\sprite\gameover.png" />
     <ImageContentTask Include="Assets\sprite\taittol.png" />
     <ImageContentTask Include="Assets\sprite\tairyoku.png" />

@@ -359,6 +359,7 @@
     <Image Include="Assets\modelData\ground_grass.tga" />
     <Image Include="Assets\modelData\MARBOCTB.GIF" />
     <Image Include="Assets\modelData\PLASTERT.TGA" />
+    <Image Include="Assets\sprite\stagecrear.png" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\test.png">
