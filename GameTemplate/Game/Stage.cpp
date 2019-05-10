@@ -77,6 +77,7 @@ Stage::Stage(int No)
 				g_game->GetPlayer()->SetPosition(objData.position);
 				return true;
 			}
+
 			return false;
 		});
 	}

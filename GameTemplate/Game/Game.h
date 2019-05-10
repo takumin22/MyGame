@@ -125,7 +125,8 @@ private:
 	CSoundSource m_coinse;					//コインのSE
 	CSoundSource m_kirakirase;				//ゴール出現時のSE
 	bool SEflag = true;						//SEを鳴らすためのフラグ
-	Sprite m_goalsprite;					//ゴールのスプライト
+	Sprite m_goalsprite;		
+	//ゴールのスプライト
 	Sprite m_stagecrear;
 	Font m_font;					//フォント
 	Timer m_time;					//タイマー
@@ -138,6 +139,7 @@ private:
 	D3D11_VIEWPORT m_frameBufferViewports;			//フレームバッファのビューポート。
 	ID3D11RenderTargetView* m_frameBufferRenderTargetView = nullptr;	//フレームバッファのレンダリングターゲットビュー。
 	ID3D11DepthStencilView* m_frameBufferDepthStencilView = nullptr;	//フレームバッファのデプスステンシルビュー。
+
 };
 
 //グローバルなアクセスポイントをグローバル変数として提供する。

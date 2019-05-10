@@ -47,11 +47,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(ProjectDir)/DirectXTK\Bin\Desktop_2015_Win10\x64\Debug;$(SolutionDir)/x64/Debug;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir);$(ProjectDir)/bulletPhysics/src;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir);$(ProjectDir)/bulletPhysics/src;$(ProjectDir)/EffekseerRuntime130/src/include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)/bulletPhysics/src;$(ProjectDir);$(IncludePath)</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)/bulletPhysics/src;$(ProjectDir);$(ProjectDir)/EffekseerRuntime130/src/include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)/DirectXTK\Bin\Desktop_2015_Win10\x64\Release;$(SolutionDir)/x64/Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -226,6 +226,8 @@
     <MeshContentTask Include="Assets\modelData\enemy.FBX" />
     <MeshContentTask Include="Assets\modelData\enemy_00.FBX" />
     <MeshContentTask Include="Assets\modelData\fence_gate.FBX" />
+    <MeshContentTask Include="Assets\modelData\Green_Cube.fbx" />
+    <MeshContentTask Include="Assets\modelData\Island.fbx" />
     <MeshContentTask Include="Assets\modelData\karasiba.FBX" />
     <MeshContentTask Include="Assets\modelData\kkk.fbx" />
     <MeshContentTask Include="Assets\modelData\Skeleton%40Skin.FBX" />
@@ -233,7 +235,7 @@
     <MeshContentTask Include="Assets\modelData\Spring.FBX" />
     <MeshContentTask Include="Assets\modelData\Stage0.FBX" />
     <MeshContentTask Include="Assets\modelData\Stage01.FBX" />
-    <MeshContentTask Include="Assets\modelData\Stage1.FBX" />
+    <MeshContentTask Include="Assets\modelData\Stage2.fbx" />
     <MeshContentTask Include="Assets\modelData\star1.FBX" />
     <MeshContentTask Include="Assets\modelData\StoneMonster.FBX" />
     <MeshContentTask Include="Assets\modelData\turnasiba.FBX" />
@@ -263,6 +265,7 @@
     <Image Include="Assets\modelData\ferns.tga" />
     <Image Include="Assets\modelData\ground_grass.tga" />
     <Image Include="Assets\modelData\MARBOCTB.GIF" />
+    <ImageContentTask Include="Assets\modelData\Pixel Cube Atlas.png" />
     <Image Include="Assets\modelData\PLASTERT.TGA" />
     <Image Include="Assets\modelData\StoneMonster.png" />
     <ImageContentTask Include="Assets\sprite\stagecrear.png" />

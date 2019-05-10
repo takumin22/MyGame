@@ -120,6 +120,8 @@ private:
 	Player* m_player = nullptr;							//プレイヤー
 	bool EnemyDeth = false;								//死亡状態
 	int AnimPlayTime = 0;								//アニメーションの再生時間
-	float m_deltatime = 1.0f / 30.0f;                   //1フレームの経過時間
+	int i = 1;
+	Effekseer::Effect* m_enemyEffect = nullptr;
+	Effekseer::Handle m_enemyEffectHandle = -1;
 };
 

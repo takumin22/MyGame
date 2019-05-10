@@ -76,13 +76,18 @@ Player::Player()
 	m_model.SetNormalMap(g_normalMapSRV);
 	m_model.SetSpecularMap(g_specMapSRV);
 
-	
+	//サンプルのエフェクトをロードする。
+	m_sampleEffect = Effekseer::Effect::Create(g_graphicsEngine->GetEffekseerManager(), (const EFK_CHAR*)L"Assets/effect/test.efk");
 	m_charaCon.Init(10.0f, 45.0f, m_position);
 }
 
 
 Player::~Player()
 {
+	m_sampleEffect->Release();
+	if (g_graphicsEngine->GetEffekseerManager() != NULL) {
+		g_graphicsEngine->GetEffekseerManager()->StopEffect(m_playEffectHandle);
+	}
 	//todo 法線マップを解放。
 	if (g_normalMapSRV != nullptr) {
 		g_normalMapSRV->Release();

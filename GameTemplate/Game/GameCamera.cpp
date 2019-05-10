@@ -29,20 +29,21 @@ void GameCamera::Update()
 		newTarget.y += 20.0f;
 		CVector3 toCameraPosOld = toCameraPos;
 		//パッドの入力を使ってカメラを回す。
-		float x = g_pad[0].GetRStickXF();
-		float y = g_pad[0].GetRStickYF();
+		float x = g_pad[0].GetRStickXF() *5.0f;
+		float y = g_pad[0].GetRStickYF() *5.0f;
 		//Y軸周りの回転
 		CQuaternion qRot;
-		qRot.SetRotationDeg(CVector3::AxisY(), 5.0f * x);
+		qRot.SetRotationDeg(g_camera3D.GetUp(), x);
 		qRot.Multiply(toCameraPos);
 		//X軸周りの回転。
-		CVector3 axisX;
-		axisX.Cross(CVector3::AxisY(), toCameraPos);
-		axisX.Normalize();
-		qRot.SetRotationDeg(axisX, 5.0f * y);
-		qRot.Multiply(toCameraPos);
+		CQuaternion qrot;
+		qrot.SetRotationDeg(g_camera3D.GetRight(), y);
+		qrot.Multiply(toCameraPos);
 		CVector3 toPosDir = toCameraPos;
 		toPosDir.Normalize();
+		float angle = toPosDir.Dot(g_camera3D.GetUp());
+		angle = acosf(Acos(angle));
+		angle = CMath::RadToDeg(angle);
 
 
 		//カメラからプレイヤーに向かうベクトルを計算する。
@@ -51,12 +52,9 @@ void GameCamera::Update()
 		toPlayer.Normalize();
 		//前方方向と、プレイヤーへの向きベクトルの内積を計算する。
 		float forward = toPlayer.Dot((m_player->GetForWard()));
-		float tatemuki = toPlayer.Dot((m_player->GetUp()));
 		//内積の結果はcosθになるため、なす角θを求めるためにacosを実行する。③
 		forward = acosf(Acos(forward));
 		forward = CMath::RadToDeg(forward);
-		tatemuki = acosf(Acos2(tatemuki));
-		tatemuki = CMath::RadToDeg(tatemuki);
 
 	if (g_game->GetGoal() == true)
 	{	
@@ -73,13 +71,17 @@ void GameCamera::Update()
 
 	}	
 
-		if (toPosDir.y < 0.0f) {
+		if (angle > 90.0f) {
 			//カメラが上向きすぎ。
 			toCameraPos = toCameraPosOld;
+			qRot.SetRotationDeg(g_camera3D.GetUp(), x);
+			qRot.Multiply(toCameraPos);
 		}
-		else if (toPosDir.y > 0.8f) {
+		else if (angle  < 30.0f) {
 			//カメラが下向きすぎ。
 			toCameraPos = toCameraPosOld;
+			qRot.SetRotationDeg(g_camera3D.GetUp(), x);
+			qRot.Multiply(toCameraPos);
 		}
 		//新しい視点を計算する。
 		auto newPositin = newTarget + toCameraPos;

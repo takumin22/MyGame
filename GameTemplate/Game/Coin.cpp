@@ -13,6 +13,8 @@ Coin::Coin(CVector3 pos, CQuaternion rot,Player* player):
 	m_model.Init(L"Assets/modelData/Coin.cmo", enFbxUpAxisZ, { 3.0f,3.0f,3.0f,1.0f});
 	m_model.SetAmbientLight(ambientColor);
 
+	m_coinEffect = Effekseer::Effect::Create(g_graphicsEngine->GetEffekseerManager(), (const EFK_CHAR*)L"Assets/effect/coineffect.efk");
+
 }
 
 
@@ -28,11 +30,25 @@ void Coin::CoinGet()
 	//コインまでの距離を求める
 	float len = toCoin.Length();
 	if (len <= 70.0f) {
-	
-			CoinGetFlag = true;
-		
+		flag = true;
 	}
+	if (flag == true)
+	{
+		rotspeed += 10.0f;
+		m_position.y += 10.0f;
+		m_scale.y -= 0.08f;
+		m_scale.z -= 0.08f;
+		CoinTime++;
 
+
+	}
+	if (CoinTime >= 10) {
+		CoinGetFlag = true;
+		//エフェクトを再生する。
+		m_coinEffectHandle = g_graphicsEngine->GetEffekseerManager()->Play(m_coinEffect, m_position.x, m_position.y, m_position.z);
+		flag = false;
+		CoinTime = 0;
+	}
 }
 
 void Coin::Update()
@@ -42,7 +58,7 @@ void Coin::Update()
 	CoinGet();
 	//コインを回転
 	CQuaternion qRot;
-	qRot.SetRotationDeg(CVector3::AxisY(), 10.0f);
+	qRot.SetRotationDeg(CVector3::AxisY(), rotspeed);
 	m_rotation.Multiply(qRot);
 	//ワールド行列の更新
 	g_shadowMap->RegistShadowCaster(&m_model);

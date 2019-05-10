@@ -54,6 +54,11 @@ private:
 	CVector3 ambientColor = { 1.0f, 1.0f, 1.0f };		//環境光のカラー
 	Player* m_player = nullptr;							//プレイヤー
 	bool CoinGetFlag = false;							//コイン取得フラグ
+	Effekseer::Effect* m_coinEffect = nullptr;
+	Effekseer::Handle m_coinEffectHandle = -1;
+	bool flag = false;
+	float rotspeed = 10.0f;
+	int CoinTime = 0;
 
 };
 

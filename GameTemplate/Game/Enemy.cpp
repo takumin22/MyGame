@@ -5,17 +5,17 @@
 #include "Stage.h"
 
 using namespace std;
-Enemy::Enemy(CVector3 pos, CQuaternion rot, Player* player):
-m_position(pos),
-m_rotation(rot),
-m_player(player)
+Enemy::Enemy(CVector3 pos, CQuaternion rot, Player* player) :
+	m_position(pos),
+	m_rotation(rot),
+	m_player(player)
 {
 	//cmoファイルの読み込み。
 	m_model.Init(L"Assets/modelData/kkk.cmo");
 
 	m_animationClips[enAnimationClip_walk].Load(L"Assets/animData/enemywalk1.tka");
 	m_animationClips[enAnimationClip_walk].SetLoopFlag(true);
-	
+
 	m_animationClips[enAnimation_Damage].Load(L"Assets/animData/enemydeth.tka");
 	m_animationClips[enAnimation_Damage].SetLoopFlag(false);
 
@@ -26,6 +26,8 @@ m_player(player)
 		m_animationClips,	//アニメーションクリップの配列。
 		enAnimationClip_Num					//アニメーションクリップの数。
 	);
+
+	m_enemyEffect = Effekseer::Effect::Create(g_graphicsEngine->GetEffekseerManager(), (const EFK_CHAR*)L"Assets/effect/hit.efk");
 
 	//キャラコン設定
 	m_charaCon.Init(50.0f, 40.0f, m_position);
@@ -39,18 +41,18 @@ Enemy::~Enemy()
 
 void Enemy::Move()
 {
-	int i = 1;
+
 	idoutime++;
 	m_position.x += 5.0f*i;
-		//Y方向の移動速度は重力加速を行う。
-		m_moveSpeed.y -= 1800.0f * (1.0f / 60.0f);
-		m_rotation.SetRotationDeg(CVector3::AxisY(), 90.0f*i);
-		if (idoutime>= 40) {
-			idoutime = 0;
-			i *= -1;
-		}
+	//Y方向の移動速度は重力加速を行う。
+	m_moveSpeed.y -= 1800.0f * (1.0f / 60.0f);
+	m_rotation.SetRotationDeg(CVector3::AxisY(), 90.0f*i);
+	if (idoutime >= 40) {
+		idoutime = 0;
+		i *= -1;
+	}
 }
-void Enemy::Search() 
+void Enemy::Search()
 {
 	//エネミーからプレイヤーに伸びるベクトルを求める。
 	CVector3 toEnemyDir = m_player->GetPosition() - m_position;
@@ -62,7 +64,7 @@ void Enemy::Search()
 }
 void Enemy::Tracking()
 {
-	
+
 	//エネミーからプレイヤーに伸びるベクトルを求める。
 	CVector3 toPlayer = m_player->GetPosition() - m_position;
 	//プレイヤーまでの距離を求める
@@ -74,7 +76,7 @@ void Enemy::Tracking()
 	if (len > 200.0f) {
 		m_estate = State_Move;
 	}
-	
+
 	//向き
 	m_rotation.SetRotation(CVector3::AxisY(), atan2f(toPlayer.x, toPlayer.z));
 }
@@ -85,7 +87,7 @@ void Enemy::Damage()
 	CVector3 springForward = CVector3::AxisY();
 	m_rotation.Multiply(springForward);
 	//エネミーからプレイヤーに伸びるベクトルを求める。
-	CVector3 toEnemyDir = m_player->GetPosition()  -m_position ;
+	CVector3 toEnemyDir = m_player->GetPosition() - m_position;
 	//エネミーまでの距離を求めておく。
 	float toEnemyLen = toEnemyDir.Length();
 	//正規化
@@ -94,7 +96,7 @@ void Enemy::Damage()
 	float d = toEnemyDir.Dot(m_up);
 	//内積の結果をacos関数に渡して、springForwardとtoEnemyDirのなす角を求める。
 	float angle = acosf(d);
-	 angle = CMath::RadToDeg(angle);
+	angle = CMath::RadToDeg(angle);
 
 	if (toEnemyLen <= 60.0f &&  angle <= 65.0f) {
 		m_estate = State_EDamage;
@@ -104,11 +106,11 @@ void Enemy::EnemyAnimation()
 {
 	if (m_estate == State_Move)
 	{
-		m_animation.Play(enAnimationClip_walk,0.2f);
+		m_animation.Play(enAnimationClip_walk, 0.2f);
 	}
 	if (m_estate == State_EDamage)
 	{
-		m_animation.Play(enAnimation_Damage,0.2f);
+		m_animation.Play(enAnimation_Damage, 0.2f);
 	}
 }
 void Enemy::Update()
@@ -120,12 +122,12 @@ void Enemy::Update()
 	{
 	case State_Move:
 		m_moveSpeed.x = 0.0f;
-	    m_moveSpeed.z = 0.0f;
+		m_moveSpeed.z = 0.0f;
 		Move();
-	    Search();
+		Search();
 		if (m_position.y <= -500.0f) {
 			m_estate = State_EDamage;
-		
+
 		}
 		break;
 	case State_Tracking:
@@ -138,18 +140,19 @@ void Enemy::Update()
 		AnimPlayTime++;
 		if (AnimPlayTime >= 50) {
 			EnemyDeth = true;
+			m_enemyEffectHandle = g_graphicsEngine->GetEffekseerManager()->Play(m_enemyEffect, m_position.x, m_position.y, m_position.z);
 			AnimPlayTime = 0;
 		}
 		break;
 	}
-	    m_moveSpeed.y -= 1800.0f /** (1.0f / 60.0f)*/;
-		m_charaCon.SetPosition(m_position);
-		m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
-		m_model.SetShadowReciever(true);
-		//ワールド行列の更新
-	    g_shadowMap->RegistShadowCaster(&m_model);
-		m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
-		m_animation.Update(1.0f / 60.0f);
+	m_moveSpeed.y -= 1800.0f /** (1.0f / 60.0f)*/;
+	m_charaCon.SetPosition(m_position);
+	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
+	m_model.SetShadowReciever(true);
+	//ワールド行列の更新
+	g_shadowMap->RegistShadowCaster(&m_model);
+	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
+	m_animation.Update(1.0f / 60.0f);
 
 }
 

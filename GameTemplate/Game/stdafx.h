@@ -16,8 +16,14 @@
 #include <x3daudio.h>
 #include <xaudio2fx.h>
 
+
+
 #include "btBulletDynamicsCommon.h"
 #include "BulletCollision\CollisionDispatch\btGhostObject.h"
+//Effekseerのヘッダーファイルをインクルード
+#include "Effekseer.h"
+#include "EffekseerRendererDX11.h"
+
 
 //DirectXTKのインクルードファイル。
 #include "DirectXTK/Inc/Model.h"
@@ -31,6 +37,7 @@
 
 #include "math/Vector.h"
 #include "math/Matrix.h"
+#include "graphics/Camera.h"
 #include "graphics/GraphicsEngine.h"
 
 #include "graphics/SkinModel.h"
@@ -38,7 +45,8 @@
 
 #include "graphics/animation/Animation.h"
 #include "graphics/animation/AnimationClip.h"
-#include "graphics/Camera.h"
+
+
 
 #include"font.h"
 #include"Timer.h"

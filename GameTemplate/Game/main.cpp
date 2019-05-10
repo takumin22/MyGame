@@ -62,7 +62,7 @@ void RenderGame()
 	//フェードの描画
 	g_fade->Draw();
 	
-
+	g_graphicsEngine->EffectUpdate();
 	//描画終了。
 	g_graphicsEngine->EndRender();
 }

@@ -9,9 +9,9 @@ Goal::Goal()
 {
 	//cmoファイルの読み込み。
 	m_model.Init(L"Assets/modelData/star1.cmo", enFbxUpAxisZ ,{2.5f,2.5f,2.5f,1.0f});
-		m_position.z = -5199.0f;
+	/*	m_position.z = -5199.0f;
 		m_position.y = 1000.0f;
-		m_position.x = -332.0f;
+		m_position.x = -332.0f;*/
 	
 
 

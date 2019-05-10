@@ -23,7 +23,7 @@ Game::Game()
 	m_stage = new Stage(StageNo++);
 	m_goalsprite.Init(L"Resource/sprite/kari.dds", 1280, 720);
 	m_stagecrear.Init(L"Resource/sprite/stagecrear.dds", 1280, 720);
-	m_gameCamera.SetPlayer(&m_player);	
+	m_gameCamera.SetPlayer(&m_player);
 	m_goal.SetPlayer(&m_player);
 	m_stagebgm.Init(L"Assets/sound/stagebgm.wav");
 	m_kirakirase.Init(L"Assets/sound/kirakira.wav");
@@ -45,20 +45,20 @@ Game::Game()
 
 Game::~Game()
 {
-	
+
 	delete m_stage;
-		if (m_frameBufferRenderTargetView != nullptr) {
-			m_frameBufferRenderTargetView->Release();
-		}
-		if (m_frameBufferDepthStencilView != nullptr) {
-			m_frameBufferDepthStencilView->Release();
-		}
+	if (m_frameBufferRenderTargetView != nullptr) {
+		m_frameBufferRenderTargetView->Release();
+	}
+	if (m_frameBufferDepthStencilView != nullptr) {
+		m_frameBufferDepthStencilView->Release();
+	}
 }
 
 void Game::Update()
 {
 
-	
+
 	switch (m_gstate)
 	{
 	case State_Default:
@@ -77,13 +77,13 @@ void Game::Update()
 				SEflag = false;
 			}
 		}
-		if ( m_goal.GetGFlag() == false && m_stage->GetEnemyCount() >= 0 ) {
-			
+		if (m_goal.GetGFlag() == false && m_stage->GetEnemyCount() >= 0) {
+
 			//ゴールを更新
-			m_goal.Update();	
+			m_goal.Update();
 		}
 		if (m_player.GetZanki() <= 0 || m_time.GetAllSeconds() >= GAMETIME) {
-		
+
 			m_gstate = State_GameOver;
 		}
 		if (m_goal.GetGFlag() == true)
@@ -96,12 +96,12 @@ void Game::Update()
 					taim = 0;
 					m_gstate = State_StageChange /*State_TitleChange*/;
 				}
-		
+
 			}
 			if (StageNo > 1 && StageNo <= 2 && GoalCount >= 120.0f) {
 
 				if (g_pad[0].IsPress(enButtonA) == true) {
-				
+
 					m_gstate = State_TitleChange;
 				}
 			}
@@ -126,7 +126,7 @@ void Game::Update()
 
 		if (g_pad[0].IsTrigger(enButtonA))
 		{
-			
+
 			m_gstate = State_TitleChange;
 		}
 		break;
@@ -157,9 +157,9 @@ void Game::Draw()
 {
 	m_font.BeginDraw();	//フォントの描画開始。
 
-	////レンダリングターゲットをメインに変更する。
+						////レンダリングターゲットをメインに変更する。
 	auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
-	ChangeRenderTarget(d3dDeviceContext, &m_mainRenderTarget,m_mainRenderTarget.GetViewport());
+	ChangeRenderTarget(d3dDeviceContext, &m_mainRenderTarget, m_mainRenderTarget.GetViewport());
 	//メインレンダリングターゲットをクリアする。
 	float clearColor[] = { 0.0f, 0.7f, 1.0f, 1.0f };
 	m_mainRenderTarget.ClearRenderTarget(clearColor);
@@ -197,9 +197,9 @@ void Game::Draw()
 			1.5f,
 			{ 0.0f,1.0f }
 		);
-		
+
 		//秒の計算をする
-		 taim = (int)m_time.GetAllSeconds() % 201;
+		taim = (int)m_time.GetAllSeconds() % 201;
 		swprintf_s(toubatu, L"残り時間%d秒", (GAMETIME - taim));		//表示用にデータを加工
 		m_font.Draw(
 			toubatu,		//表示する文字列。
@@ -213,8 +213,8 @@ void Game::Draw()
 
 
 	if (m_goal.GetGFlag() == true && GoalCount >= 120.0f) {
-			m_goalsprite.Draw();
-		
+		m_goalsprite.Draw();
+
 		TimeScore = GAMETIME - taim;
 		swprintf_s(toubatu, L"スコア %d", m_stage->GetScore());
 		m_font.Draw(
@@ -252,5 +252,5 @@ void Game::Draw()
 
 		m_over.Draw();
 	}
-	
+
 }
