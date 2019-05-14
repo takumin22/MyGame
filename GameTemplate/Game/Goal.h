@@ -40,6 +40,10 @@ public:
 	{
 		GetFlag = flag;
 	}
+	void SetPosition(CVector3 pos)
+	{
+		m_position = pos;
+	}
 	void SetPlayer(Player* player)
 	{
 		m_player = player;

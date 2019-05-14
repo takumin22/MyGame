@@ -9,9 +9,6 @@ Goal::Goal()
 {
 	//cmoファイルの読み込み。
 	m_model.Init(L"Assets/modelData/star1.cmo", enFbxUpAxisZ ,{2.5f,2.5f,2.5f,1.0f});
-	/*	m_position.z = -5199.0f;
-		m_position.y = 1000.0f;
-		m_position.x = -332.0f;*/
 	
 
 
@@ -45,12 +42,6 @@ void Goal::GoalGet()
 void Goal::Update()
 {
 
-	if (g_game->GetNo() > 1) {
-
-		m_position.z = 0.0f;
-		m_position.y = 40.0f;
-		m_position.x = 0.0f;
-	}
 		GoalGet();
 		CQuaternion qRot;
 		qRot.SetRotationDeg(CVector3::AxisY(), 2.0f);

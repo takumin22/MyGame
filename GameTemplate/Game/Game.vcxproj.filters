@@ -143,6 +143,7 @@
     <ClCompile Include="font.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Gameover.cpp" />
+    <ClCompile Include="character\SpringCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -199,9 +200,6 @@
     <ClInclude Include="Scaffold.h" />
     <ClInclude Include="Goal.h" />
     <ClInclude Include="Stage.h" />
-    <ClInclude Include="graphics\SkinModelShaderConst.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
     <ClInclude Include="graphics\SkinModelEffect.h">
       <Filter>graphics</Filter>
     </ClInclude>
@@ -258,6 +256,10 @@
     <ClInclude Include="font.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Gameover.h" />
+    <ClInclude Include="SkinModelShaderConst.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="character\SpringCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">

@@ -75,6 +75,10 @@ public:
 	{
 		return &m_player;
 	}
+	Goal* Getgoal()
+	{
+		return &m_goal;
+	}
 
 	Stage* GetStage()
 	{

@@ -50,7 +50,7 @@ void SkinModel::InitDirectionLight(CVector4 color)
 {
 	m_light.directionlight.direction = { 0.707f,-0.707f,0.0f,1.0f };
 	m_light.directionlight.color = color;
-	m_light.specPow = 100.0f;
+	m_light.specPow = 10.0f;
 }
 
 void SkinModel::InitSkeleton(const wchar_t* filePath)
@@ -134,29 +134,18 @@ void SkinModel::UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVect
 	//スケルトンの更新。
 	m_skeleton.Update(m_worldMatrix);
 
-	//ライトを回す。
-	/*CQuaternion qRot;
-	qRot.SetRotationDeg(CVector3::AxisY(), 0.3f);
-	qRot.Multiply(m_light.directionlight.direction);*/
-
-	////ライトを回す。
-	//CQuaternion qRot;
-	//qRot.SetRotationDeg(CVector3::AxisY(), 2.0f);
-	//for (int i = 0; i < 4; i++) {
-	//	qRot.Multiply(m_dirLight.direction[i]);
-	//}
-
 	////ライトを回す。
 	//CQuaternion qRot;
 	//qRot.SetRotationDeg(CVector3::AxisY(), g_pad[0].GetLStickXF());
-	//qRot.Multiply(m_light.directionLight.direction);
+	//qRot.Multiply(m_light.directionlight.direction);
 	//if (g_pad[0].IsPress(enButtonLeft)) {
-	//	m_light.specPow = max(0.0f, m_light.specPow - 0.2f);
+	//	m_light.specPow = max(0.0f, m_light.specPow - 0.5f);
 	//}
 	//if (g_pad[0].IsPress(enButtonRight)) {
-	//	m_light.specPow = min(100.0f, m_light.specPow + 0.2f);
+	//	m_light.specPow = min(100.0f, m_light.specPow + 0.5f);
 	//}
 }
+
 void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMatrix)
 {
 	DirectX::CommonStates state(g_graphicsEngine->GetD3DDevice());
@@ -192,7 +181,7 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 		vsCb.isHasSpecuraMap = false;
 	}
 	//視点を設定。
-	m_light.eyePos = g_camera3D.GetTarget();
+	m_light.eyePos = g_camera3D.GetPosition();
 	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
 	//定数バッファをGPUに転送。
 	//ライト用の定数バッファを更新。

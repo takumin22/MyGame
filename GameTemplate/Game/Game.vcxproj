@@ -146,6 +146,7 @@
     <ClCompile Include="sound\WaveFile.cpp" />
     <ClCompile Include="sound\WaveFileBank.cpp" />
     <ClCompile Include="Spring.cpp" />
+    <ClCompile Include="character\SpringCamera.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -182,7 +183,7 @@
     <ClInclude Include="graphics\SkinModel.h" />
     <ClInclude Include="graphics\SkinModelDataManager.h" />
     <ClInclude Include="graphics\SkinModelEffect.h" />
-    <ClInclude Include="graphics\SkinModelShaderConst.h" />
+    <ClInclude Include="SkinModelShaderConst.h" />
     <ClInclude Include="HID\Pad.h" />
     <ClInclude Include="HP.h" />
     <ClInclude Include="IScene.h" />
@@ -208,6 +209,7 @@
     <ClInclude Include="sound\WaveFile.h" />
     <ClInclude Include="sound\WaveFileBank.h" />
     <ClInclude Include="Spring.h" />
+    <ClInclude Include="character\SpringCamera.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="stdafx.h" />
@@ -236,7 +238,9 @@
     <MeshContentTask Include="Assets\modelData\Stage0.FBX" />
     <MeshContentTask Include="Assets\modelData\Stage01.FBX" />
     <MeshContentTask Include="Assets\modelData\Stage2.fbx" />
-    <MeshContentTask Include="Assets\modelData\star1.FBX" />
+    <MeshContentTask Include="Assets\modelData\star1.FBX">
+      <FileType>Document</FileType>
+    </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\StoneMonster.FBX" />
     <MeshContentTask Include="Assets\modelData\turnasiba.FBX" />
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">

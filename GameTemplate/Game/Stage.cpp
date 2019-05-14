@@ -61,6 +61,11 @@ Stage::Stage(int No)
 				g_game->GetPlayer()->SetCoin(StageNo4++, coin);
 				return true;
 			}
+			else if (objData.EqualName(L"star1") == true) {
+				//コイン
+				g_game->Getgoal()->SetPosition(objData.position);
+				return true;
+			}
 			else if (objData.EqualName(L"fence_gate") == true) {
 				//ゲート
 				auto gate = new Gate(objData.position, objData.rotation, g_game->GetPlayer(),this);
@@ -77,7 +82,11 @@ Stage::Stage(int No)
 				g_game->GetPlayer()->SetPosition(objData.position);
 				return true;
 			}
-
+			else if (objData.EqualName(L"star1") == true) {
+				//コイン
+				g_game->Getgoal()->SetPosition(objData.position);
+				return true;
+			}
 			return false;
 		});
 	}
@@ -106,6 +115,10 @@ Stage::~Stage()
 	}
 	for (auto& coin : m_coinList) {
 		delete coin;
+	}
+	for (auto& goal : m_goalList)
+	{
+		delete goal;
 	}
 	Score = 0;
 	EnemyCount = 0;

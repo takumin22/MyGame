@@ -79,6 +79,7 @@ private:
 	Level m_level;								//レベルを初期化。
 	std::vector< Enemy* > m_enemyList;			//エネミーのリスト。
 	std::vector< Scaffold*> m_sacaffoldList;	//足場のリスト。
+	std::vector< Goal*> m_goalList;
 	std::vector< Spring*> m_springList;			//バネリスト
 	std::vector< Coin*> m_coinList;				//コインのリスト
 	std::vector<TurnScaffold*> m_turnscaffold;	//回転足場のリスト

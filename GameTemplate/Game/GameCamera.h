@@ -1,5 +1,6 @@
 #pragma once
 #include "Goal.h"
+#include "character/SpringCamera.h"
 class Player;
 class Goal;
 
@@ -30,6 +31,7 @@ private:
 		return b;
 	}
 	Player * m_player = nullptr;	//プレイヤー。
+	SpringCamera m_characon;
 	bool GoalCamera = false;		//ゴールカメラ用のフラグ
 	
 };

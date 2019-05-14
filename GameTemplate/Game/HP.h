@@ -23,10 +23,14 @@ public:
 		DamageCount = k;
 	}
 private:
+	SkinModel m_model;
 	Sprite m_hp;									//体力のスプライトデータ
 	Sprite m_hp2;
 	Sprite m_hp3;
 	Sprite m_hp4;
+	CVector3 m_position = CVector3::Zero();
+	CQuaternion m_rotation = CQuaternion::Identity();
+	CVector3 m_scale = CVector3::Zero();
 	CVector3 m_hppos = { 300.0f,300.0f,0.0f };		//体力の表示ポジション
 	CVector3 m_hppos2 = { 400.0f,300.0f,0.0f };
 	CVector3 m_hppos3 = { 500.0f,300.0f,0.0f };

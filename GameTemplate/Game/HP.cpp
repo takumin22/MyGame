@@ -46,7 +46,7 @@ void HP::Draw()
 		m_hp4.Draw();
 	}
 	
-	
+
 	
 
 }
