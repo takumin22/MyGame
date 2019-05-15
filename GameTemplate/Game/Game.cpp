@@ -20,7 +20,7 @@ Game* g_game = nullptr;
 Game::Game()
 {
 	g_game = this;
-	
+	m_stage = new Stage(StageNo++);
 	m_goalsprite.Init(L"Resource/sprite/kari.dds", 1280, 720);
 	m_stagecrear.Init(L"Resource/sprite/stagecrear.dds", 1280, 720);
 	m_gameCamera.SetPlayer(&m_player);
