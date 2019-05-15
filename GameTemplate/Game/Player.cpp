@@ -58,8 +58,7 @@ Player::Player()
 		enAnimationClip_Num					//アニメーションクリップの数。
 	);
 
-	//todo Unityちゃんの法線マップをロード。
-	//ファイル名を使って、テクスチャをロードして、ShaderResrouceViewを作成する。
+
 	//todo Unityちゃんの法線マップをロード。
 	//ファイル名を使って、テクスチャをロードして、ShaderResrouceViewを作成する。
 	HRESULT hr = DirectX::CreateDDSTextureFromFileEx(
@@ -227,10 +226,36 @@ void Player::Damage()
 }
 void Player::SpringJump()
 {
-		m_spjumpse.Play(false);
-		m_moveSpeed.y += 1300.0f;
-		m_pstate = State_Idel;
+	CVector3 springForward = CVector3::AxisY();
+	m_rotation.Multiply(springForward);
+	//ジャンプ台からプレイヤーに伸びるベクトルを求める。
+	CVector3 toPlayerDir = m_position - m_spring[0]->GetSPosition();
+	//ジャンプ台までの距離を求めておく。
+	float toPlayerLen = toPlayerDir.Length();
+	//正規化
+	toPlayerDir.Normalize();
+	//springForwardとtoPlayerDirとの内積を計算する。
+	float d = springForward.Dot(toPlayerDir);
+	//内積の結果をacos関数に渡して、springForwardとtoPlayerDirのなす角を求める。
+	float angle = acos(d);
+
+	//ジャンプ台からプレイヤーに伸びるベクトルを求める。
+	CVector3 toPlayerDjr = m_position - m_spring[1]->GetSPosition();
+	//ジャンプ台までの距離を求めておく。
+	float toPlayerLan = toPlayerDjr.Length();
+	//正規化
+	toPlayerDjr.Normalize();
+	//springForwardとtoPlayerDirとの内積を計算する。
+	float e = springForward.Dot(toPlayerDjr);
+	//内積の結果をacos関数に渡して、springForwardとtoPlayerDirのなす角を求める。
+	float ange = acos(e);
 		
+	if (fabsf(angle) < CMath::DegToRad(50.0f)
+		&& toPlayerLen <= 70.0f ||
+		fabsf(ange) < CMath::DegToRad(50.0f)
+		&& toPlayerLan <= 70.0f) {
+		m_pstate = State_SpringJump;
+	}
 		
 }
 void Player::PlayerPosRetrun()
@@ -291,8 +316,9 @@ void Player::AABB()
 }
 void Player::Scafflod()
 {
-
-	AABB();
+	if (g_game->GetNo() <= 0) {
+		AABB();
+	}
 	if (syoutotuflag == true) {
 
 		m_pstate = State_Scaffold;
@@ -313,32 +339,6 @@ void Player::Scafflod()
 }
 void Player::Update()
 {
-
-
-
-		CVector3 springForward = CVector3::AxisY();
-		m_rotation.Multiply(springForward);
-		//ジャンプ台からプレイヤーに伸びるベクトルを求める。
-		CVector3 toPlayerDir = m_position - m_spring[0]->GetSPosition();
-		//ジャンプ台までの距離を求めておく。
-		float toPlayerLen = toPlayerDir.Length();
-		//正規化
-		toPlayerDir.Normalize();
-		//springForwardとtoPlayerDirとの内積を計算する。
-		float d = springForward.Dot(toPlayerDir);
-		//内積の結果をacos関数に渡して、springForwardとtoPlayerDirのなす角を求める。
-		float angle = acos(d);
-
-		//ジャンプ台からプレイヤーに伸びるベクトルを求める。
-		CVector3 toPlayerDjr = m_position - m_spring[1]->GetSPosition();
-		//ジャンプ台までの距離を求めておく。
-		float toPlayerLan = toPlayerDjr.Length();
-		//正規化
-		toPlayerDjr.Normalize();
-		//springForwardとtoPlayerDirとの内積を計算する。
-		float e = springForward.Dot(toPlayerDjr);
-		//内積の結果をacos関数に渡して、springForwardとtoPlayerDirのなす角を求める。
-		float ange = acos(e);
 		static float JUMP_SPEED = 700.0f;
 		Turn();
 		AnimationControl();
@@ -350,7 +350,11 @@ void Player::Update()
 		Time = 0;
 		Move();
 	    Scafflod();
-		Damage();
+		if (g_game->GetNo() <= 0) {
+			Damage();
+			SpringJump();
+		}
+	
 		if (g_pad[0].IsTrigger(enButtonA)) {
 			m_moveSpeed.y = JUMP_SPEED;
 			m_pstate = State_Jump;
@@ -362,12 +366,6 @@ void Player::Update()
 		if (g_game->GetGoal() == true) {
 			m_pstate = State_Goal;
 		}
-		if (fabsf(angle) < CMath::DegToRad(50.0f)
-			&&toPlayerLen <= 70.0f ||
-			fabsf(ange) < CMath::DegToRad(50.0f)
-			&& toPlayerLan <= 70.0f) {
-			m_pstate = State_SpringJump;
-		}
 		if (m_position.y <= -500.0f) {
 			//プレイヤーをスタート位置に戻す
 			m_pstate = State_Return;
@@ -376,7 +374,11 @@ void Player::Update()
 	case State_MoveRun:
 		Move();
 		Scafflod();
-		Damage();
+		if (g_game->GetNo() <= 0) {
+			Damage();
+			SpringJump();
+		}
+		
 		if (m_moveSpeed.LengthSq() < 30.0f * 30.0f) {
 			//入力がなくなった。
 			m_pstate = State_Idel;
@@ -390,12 +392,6 @@ void Player::Update()
 		if (m_position.y <= -500.0f) {
 			//プレイヤーをスタート位置に戻す
 			m_pstate = State_Return;
-		}
-		if (fabsf(angle) < CMath::DegToRad(50.0f)
-			&& toPlayerLen <= 70.0f ||
-			fabsf(ange) < CMath::DegToRad(50.0f)
-			&& toPlayerLan <= 70.0f) {
-			m_pstate = State_SpringJump;
 		}
 		if (g_game->GetGoal() == true) {
 			m_pstate = State_Goal;
@@ -417,7 +413,9 @@ void Player::Update()
 		}
 		break;
 	case State_SpringJump: //バネジャンプ
-        SpringJump();
+		m_spjumpse.Play(false);
+		m_moveSpeed.y += 1300.0f;
+		m_pstate = State_Idel;
 		break;
 	case State_Return://スタートに戻る
 		PlayerPosRetrun();
@@ -473,6 +471,9 @@ void Player::Update()
 	case State_InvincibleCount:  //無敵時間(仮)	
 		Move();
 		Time++;
+		if (g_pad[0].IsTrigger(enButtonA)) {
+			m_moveSpeed.y = JUMP_SPEED;
+		}
 		if (Time== 60.0f) {
 			m_pstate = State_Idel;
 		}

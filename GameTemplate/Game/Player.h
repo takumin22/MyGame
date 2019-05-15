@@ -4,6 +4,7 @@
 #include "HP.h"
 #include "sound/SoundEngine.h"
 #include "sound/SoundSource.h"
+#include "level/Level.h"
 
 class Enemy;
 class Spring;
@@ -215,6 +216,6 @@ private:
 	float m_deltatime = 1.0f / 30.0f;                   //1ƒtƒŒ[ƒ€‚ÌŒo‰ßŠÔ
 	Effekseer::Effect* m_sampleEffect = nullptr;
 	Effekseer::Handle m_playEffectHandle = -1;
-
+	Level m_level;
 };
 

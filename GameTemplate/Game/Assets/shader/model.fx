@@ -249,7 +249,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 			float3 reflectEyeDir = -toEyeDir + 2 * dot(In.Normal, toEyeDir) * In.Normal;
 
 			//求めた反射ベクトルとディレクションライトの方向との内積を取って、スペキュラの強さを計算する。
-			float t = max(0.0f, dot(-directionLight.direction, reflectEyeDir));
+			float t = max(0.0f, dot(reflectEyeDir, -directionLight.direction));
 			//float specPower = 1.0f;
 			//if (isHasSpecularMap) {
 			//	//スペキュラマップがある。
@@ -260,7 +260,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 			float3 specLig = pow(t, specPow) * directionLight.color.xyz;
 			//スペキュラ反射が求まったら、ligに加算する。
 			//鏡面反射を反射光に加算する。
-			lig += specLig;
+			lig = lig + specLig;
 		}
 	}
 	if (isShadowReciever == 1) {	

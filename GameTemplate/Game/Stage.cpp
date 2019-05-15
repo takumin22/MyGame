@@ -21,52 +21,51 @@ Stage::Stage(int No)
 
 	if (No == 0) {
 		m_level.Init(L"Assets/level/level00.tkl", [&](LevelObjectData& objData)->bool {
-			if (objData.EqualName(L"unityChan") == true) {
+			if (objData.ForwardMatchName(L"unityChan") == true) {
 				//プレイヤー
 				g_game->GetPlayer()->SetPosition(objData.position);
 				return true;
 			}
-			else if (objData.EqualName(L"kkk") == true) {
+			else if (objData.ForwardMatchName(L"kkk") == true) {
 				//エネミー
 				auto enemy = new Enemy(objData.position, objData.rotation, g_game->GetPlayer());
 				m_enemyList.push_back(enemy);
 				g_game->GetPlayer()->SetEnemy(StageNo++, enemy);
 				return true;
 			}
-			else if (objData.EqualName(L"Spring") == true) {
+			else if (objData.ForwardMatchName(L"Spring") == true) {
 				//バネ
 				auto spring = new Spring(objData.position, objData.rotation, g_game->GetPlayer());
 				m_springList.push_back(spring);
-
 				g_game->GetPlayer()->SetSpring(StageNo1++, spring);
 				return true;
 			}
-			else if (objData.EqualName(L"karasiba") == true) {
+			else if (objData.ForwardMatchName(L"karasiba") == true) {
 
 				auto scaffold = new Scaffold(objData.position, objData.rotation, g_game->GetPlayer());
 				m_sacaffoldList.push_back(scaffold);
 				g_game->GetPlayer()->SetScaffold(StageNo2++, scaffold);
 				return true;
 			}
-			else if (objData.EqualName(L"turnasiba") == true) {
+			else if (objData.ForwardMatchName(L"turnasiba") == true) {
 				auto turnscaffold = new TurnScaffold(objData.position, objData.rotation, g_game->GetPlayer());
 				m_turnscaffold.push_back(turnscaffold);
 				g_game->GetPlayer()->SetTurnScaffold(StageNo3++, turnscaffold);
 				return true;
 			}
-			else if (objData.EqualName(L"Coin") == true) {
+			else if (objData.ForwardMatchName(L"Coin") == true) {
 				//コイン
 				auto coin = new Coin(objData.position, objData.rotation, g_game->GetPlayer());
 				m_coinList.push_back(coin);
 				g_game->GetPlayer()->SetCoin(StageNo4++, coin);
 				return true;
 			}
-			else if (objData.EqualName(L"star1") == true) {
+			else if (objData.ForwardMatchName(L"star1") == true) {
 				//コイン
 				g_game->Getgoal()->SetPosition(objData.position);
 				return true;
 			}
-			else if (objData.EqualName(L"fence_gate") == true) {
+			else if (objData.ForwardMatchName(L"fence_gate") == true) {
 				//ゲート
 				auto gate = new Gate(objData.position, objData.rotation, g_game->GetPlayer(),this);
 				m_gateList.push_back(gate);

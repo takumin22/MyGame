@@ -183,7 +183,7 @@
     <ClInclude Include="graphics\SkinModel.h" />
     <ClInclude Include="graphics\SkinModelDataManager.h" />
     <ClInclude Include="graphics\SkinModelEffect.h" />
-    <ClInclude Include="SkinModelShaderConst.h" />
+    <ClInclude Include="graphics\SkinModelShaderConst.h" />
     <ClInclude Include="HID\Pad.h" />
     <ClInclude Include="HP.h" />
     <ClInclude Include="IScene.h" />
@@ -269,6 +269,7 @@
     <Image Include="Assets\modelData\ferns.tga" />
     <Image Include="Assets\modelData\ground_grass.tga" />
     <Image Include="Assets\modelData\MARBOCTB.GIF" />
+    <ImageContentTask Include="Assets\sprite\yaji.png" />
     <ImageContentTask Include="Assets\modelData\Pixel Cube Atlas.png" />
     <Image Include="Assets\modelData\PLASTERT.TGA" />
     <Image Include="Assets\modelData\StoneMonster.png" />

@@ -256,10 +256,8 @@
     <ClInclude Include="font.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Gameover.h" />
-    <ClInclude Include="SkinModelShaderConst.h">
-      <Filter>graphics</Filter>
-    </ClInclude>
     <ClInclude Include="character\SpringCamera.h" />
+    <ClInclude Include="graphics\SkinModelShaderConst.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
@@ -361,6 +359,7 @@
     <Image Include="Assets\modelData\ground_grass.tga" />
     <Image Include="Assets\modelData\MARBOCTB.GIF" />
     <Image Include="Assets\modelData\PLASTERT.TGA" />
+    <Image Include="Assets\sprite\yaji.png" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\test.png">

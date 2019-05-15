@@ -20,7 +20,7 @@ Game* g_game = nullptr;
 Game::Game()
 {
 	g_game = this;
-	m_stage = new Stage(StageNo++);
+	
 	m_goalsprite.Init(L"Resource/sprite/kari.dds", 1280, 720);
 	m_stagecrear.Init(L"Resource/sprite/stagecrear.dds", 1280, 720);
 	m_gameCamera.SetPlayer(&m_player);
@@ -91,17 +91,32 @@ void Game::Update()
 			GoalCount++;
 			Goal = true;
 			if (StageNo <= 1 && GoalCount >= 120.0f) {
-
+				
 				if (g_pad[0].IsPress(enButtonA) == true) {
 					taim = 0;
+					if (g_fade->GetState() == Fade::idel) {
+						g_fade->Fadein();
+						ChangeFlag = true;
+					}
+				}
+				if (ChangeFlag == true && g_fade->GetState() == Fade::idel) {
+					g_fade->Fadeout();
+					ChangeFlag = false;
 					m_gstate = State_StageChange /*State_TitleChange*/;
 				}
 
 			}
 			if (StageNo > 1 && StageNo <= 2 && GoalCount >= 120.0f) {
 
-				if (g_pad[0].IsPress(enButtonA) == true) {
-
+				if (g_pad[0].IsPress(enButtonA) == true && g_fade->GetState() == Fade::idel) {
+					g_fade->Fadein();
+					ChangeFlag = true;
+					
+				}
+				if (ChangeFlag == true && g_fade->GetState() == Fade::idel)
+				{
+					g_fade->Fadeout();
+					ChangeFlag = false;
 					m_gstate = State_TitleChange;
 				}
 			}
@@ -114,6 +129,7 @@ void Game::Update()
 		m_stage = new Stage(StageNo++);
 		Goal = false;
 		GoalCount = 0;
+		
 		m_gstate = State_Default;
 		break;
 	case State_TitleChange:
@@ -124,9 +140,15 @@ void Game::Update()
 	case State_GameOver:
 		m_over.Update();
 
-		if (g_pad[0].IsTrigger(enButtonA))
-		{
+		if (g_pad[0].IsPress(enButtonA) == true && g_fade->GetState() == Fade::idel) {
+			g_fade->Fadein();
+			ChangeFlag = true;
 
+		}
+		if (ChangeFlag == true && g_fade->GetState() == Fade::idel)
+		{
+			g_fade->Fadeout();
+			ChangeFlag = false;
 			m_gstate = State_TitleChange;
 		}
 		break;

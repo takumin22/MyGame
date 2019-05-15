@@ -36,13 +36,13 @@ void HP::Draw()
 	}
 	if (g_game->GetPlayer()->GetDCount() <= 2)
 	{
-	m_hp2.Draw();
+		m_hp2.Draw();
 	}
 	if (g_game->GetPlayer()->GetDCount() <= 1)
 	{
 		m_hp3.Draw();
 	}
-	if (g_game->GetPlayer()->GetDCount()<= 0) {
+	if (g_game->GetPlayer()->GetDCount() <= 0) {
 		m_hp4.Draw();
 	}
 	

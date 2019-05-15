@@ -73,10 +73,12 @@ public:
 	{
 		return Score;
 	}
+
 private:
 
 	int StageCount = 0;
 	Level m_level;								//レベルを初期化。
+	Goal* m_goal;
 	std::vector< Enemy* > m_enemyList;			//エネミーのリスト。
 	std::vector< Scaffold*> m_sacaffoldList;	//足場のリスト。
 	std::vector< Goal*> m_goalList;
@@ -97,5 +99,6 @@ private:
 	int StageNo3 = 0;
 	int StageNo4 = 0;
 	int StageNo5 = 0;
+	int StageNo6 = 0;
 };
 

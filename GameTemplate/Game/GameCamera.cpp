@@ -7,7 +7,7 @@
 GameCamera::GameCamera()
 {
 
-	m_characon.Init(0.000001f, 0.00001f, { 0.0f, 2100.0f, 300.0f });
+	m_characon.Init(0.00001f, 0.00001f, { 0.0f, 2100.0f, 300.0f });
 	//カメラを初期化。
 	g_camera3D.SetPosition({ 0.0f, 210.0f, 300.0f });
 	g_camera3D.SetTarget({ 0.0f, 100.0f, 0.0f });
@@ -81,11 +81,11 @@ void GameCamera::Update()
 		else if (angle  < 30.0f) {
 			//カメラが下向きすぎ。
 			toCameraPos = toCameraPosOld;
-			qRot.SetRotationDeg(g_camera3D.GetUp(), x);
-			qRot.Multiply(toCameraPos);
+
 		}
 		//新しい視点を計算する。
-
+		qRot.SetRotationDeg(g_camera3D.GetUp(), x);
+		qRot.Multiply(toCameraPos);
 		auto newPositin = CVector3::Zero();// = newTarget + toCameraPos;
 		m_characon.SetPosition(newTarget);
 		toCameraPos.Normalize();

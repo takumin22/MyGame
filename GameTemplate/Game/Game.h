@@ -3,6 +3,7 @@
 #include "IScene.h"
 #include "Player.h"
 #include "level/Level.h"
+#include "Title.h"
 #include "GameCamera.h"
 #include "Background.h"
 #include "Scaffold.h"
@@ -134,9 +135,11 @@ private:
 	Sprite m_stagecrear;
 	Font m_font;					//フォント
 	Timer m_time;					//タイマー
+	Title m_title;
 	int GAMETIME = 200;				//残り時間
 	int TimeScore = 0;				//タイムのスコア
 	int taim = 0;						//経過時間
+	bool ChangeFlag = false;
 	wchar_t toubatu[256];
 	PostEffect* m_postEffect;				//ポストエフェクト。
 	Sprite m_copyMainRtToFrameBufferSprite;			//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
