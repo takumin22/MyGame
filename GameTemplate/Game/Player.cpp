@@ -20,7 +20,7 @@ Player::Player()
 {
 
 	//cmoファイルの読み込み。
-	m_model.Init(L"Assets/modelData/unityChan.cmo", enFbxUpAxisY);
+	m_model.Init(L"Assets/modelData/Chara_4Hero.cmo");
 	m_model.SetAmbientLight(ambientColor);
 
 	m_spjumpse.Init(L"Assets/sound/springjump.wav");
@@ -37,6 +37,10 @@ Player::Player()
 
 	m_animationClips[enAnimationClip_jump].Load(L"Assets/animData/jump.tka");
 	m_animationClips[enAnimationClip_jump].SetLoopFlag(false);
+
+
+	m_animationClips[enAnimationClip_attack].Load(L"Assets/animData/punch.tka");
+	m_animationClips[enAnimationClip_attack].SetLoopFlag(false);
 
 	m_animationClips[enAnimationClip_damage].Load(L"Assets/animData/damage.tka");
 	m_animationClips[enAnimationClip_damage].SetLoopFlag(false);
@@ -62,22 +66,22 @@ Player::Player()
 	//todo Unityちゃんの法線マップをロード。
 	//ファイル名を使って、テクスチャをロードして、ShaderResrouceViewを作成する。
 	HRESULT hr = DirectX::CreateDDSTextureFromFileEx(
-		g_graphicsEngine->GetD3DDevice(), L"Resource/sprite/utc_nomal.dds", 0,
+		g_graphicsEngine->GetD3DDevice(), L"Resource/sprite/Texture_Chara_4Hero_Normal.dds", 0,
 		D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0,
 		false, nullptr, &g_normalMapSRV);
 	//Unityちゃんのスペキュラマップをロード。
 	//ファイル名を使って、テクスチャをロードして、ShaderResourceViewを作成する。
-	DirectX::CreateDDSTextureFromFileEx(
-		g_graphicsEngine->GetD3DDevice(), L"Resource/sprite/utc_spec.dds", 0,
-		D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0,
-		false, nullptr, &g_specMapSRV);
+	//DirectX::CreateDDSTextureFromFileEx(
+	//	g_graphicsEngine->GetD3DDevice(), L"Resource/sprite/utc_spec.dds", 0,
+	//	D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0,
+	//	false, nullptr, &g_specMapSRV);
 	//モデルに法線マップを設定する。
 	m_model.SetNormalMap(g_normalMapSRV);
-	m_model.SetSpecularMap(g_specMapSRV);
+	//m_model.SetSpecularMap(g_specMapSRV);
 
 	//サンプルのエフェクトをロードする。
 	m_sampleEffect = Effekseer::Effect::Create(g_graphicsEngine->GetEffekseerManager(), (const EFK_CHAR*)L"Assets/effect/test.efk");
-	m_charaCon.Init(10.0f, 45.0f, m_position);
+	m_charaCon.Init(15.0f, 42.0f, m_position);
 }
 
 
@@ -170,7 +174,6 @@ void Player::Turn()
 }
 void Player::AnimationControl()
 {
-
 	if ( m_charaCon.IsJump() == true) {
 		m_animation.Play(enAnimationClip_jump,0.2);
 	}
@@ -180,8 +183,11 @@ void Player::AnimationControl()
 			m_animation.Play(enAnimationClip_run, 0.2f);
 		}
 		else if (m_moveSpeed.Length() >= 30.0f) {
-			//走りモーション。
+			//歩きモーション。
 			m_animation.Play(enAnimationClip_walk, 0.2f);
+		}
+		else if (m_pstate == State_Attack) {
+			m_animation.Play(enAnimationClip_attack, 0.2f);
 		}
 		else if (m_pstate == State_Goal)
 		{
@@ -200,6 +206,10 @@ void Player::AnimationControl()
 			m_animation.Play(enAnimationClip_idle, 0.2f);
 		}
 	}
+
+}
+void Player::Attack()
+{
 
 }
 void Player::Damage()
@@ -268,9 +278,9 @@ void Player::PlayerPosRetrun()
 			m_charaCon.SetPosition(m_position);
 		}
 		else if (g_game->GetNo() == 2) {
-			m_position.x = -315.0f;
-			m_position.y = 2.5f;
-			m_position.z = 214.0f;
+			m_position.x = 0.0f;
+			m_position.y = 435.0f;
+			m_position.z = 429.0f;
 			m_charaCon.SetPosition(m_position);
 		}
 	}
@@ -282,10 +292,10 @@ void Player::AABB()
 	auto vMax=	m_scaffold[1]->GetScaPosition();
 	auto vMin = vMax;
 	vMax.x += 200.0f;
-	vMax.y += 50.0f;
+	vMax.y += 200.0f;
 	vMax.z += 200.0f;
 	vMin.x -= 200.0f;
-	vMin.y -= 50.0f;
+	vMin.y -= 200.0f;
 	vMin.z -= 200.0f;
 	if (m_position.x <= vMax.x && m_position.x >= vMin.x &&
 		m_position.y <= vMax.y && m_position.y >= vMin.y &&
@@ -300,10 +310,10 @@ void Player::AABB()
 	auto vMax1 = m_scaffold[0]->GetScaPosition();
 	auto vMin1 = vMax1;
 	vMax1.x += 200.0f;
-	vMax1.y += 50.0f;
+	vMax1.y += 200.0f;
 	vMax1.z += 200.0f;
 	vMin1.x -= 200.0f;
-	vMin1.y -= 50.0f;
+	vMin1.y -= 200.0f;
 	vMin1.z -= 200.0f;
 	if (m_position.x <= vMax1.x && m_position.x >= vMin1.x &&
 		m_position.y <= vMax1.y && m_position.y >= vMin1.y &&
@@ -316,7 +326,7 @@ void Player::AABB()
 }
 void Player::Scafflod()
 {
-	if (g_game->GetNo() <= 0) {
+	if (g_game->GetNo() <= 1) {
 		AABB();
 	}
 	if (syoutotuflag == true) {
@@ -350,18 +360,20 @@ void Player::Update()
 		Time = 0;
 		Move();
 	    Scafflod();
-		if (g_game->GetNo() <= 0) {
+		if (g_game->GetNo() <= 1) {
 			Damage();
 			SpringJump();
 		}
-	
 		if (g_pad[0].IsTrigger(enButtonA)) {
 			m_moveSpeed.y = JUMP_SPEED;
 			m_pstate = State_Jump;
 		}
-		else if (m_moveSpeed.LengthSq() > 0.001f) {
+		 if (m_moveSpeed.LengthSq() > 0.001f * 0.001f) {
 			//入力がある。
 			m_pstate = State_MoveRun;
+		}
+		if (g_pad[0].IsTrigger(enButtonB)) {
+			m_pstate = State_Attack;
 		}
 		if (g_game->GetGoal() == true) {
 			m_pstate = State_Goal;
@@ -374,7 +386,7 @@ void Player::Update()
 	case State_MoveRun:
 		Move();
 		Scafflod();
-		if (g_game->GetNo() <= 0) {
+		if (g_game->GetNo() <= 1) {
 			Damage();
 			SpringJump();
 		}
@@ -383,11 +395,14 @@ void Player::Update()
 			//入力がなくなった。
 			m_pstate = State_Idel;
 		}
-		else if (g_pad[0].IsTrigger(enButtonA)) {
+		 if (g_pad[0].IsTrigger(enButtonA)) {
 			//この時点でのXZ方向の速度を記憶しておく。
 			m_moveSpeedWhenStartJump = m_moveSpeed.Length();
 			m_moveSpeed.y = JUMP_SPEED;
 			m_pstate = State_Jump;
+		}
+		if (g_pad[0].IsTrigger(enButtonB)) {
+			m_pstate = State_Attack;
 		}
 		if (m_position.y <= -500.0f) {
 			//プレイヤーをスタート位置に戻す
@@ -400,7 +415,7 @@ void Player::Update()
 	case State_Jump:
 		Move();
 		if (!m_charaCon.IsJump()) {
-			if (m_moveSpeed.LengthSq() < 50.0f * 50.0f) {
+			if (m_moveSpeed.LengthSq() < 30.0f * 30.0f) {
 				//入力がなくなった。
 				m_pstate = State_Idel;
 			}
@@ -411,6 +426,15 @@ void Player::Update()
 		if (m_position.y <= -500.0f ) {
 			m_pstate = State_Return;
 		}
+		break;
+	case State_Attack:
+		m_moveSpeed.x = 0.0f;
+		m_moveSpeed.z = 0.0f;
+		if (m_animation.IsPlaying() == false) {
+				m_pstate = State_Idel;
+			
+		}
+
 		break;
 	case State_SpringJump: //バネジャンプ
 		m_spjumpse.Play(false);
@@ -437,7 +461,7 @@ void Player::Update()
 		//この時点でのXZ方向の速度を記憶しておく。
 		m_moveSpeedWhenStartJump = m_moveSpeed.Length();
 		m_moveSpeed.y = JUMP_SPEED;
-		m_pstate = State_Jump;
+		//m_pstate = State_Jump;Unity
 	}
        m_charaCon.SetPosition(m_position);
 		break;
@@ -445,9 +469,8 @@ void Player::Update()
 		Move();
 		Scafflod();
 		if (m_scaffold[0]->GetState() == m_scaffold[0]->State_FrontMove) {
-			m_position.z -= 5.0f;
-
-
+			
+			
 		}
 		else if (m_scaffold[0]->GetState() == m_scaffold[0]->State_BackMove) {
 				m_position.z += 5.0f;
@@ -456,7 +479,7 @@ void Player::Update()
 			//この時点でのXZ方向の速度を記憶しておく。
 			m_moveSpeedWhenStartJump = m_moveSpeed.Length();
 			m_moveSpeed.y = JUMP_SPEED;
-			m_pstate = State_Jump;
+			//m_pstate = State_Jump;
 		}
 		m_charaCon.SetPosition(m_position);
 		break;

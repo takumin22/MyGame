@@ -129,6 +129,7 @@ void Game::Update()
 		m_stage = new Stage(StageNo++);
 		Goal = false;
 		GoalCount = 0;
+		taim = 0;
 		
 		m_gstate = State_Default;
 		break;

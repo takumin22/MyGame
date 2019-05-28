@@ -83,7 +83,7 @@ void SkinModel::InitConstantBuffer()
 	D3D11_BUFFER_DESC bufferDesc;
 	ZeroMemory(&bufferDesc, sizeof(bufferDesc));				//０でクリア。
 	bufferDesc.Usage = D3D11_USAGE_DEFAULT;						//バッファで想定されている、読み込みおよび書き込み方法。
-	bufferDesc.ByteWidth = Raundup16(bufferSize);	//バッファは16バイトアライメントになっている必要がある。
+	bufferDesc.ByteWidth = (((bufferSize - 1) / 16) + 1) * 16;	//バッファは16バイトアライメントになっている必要がある。
 																//アライメントって→バッファのサイズが16の倍数ということです。
 	bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;			//バッファをどのようなパイプラインにバインドするかを指定する。
 																//定数バッファにバインドするので、D3D11_BIND_CONSTANT_BUFFERを指定する。
@@ -138,12 +138,12 @@ void SkinModel::UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVect
 	//CQuaternion qRot;
 	//qRot.SetRotationDeg(CVector3::AxisY(), g_pad[0].GetLStickXF());
 	//qRot.Multiply(m_light.directionlight.direction);
-	//if (g_pad[0].IsPress(enButtonLeft)) {
-	//	m_light.specPow = max(0.0f, m_light.specPow - 0.5f);
-	//}
-	//if (g_pad[0].IsPress(enButtonRight)) {
-	//	m_light.specPow = min(100.0f, m_light.specPow + 0.5f);
-	//}
+	if (g_pad[0].IsPress(enButtonLeft)) {
+		m_light.specPow = max(0.0f, m_light.specPow - 0.5f);
+	}
+	if (g_pad[0].IsPress(enButtonRight)) {
+		m_light.specPow = min(100.0f, m_light.specPow + 0.5f);
+	}
 }
 
 void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMatrix)

@@ -21,7 +21,7 @@ Stage::Stage(int No)
 
 	if (No == 0) {
 		m_level.Init(L"Assets/level/level00.tkl", [&](LevelObjectData& objData)->bool {
-			if (objData.ForwardMatchName(L"unityChan") == true) {
+			if (objData.ForwardMatchName(L"Chara_4Hero") == true) {
 				//プレイヤー
 				g_game->GetPlayer()->SetPosition(objData.position);
 				return true;
@@ -76,7 +76,7 @@ Stage::Stage(int No)
 	}
 	else  if (No == 1) {
 		m_level.Init(L"Assets/level/level01.tkl", [&](LevelObjectData& objData)->bool {
-			if (objData.EqualName(L"unityChan") == true) {
+			if (objData.EqualName(L"Chara_4Hero") == true) {
 				//プレイヤー
 				g_game->GetPlayer()->SetPosition(objData.position);
 				return true;

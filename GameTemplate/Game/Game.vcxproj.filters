@@ -311,6 +311,8 @@
     <MeshContentTask Include="Assets\modelData\Green_Cube.fbx" />
     <MeshContentTask Include="Assets\modelData\Stage2.fbx" />
     <MeshContentTask Include="Assets\modelData\Island.fbx" />
+    <MeshContentTask Include="Assets\modelData\Chara_4Hero.fbx" />
+    <MeshContentTask Include="Assets\modelData\Chara_4Hero1.fbx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\animData\walk.tka">
@@ -347,6 +349,7 @@
       <Filter>Assets\animData</Filter>
     </None>
     <None Include="Assets\animData\salute.tka" />
+    <None Include="Assets\animData\punch.tka" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\StoneMonster.png">
@@ -359,7 +362,7 @@
     <Image Include="Assets\modelData\ground_grass.tga" />
     <Image Include="Assets\modelData\MARBOCTB.GIF" />
     <Image Include="Assets\modelData\PLASTERT.TGA" />
-    <Image Include="Assets\sprite\yaji.png" />
+    <Image Include="Assets\modelData\Texture_Chara_4Hero_Normal.tga" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\test.png">
@@ -377,5 +380,6 @@
     <ImageContentTask Include="Assets\sprite\gameover.png" />
     <ImageContentTask Include="Assets\sprite\stagecrear.png" />
     <ImageContentTask Include="Assets\modelData\Pixel Cube Atlas.png" />
+    <ImageContentTask Include="Assets\sprite\yaji.png" />
   </ItemGroup>
 </Project>

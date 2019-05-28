@@ -246,7 +246,8 @@ float4 PSMain( PSInput In ) : SV_Target0
 			float3 toEyeDir = normalize(eyePos - In.worldPos);
 
 			//求めたtoEyeDirの反射ベクトルを求める。
-			float3 reflectEyeDir = -toEyeDir + 2 * dot(In.Normal, toEyeDir) * In.Normal;
+			float3 reflectEyeDir = reflect(-toEyeDir, normal);
+			//float3 reflectEyeDir = -toEyeDir + 2 * dot(In.Normal, toEyeDir) * In.Normal;
 
 			//求めた反射ベクトルとディレクションライトの方向との内積を取って、スペキュラの強さを計算する。
 			float t = max(0.0f, dot(reflectEyeDir, -directionLight.direction));
@@ -295,7 +296,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 
 	float4 finalColor = float4(0.0f, 0.0f,0.0f, 1.0f);
    // finalColor.xyz = albedoColor.xyz * lig + albedoColor.xyz * directionLight.ambientLight.xyz;
-	finalColor.xyz = albedoColor.xyz * lig;
+	finalColor.xyz += albedoColor.xyz * lig;
 	finalColor.xyz += albedoColor.xyz* directionLight.ambientLight;
 	return finalColor;
 }

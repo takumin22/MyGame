@@ -32,6 +32,11 @@ public:
 	/// 移動処理
 	/// </summary>
 	void Move();
+	/// <summary>
+	/// 攻撃
+	/// </summary>
+	void Attack();
+	/// </summary>
 	/// 回転
 	/// </summary>
 	void Turn();
@@ -163,6 +168,7 @@ private:
 		enAnimationClip_idle,		//待機アニメーション。
 		enAnimationClip_run,		//走りアニメーション。
 		enAnimationClip_walk,		//歩きアニメーション。
+		enAnimationClip_attack,		//歩きアニメーション。
 		enAnimationClip_jump,		//ジャンプアニメーション。
 		enAnimationClip_damage,		//ダメージアニメーション
 		enAnimationClip_godown,		//ダウンアニメーション
@@ -177,6 +183,7 @@ private:
 		State_Idel,					//基本状態(歩)
 		State_MoveRun,				//ダッシ状態
 		State_Jump,					//ジャンプ状態
+		State_Attack,				//攻撃状態。
 		State_Damage,				//ダメージ状態
 		State_Scaffold,				//足場上状態
 		State_Scaffold1,

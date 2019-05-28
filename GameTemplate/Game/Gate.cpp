@@ -26,7 +26,6 @@ void Gate::Open()
 {
 	if (m_stage->GetCoinCount() == 1) 
 	{
-
 		GateFlag = true;
 
 	}

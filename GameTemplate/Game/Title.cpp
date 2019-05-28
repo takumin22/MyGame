@@ -10,9 +10,9 @@ Title::Title()
 	m_sprite.Update(CVector3::Zero(), CQuaternion::Identity(), CVector3::One());
 	m_decisionse.Init(L"Assets/sound/Decision.wav");
 	m_decisionse.SetVolume(0.5f);
-	m_titlebgm.Init(L"Assets/sound/Title.wav");
-	m_titlebgm.SetVolume(0.8f);
-	m_titlebgm.Play(true);
+	//m_titlebgm.Init(L"Assets/sound/Title.wav");
+	//m_titlebgm.SetVolume(0.8f);
+	//m_titlebgm.Play(true);
 }
 
 
@@ -38,7 +38,7 @@ void Title::Update()
 	{
 
 		g_currentScene = new Game;
-		m_titlebgm.Stop();
+		//m_titlebgm.Stop();
 		g_fade->Fadeout();
 		delete this;
 	}
