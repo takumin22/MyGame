@@ -100,7 +100,7 @@ struct PSInput{
 	float3 Normal		: NORMAL;
 	float3 Tangent		: TANGENT;
 	float2 TexCoord 	: TEXCOORD0;
-	float4 worldPos		: TEXCOORD1;	//ワールド座標。
+	float3 worldPos		: TEXCOORD1;	//ワールド座標。
 	float4 posInLVP		: TEXCOORD2;	//ライトビュープロジェクション空間での座標。
 };
 /// <summary>
@@ -132,18 +132,23 @@ float4x4 CalcSkinMatrix(VSInputNmTxWeights In)
 PSInput VSMain( VSInputNmTxVcTangent In ) 
 {
 	PSInput psInput = (PSInput)0;
-	float4 pos = mul(mWorld, In.Position);
-	float4 WPos = pos;
-	psInput.worldPos = pos;
+	//ローカル座標系からワールド座標系に変換する。
+	float4 worldPos = mul(mWorld, In.Position);
+	//鏡面反射のためにワールド座標をピクセルシェーダーに渡す。
+	psInput.worldPos = worldPos.xyz;
+	//ワールド座標系からカメラ座標系に変換する。
+	psInput.Position = mul(mView, worldPos);
+	//カメラ座標系からスクリーン座標系に変換する。
+	psInput.Position = mul(mProj, psInput.Position);
 	if (isShadowReciever == 1) {
 		//続いて、ライトビュープロジェクション空間に変換。
-		psInput.posInLVP = mul(mLightView,WPos);
+		psInput.posInLVP = mul(mLightView, worldPos);
 		psInput.posInLVP = mul(mLightProj, psInput.posInLVP);
 	}
 
-	pos = mul(mView, pos);
-	pos = mul(mProj, pos);
-	psInput.Position = pos;
+	//pos = mul(mView, pos);
+	//pos = mul(mProj, pos);
+	//psInput.Position = pos;
 	
 	psInput.TexCoord = In.TexCoord;
 	psInput.Normal = normalize(mul(mWorld, In.Normal));
@@ -246,11 +251,10 @@ float4 PSMain( PSInput In ) : SV_Target0
 			float3 toEyeDir = normalize(eyePos - In.worldPos);
 
 			//求めたtoEyeDirの反射ベクトルを求める。
-			float3 reflectEyeDir = reflect(-toEyeDir, normal);
-			//float3 reflectEyeDir = -toEyeDir + 2 * dot(In.Normal, toEyeDir) * In.Normal;
+			float3 reflectEyeDir = -toEyeDir + 2 * dot(normal, toEyeDir) * normal;
 
 			//求めた反射ベクトルとディレクションライトの方向との内積を取って、スペキュラの強さを計算する。
-			float t = max(0.0f, dot(reflectEyeDir, -directionLight.direction));
+			float t = max(0.0f, dot(-directionLight.direction,reflectEyeDir));
 			//float specPower = 1.0f;
 			//if (isHasSpecularMap) {
 			//	//スペキュラマップがある。

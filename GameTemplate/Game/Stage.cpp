@@ -155,7 +155,7 @@ void Stage::Draw()
 	for (auto& enemy : m_enemyList) {
 		enemy->Draw();
 	}
-	if (EnemyCount >= 2) {
+	if (EnemyCount >= 0) {
 	
 	
 		if (SEflag == true) {
@@ -178,7 +178,7 @@ void Stage::Draw()
 void Stage::Update()
 {
 	//バネの更新。
-	if (EnemyCount >= 2) {
+	if (EnemyCount >= 0) {
 		for (auto& spring : m_springList) {
 			spring->Update();
 		}

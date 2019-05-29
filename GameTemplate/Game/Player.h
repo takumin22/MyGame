@@ -187,6 +187,7 @@ private:
 		State_Damage,				//ダメージ状態
 		State_Scaffold,				//足場上状態
 		State_Scaffold1,
+		State_TurnScaffold,
 		State_InvincibleCount,		//無敵時間状態
 		State_SpringJump,			//バネジャンプ状態
 		State_Return,				//復帰状態
@@ -211,6 +212,7 @@ private:
 	int Time = 0;										//無敵時間
 	int DamageCount = 0;								//ダメージ量のカウント
 	int Zanki = 4;										//残機
+	int armboneNo = -1;
     Enemy* m_enemy[10];									//エネミー
 	Spring* m_spring[10];								//ジャンプ台
 	Coin* m_coin[100];									//コイン
@@ -219,6 +221,7 @@ private:
 	TurnScaffold* m_turnscaffold[10];					//回転する足場
 	bool syoutotuflag = false;							//衝突フラグ
 	bool syoutotuflag1 = false;							//衝突フラグ1
+	bool syoutotuflag2 = false;							//衝突フラグ1
 	CSoundSource m_spjumpse;							//ジャンプ台に乗った時の音
 	float m_deltatime = 1.0f / 30.0f;                   //1フレームの経過時間
 	Effekseer::Effect* m_sampleEffect = nullptr;

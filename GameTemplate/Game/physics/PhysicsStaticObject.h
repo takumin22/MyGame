@@ -29,8 +29,10 @@ public:
 		*/
 	void CreateMeshObject(SkinModel& skinModel, CVector3 pos, CQuaternion rot);
 	void PhysicsStaticObject::Releasehantei();
+	void hogege();
 	
 private:
 	MeshCollider m_meshCollider;		//!<メッシュコライダー。
 	RigidBody m_rigidBody;				//!<剛体。
+	bool Hantei = false; //判定用のフラグ
 };

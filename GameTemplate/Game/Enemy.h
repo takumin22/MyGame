@@ -61,6 +61,7 @@ public:
 	void SetEPosition(CVector3 epos)
 	{
 		m_position = epos;
+		m_charaCon.SetPosition(epos);
 	}
 	/// <summary>
 	/// ƒ|ƒWƒVƒ‡ƒ“‚ðŽæ“¾

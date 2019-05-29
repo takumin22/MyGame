@@ -23,6 +23,14 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw();
+	CQuaternion GetRotation()
+	{
+		return m_rotation;
+	}
+	CVector3 GetPosition()
+	{
+		return m_position;
+	}
 private:
 	SkinModel m_model;									//スキンモデル。
 	CVector3 m_position = CVector3::Zero();				//座標。

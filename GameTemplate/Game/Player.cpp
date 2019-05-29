@@ -174,15 +174,19 @@ void Player::Turn()
 }
 void Player::AnimationControl()
 {
+	CVector3 move = CVector3::Zero();
+    move.x = g_pad[0].GetLStickXF();
+	move.z = g_pad[0].GetLStickYF();
+	move.y = 0.0f;
 	if ( m_charaCon.IsJump() == true) {
 		m_animation.Play(enAnimationClip_jump,0.2);
 	}
 	else if (m_pstate) {
-		if ( m_moveSpeed.Length() >= 300.0f ) {
+		if ( move.Length() > 0.7f ) {
 			//走りモーション。
 			m_animation.Play(enAnimationClip_run, 0.2f);
 		}
-		else if (m_moveSpeed.Length() >= 30.0f) {
+		else if (move.Length() > 0.0001f || move.Length() < -0.0001) {
 			//歩きモーション。
 			m_animation.Play(enAnimationClip_walk, 0.2f);
 		}
@@ -201,7 +205,7 @@ void Player::AnimationControl()
 		{
 			m_animation.Play(enAnimationClip_godown, 0.3);
 		}
-		else {
+		else if( move.Length() == 0.0f){
 			//待機モーション
 			m_animation.Play(enAnimationClip_idle, 0.2f);
 		}
@@ -210,7 +214,21 @@ void Player::AnimationControl()
 }
 void Player::Attack()
 {
-
+	int hoge = -1;
+	int num = m_model.GetSkeleton().GetNumBones();
+	for (int i = 0; i < num; i++) {
+		auto bonename = m_model.GetSkeleton().GetBone(i)->GetName();
+		wchar_t moveFilePath[256];
+		swprintf_s(moveFilePath, L"Character1_RightHand");
+		//腕のボーン番号を名前で取得
+		int result = wcscmp(moveFilePath, bonename);
+		if (result == 0)
+		{
+			hoge = m_model.GetSkeleton().GetBone(i)->GetNo();
+			break;
+		}
+	}
+	armboneNo = hoge;
 }
 void Player::Damage()
 {
@@ -323,6 +341,23 @@ void Player::AABB()
 	else {
 		syoutotuflag1 = false; //衝突していない
 	}
+
+	auto vMax2 = m_turnscaffold[0]->GetPosition();
+	auto vMin2 = vMax2;
+	vMax2.x += 200.0f;
+	vMax2.y += 200.0f;
+	vMax2.z += 200.0f;
+	vMin2.x -= 200.0f;
+	vMin2.y -= 200.0f;
+	vMin2.z -= 200.0f;
+	if (m_position.x <= vMax2.x && m_position.x >= vMin2.x &&
+		m_position.y <= vMax2.y && m_position.y >= vMin2.y &&
+		m_position.z >= vMin2.z && m_position.z <= vMax2.z) {
+		syoutotuflag2 = true;   // 衝突！！
+	}
+	else {
+		syoutotuflag2 = false; //衝突していない
+	}
 }
 void Player::Scafflod()
 {
@@ -336,9 +371,9 @@ void Player::Scafflod()
 	else if (syoutotuflag == false&& syoutotuflag1 == false && m_moveSpeed.LengthSq() < 50.0f * 50.0f) {
 		m_pstate = State_Idel;
 	}
-	else if (syoutotuflag == false && syoutotuflag1 == false && m_moveSpeed.LengthSq() > 0.001f) {
-		m_pstate = State_MoveRun;
-	}
+	//else if (syoutotuflag == false && syoutotuflag1 == false && m_moveSpeed.LengthSq() > 50.0f * 50.0f) {
+	//	m_pstate = State_MoveRun;
+	//}
 
     if (syoutotuflag1 == true) {
 
@@ -349,6 +384,11 @@ void Player::Scafflod()
 }
 void Player::Update()
 {
+	CVector3 move = CVector3::Zero();
+	move.x = g_pad[0].GetLStickXF();
+	move.z = g_pad[0].GetLStickYF();
+	move.y = 0.0f;
+	CQuaternion qRot;
 		static float JUMP_SPEED = 700.0f;
 		Turn();
 		AnimationControl();
@@ -368,7 +408,7 @@ void Player::Update()
 			m_moveSpeed.y = JUMP_SPEED;
 			m_pstate = State_Jump;
 		}
-		 if (m_moveSpeed.LengthSq() > 0.001f * 0.001f) {
+		 if (move.Length() >= 0.7f) {
 			//入力がある。
 			m_pstate = State_MoveRun;
 		}
@@ -382,6 +422,10 @@ void Player::Update()
 			//プレイヤーをスタート位置に戻す
 			m_pstate = State_Return;
 		}
+		if (syoutotuflag2 == true)
+		{
+			
+		}
 		break;
 	case State_MoveRun:
 		Move();
@@ -391,7 +435,7 @@ void Player::Update()
 			SpringJump();
 		}
 		
-		if (m_moveSpeed.LengthSq() < 30.0f * 30.0f) {
+		if (move.Length() < 0.7f ) {
 			//入力がなくなった。
 			m_pstate = State_Idel;
 		}
@@ -411,11 +455,16 @@ void Player::Update()
 		if (g_game->GetGoal() == true) {
 			m_pstate = State_Goal;
 		}
+		if (syoutotuflag2 == true)
+		{
+			qRot.SetRotationDeg(CVector3::AxisY(), 2.0f);
+			m_rotation.Multiply(qRot);
+		}
 		break;
 	case State_Jump:
 		Move();
 		if (!m_charaCon.IsJump()) {
-			if (m_moveSpeed.LengthSq() < 30.0f * 30.0f) {
+			if (move.Length() < 0.7f) {
 				//入力がなくなった。
 				m_pstate = State_Idel;
 			}
@@ -461,7 +510,7 @@ void Player::Update()
 		//この時点でのXZ方向の速度を記憶しておく。
 		m_moveSpeedWhenStartJump = m_moveSpeed.Length();
 		m_moveSpeed.y = JUMP_SPEED;
-		//m_pstate = State_Jump;Unity
+		//m_pstate = State_Jump;
 	}
        m_charaCon.SetPosition(m_position);
 		break;
@@ -470,7 +519,7 @@ void Player::Update()
 		Scafflod();
 		if (m_scaffold[0]->GetState() == m_scaffold[0]->State_FrontMove) {
 			
-			
+			m_position.z -= 5.0f;
 		}
 		else if (m_scaffold[0]->GetState() == m_scaffold[0]->State_BackMove) {
 				m_position.z += 5.0f;
@@ -502,7 +551,8 @@ void Player::Update()
 		}
 		break;
 	case State_Deth:  //死亡
-	
+		m_moveSpeed.x = 0.0f;
+		m_moveSpeed.z = 0.0f;
 		Time++;
 		if (Time >= 60.0f) {
 			m_pstate = State_Return;
