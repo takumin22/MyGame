@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Coin.h"
-#include "Player.h"
+#include "Player/Player.h"
 #include "Game.h"
 #include "graphics/ShadowMap.h"
 #include "Gate.h"

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IScene.h"
-#include "Player.h"
+#include "Player/Player.h"
 #include "level/Level.h"
 #include "Title.h"
 #include "GameCamera.h"
@@ -18,6 +18,7 @@
 #include "sound/SoundEngine.h"
 #include "sound/SoundSource.h"
 #include "graphics/RenderTarget.h"
+#include"graphics/sky.h"
 
 
 //これらは前方宣言でよい！
@@ -119,6 +120,7 @@ private:
 	Goal m_goal;                            //ゴール
 	Coin* m_coin;                           //コイン
 	Stage* m_stage;                         //ステージ
+	sky*					m_cubemap = nullptr;					//キューブマップクラスのポインター
 	GameCamera m_gameCamera;				//ゲームカメラ。
 	RenderTarget m_mainRenderTarget;		//メインレンダリングターゲット。
 	Level m_level;							//レベルを初期化。

@@ -1,7 +1,7 @@
 #pragma once
 #include "sound/SoundEngine.h"
 #include "sound/SoundSource.h"
-#include "Player.h"
+#include "Player/Player.h"
 #include "Gate.h"
 
 class Gate;

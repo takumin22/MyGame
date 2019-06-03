@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "TurnScaffold.h"
-#include "Player.h"
+#include "Player/Player.h"
 
 
 TurnScaffold::TurnScaffold(CVector3 pos, CQuaternion rot, Player* player):

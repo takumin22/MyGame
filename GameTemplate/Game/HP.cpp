@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "HP.h"
-#include "Player.h"
+#include "Player/Player.h"
 #include "Game.h"
 
 HP::HP()

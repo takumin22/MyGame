@@ -138,12 +138,12 @@ void SkinModel::UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVect
 	//CQuaternion qRot;
 	//qRot.SetRotationDeg(CVector3::AxisY(), g_pad[0].GetLStickXF());
 	//qRot.Multiply(m_light.directionlight.direction);
-	if (g_pad[0].IsPress(enButtonLeft)) {
-		m_light.specPow = max(0.0f, m_light.specPow - 0.5f);
-	}
-	if (g_pad[0].IsPress(enButtonRight)) {
-		m_light.specPow = min(100.0f, m_light.specPow + 0.5f);
-	}
+	//if (g_pad[0].IsPress(enButtonLeft)) {
+	//	m_light.specPow = max(0.0f, m_light.specPow - 0.5f);
+	//}
+	//if (g_pad[0].IsPress(enButtonRight)) {
+	//	m_light.specPow = min(100.0f, m_light.specPow + 0.5f);
+	//}
 }
 
 void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMatrix)

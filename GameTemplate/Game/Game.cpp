@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Game.h"
-#include "Player.h"
+#include "Player/Player.h"
 #include "level/Level.h"
 #include "GameCamera.h"
 #include "Enemy.h"
@@ -21,6 +21,8 @@ Game::Game()
 {
 	g_game = this;
 	m_stage = new Stage(StageNo++);
+	//m_cubemap = new sky;
+	//m_cubemap->Init(L"Resource/sprite/CLOUD2.dds", L"Assets/modelData/sky.cmo", CVector3{ 1000000.0f,1000000.0f,1000000.0f });
 	m_goalsprite.Init(L"Resource/sprite/kari.dds", 1280, 720);
 	m_stagecrear.Init(L"Resource/sprite/stagecrear.dds", 1280, 720);
 	m_gameCamera.SetPlayer(&m_player);
@@ -45,7 +47,7 @@ Game::Game()
 
 Game::~Game()
 {
-
+	delete m_cubemap;
 	delete m_stage;
 	if (m_frameBufferRenderTargetView != nullptr) {
 		m_frameBufferRenderTargetView->Release();

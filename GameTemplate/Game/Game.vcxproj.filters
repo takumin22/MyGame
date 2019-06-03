@@ -75,7 +75,6 @@
     <ClCompile Include="level\Level.cpp">
       <Filter>level</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="GameCamera.cpp" />
@@ -84,9 +83,6 @@
     <ClCompile Include="Scaffold.cpp" />
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="Title.cpp" />
-    <ClCompile Include="graphics\SkinModelEffect.cpp">
-      <Filter>graphics</Filter>
-    </ClCompile>
     <ClCompile Include="graphics\SkinModelDataManager.cpp">
       <Filter>graphics</Filter>
     </ClCompile>
@@ -144,6 +140,12 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Gameover.cpp" />
     <ClCompile Include="character\SpringCamera.cpp" />
+    <ClCompile Include="Player\Player.cpp" />
+    <ClCompile Include="Player\Player_Move.cpp" />
+    <ClCompile Include="Player\Player_State.cpp" />
+    <ClCompile Include="Player\Player_StateMachine.cpp" />
+    <ClCompile Include="graphics\SkinModelEffect.cpp" />
+    <ClCompile Include="graphics\sky.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -191,7 +193,6 @@
     <ClInclude Include="level\MapChip.h">
       <Filter>level</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="Enemy.h" />
@@ -258,128 +259,77 @@
     <ClInclude Include="Gameover.h" />
     <ClInclude Include="character\SpringCamera.h" />
     <ClInclude Include="graphics\SkinModelShaderConst.h" />
+    <ClInclude Include="Player\Player.h" />
+    <ClInclude Include="Player\Player_Move.h" />
+    <ClInclude Include="Player\Player_State.h" />
+    <ClInclude Include="Player\PlState.h" />
+    <ClInclude Include="Player\Player_StateMachine.h" />
+    <ClInclude Include="graphics\sky.h" />
   </ItemGroup>
   <ItemGroup>
-    <MeshContentTask Include="Assets\modelData\unityChan.fbx">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\animData\UnityChanAnim.fbx">
-      <Filter>Assets\animData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\background.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\enemy.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\enemy_00.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\StoneMonster.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\Skeleton%40Skin.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\karasiba.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\star1.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\Stage0.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\Spring.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\Dammy.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\turnasiba.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\SlimeLevel1.fbx">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\kkk.fbx" />
-    <MeshContentTask Include="Assets\modelData\Stage01.FBX" />
-    <MeshContentTask Include="Assets\modelData\fence_gate.FBX" />
-    <MeshContentTask Include="Assets\modelData\Coin.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\Green_Cube.fbx" />
-    <MeshContentTask Include="Assets\modelData\Stage2.fbx" />
-    <MeshContentTask Include="Assets\modelData\Island.fbx" />
+    <Image Include="Assets\modelData\104677.jpg" />
+    <Image Include="Assets\modelData\ASHSEN_2.GIF" />
+    <Image Include="Assets\modelData\BUBINGA.JPG" />
+    <Image Include="Assets\modelData\ground_grass.tga" />
+    <Image Include="Assets\modelData\MARBOCTB.GIF" />
+    <Image Include="Assets\modelData\Pixel Cube Atlas.png" />
+    <Image Include="Assets\modelData\PLASTERT.TGA" />
+    <Image Include="Assets\modelData\StoneMonster.png" />
+    <Image Include="Assets\modelData\Texture_Chara_4Hero_Normal.tga" />
+    <Image Include="Assets\modelData\utc_ao.png" />
+    <Image Include="Assets\modelData\utc_nomal.tga" />
+    <Image Include="Assets\modelData\utc_spec.tga" />
+  </ItemGroup>
+  <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Chara_4Hero.fbx" />
     <MeshContentTask Include="Assets\modelData\Chara_4Hero1.fbx" />
+    <MeshContentTask Include="Assets\modelData\Coin.FBX" />
+    <MeshContentTask Include="Assets\modelData\Dammy.FBX" />
+    <MeshContentTask Include="Assets\modelData\enemy.FBX" />
+    <MeshContentTask Include="Assets\modelData\enemy_00.FBX" />
+    <MeshContentTask Include="Assets\modelData\enemy1.FBX" />
+    <MeshContentTask Include="Assets\modelData\fence_gate.FBX" />
+    <MeshContentTask Include="Assets\modelData\fence_single.FBX" />
+    <MeshContentTask Include="Assets\modelData\Green_Cube.fbx" />
+    <MeshContentTask Include="Assets\modelData\Island.fbx" />
+    <MeshContentTask Include="Assets\modelData\karasiba.FBX" />
+    <MeshContentTask Include="Assets\modelData\kkk.fbx" />
+    <MeshContentTask Include="Assets\modelData\Skeleton%40Skin.FBX" />
+    <MeshContentTask Include="Assets\modelData\SlimeLevel1.fbx" />
+    <MeshContentTask Include="Assets\modelData\Spring.FBX" />
+    <MeshContentTask Include="Assets\modelData\Stage0.FBX" />
+    <MeshContentTask Include="Assets\modelData\Stage01.FBX" />
+    <MeshContentTask Include="Assets\modelData\Stage2.fbx" />
+    <MeshContentTask Include="Assets\modelData\star.FBX" />
+    <MeshContentTask Include="Assets\modelData\star1.FBX" />
+    <MeshContentTask Include="Assets\modelData\StoneMonster.FBX" />
+    <MeshContentTask Include="Assets\modelData\turnasiba.FBX" />
+    <MeshContentTask Include="Assets\modelData\unityChan.fbx" />
+    <MeshContentTask Include="Assets\animData\UnityChanAnim.fbx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\animData\walk.tka">
-      <Filter>Assets\animData</Filter>
-    </None>
-    <None Include="Assets\animData\run.tka">
-      <Filter>Assets\animData</Filter>
-    </None>
-    <None Include="Assets\animData\standing.tka">
-      <Filter>Assets\animData</Filter>
-    </None>
-    <None Include="Assets\animData\jump.tka">
-      <Filter>Assets\animData</Filter>
-    </None>
-    <None Include="Assets\modelData\enemy_00.X">
-      <Filter>Assets\modelData</Filter>
-    </None>
-    <None Include="Assets\animData\damage.tka">
-      <Filter>Assets\animData</Filter>
-    </None>
-    <None Include="Assets\animData\godown.tka">
-      <Filter>Assets\animData</Filter>
-    </None>
-    <None Include="Assets\animData\sliding.tka">
-      <Filter>Assets\animData</Filter>
-    </None>
-    <None Include="Assets\animData\spring.tka">
-      <Filter>Assets\animData</Filter>
-    </None>
-    <None Include="Assets\animData\toptojump.tka">
-      <Filter>Assets\animData</Filter>
-    </None>
-    <None Include="Assets\animData\toptoground.tka">
-      <Filter>Assets\animData</Filter>
-    </None>
+    <None Include="Assets\animData\damage.tka" />
+    <None Include="Assets\animData\toptoground.tka" />
+    <None Include="Assets\animData\toptojump.tka" />
+    <None Include="Assets\animData\standing.tka" />
+    <None Include="Assets\animData\spring.tka" />
+    <None Include="Assets\animData\sliding.tka" />
     <None Include="Assets\animData\salute.tka" />
+    <None Include="Assets\animData\run.tka" />
+    <None Include="Assets\animData\walk.tka" />
+    <None Include="Assets\animData\jump.tka" />
+    <None Include="Assets\animData\godown.tka" />
     <None Include="Assets\animData\punch.tka" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\modelData\StoneMonster.png">
-      <Filter>Assets\modelData</Filter>
-    </Image>
-    <Image Include="Assets\modelData\ASHSEN_2.GIF" />
-    <Image Include="Assets\modelData\104677.jpg" />
-    <Image Include="Assets\modelData\BUBINGA.JPG" />
-    <Image Include="Assets\modelData\ferns.tga" />
-    <Image Include="Assets\modelData\ground_grass.tga" />
-    <Image Include="Assets\modelData\MARBOCTB.GIF" />
-    <Image Include="Assets\modelData\PLASTERT.TGA" />
-    <Image Include="Assets\modelData\Texture_Chara_4Hero_Normal.tga" />
-  </ItemGroup>
-  <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\test.png">
-      <Filter>Assets\sprite</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\sprite\kari.png">
-      <Filter>Assets\sprite</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\sprite\taittol.png" />
-    <ImageContentTask Include="Assets\sprite\tairyoku.png" />
-    <ImageContentTask Include="Assets\modelData\utc_nomal.tga" />
-    <ImageContentTask Include="Assets\modelData\utc_spec.tga" />
-    <ImageContentTask Include="Assets\modelData\utc_ao.png" />
     <ImageContentTask Include="Assets\sprite\White.png" />
+    <ImageContentTask Include="Assets\sprite\CLOUD2.JPG" />
     <ImageContentTask Include="Assets\sprite\gameover.png" />
+    <ImageContentTask Include="Assets\sprite\kari.png" />
     <ImageContentTask Include="Assets\sprite\stagecrear.png" />
-    <ImageContentTask Include="Assets\modelData\Pixel Cube Atlas.png" />
+    <ImageContentTask Include="Assets\sprite\tairyoku.png" />
+    <ImageContentTask Include="Assets\sprite\taittol.png" />
+    <ImageContentTask Include="Assets\sprite\test.png" />
     <ImageContentTask Include="Assets\sprite\yaji.png" />
   </ItemGroup>
 </Project>

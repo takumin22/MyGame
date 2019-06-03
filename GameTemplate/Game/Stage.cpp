@@ -2,7 +2,7 @@
 #include "Stage.h"
 #include "Enemy.h"
 #include"Game.h"
-#include "Player.h"
+#include "Player/Player.h"
 #include "Scaffold.h"
 #include "TurnScaffold.h"
 #include "level/Level.h"

@@ -12,7 +12,7 @@ Texture2D<float4> g_shadowMap : register(t4);		//todo シャドウマップ。
 Texture2D<float4> g_normalMap : register(t2);		//	法線マップ。
 Texture2D<float4> g_specularMap : register(t5);		//スペキュラマップ。
 Texture2D<float4> g_aoMap : register(t6);			//AOマップ。
-
+TextureCube<float4> skyCubeMap : register(t0);     //スカイキューブマップ
 //ボーン行列
 StructuredBuffer<float4x4> boneMatrix : register(t1);
 
@@ -348,6 +348,13 @@ PSInput_ShadowMap VSMain_ShadowMapSkin(VSInputNmTxWeights In)
 	pos = mul(mProj, pos);
 	psInput.Position = pos;	
 	return psInput;
+}
+
+float4 PSCubeMain(PSInput In) : SV_Target0
+{
+	float4 color = skyCubeMap.Sample(Sampler, In.Normal*-1.0f);
+	color.xyz *= 0.5f;
+	return color;
 }
 /// <summary>
 /// ピクセルシェーダーのエントリ関数。

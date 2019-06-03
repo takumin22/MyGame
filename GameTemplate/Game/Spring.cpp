@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Spring.h"
-#include "Player.h"
+#include "Player/Player.h"
 
 
 Spring::Spring(CVector3 pos, CQuaternion rot, Player* player):

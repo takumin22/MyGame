@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Scaffold.h"
-#include "Player.h"
+#include "Player/Player.h"
 #include "Stage.h"
 #include "Game.h"
 
@@ -22,6 +22,26 @@ Scaffold::~Scaffold()
 {
 }
 
+void Scaffold::AABB()
+{
+	//ŠÈˆÕ“I‚ÈAABB
+	auto vMax = m_position;
+	auto vMin = vMax;
+	vMax.x += 200.0f;
+	vMax.y += 200.0f;
+	vMax.z += 200.0f;
+	vMin.x -= 200.0f;
+	vMin.y -= 200.0f;
+	vMin.z -= 200.0f;
+	if (m_player->GetPosition().x <= vMax.x && m_player->GetPosition().x >= vMin.x &&
+		m_player->GetPosition().y <= vMax.y && m_player->GetPosition().y >= vMin.y &&
+		m_player->GetPosition().z >= vMin.z && m_player->GetPosition().z <= vMax.z) {
+		syoutotuflag = true;   // Õ“ËII
+	}
+	else {
+		syoutotuflag = false; //Õ“Ë‚µ‚Ä‚¢‚È‚¢
+	}
+}
 void Scaffold::FrontMove()
 {
 	m_position.z -= 5.0f;	
@@ -29,11 +49,10 @@ void Scaffold::FrontMove()
 void Scaffold::BackMove()
 {
 	m_position.z += 5.0f;
-	
-
 }
 void Scaffold::Update()
 {
+	AABB();
 
 	switch (m_sstate)
 	{

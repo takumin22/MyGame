@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Goal.h"
-#include "Player.h"
+#include "Player/Player.h"
 #include "Stage.h"
 #include "Game.h"
 

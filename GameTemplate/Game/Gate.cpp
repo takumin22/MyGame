@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Gate.h"
 #include "Coin.h"
-#include "Player.h"
+#include "Player/Player.h"
 #include "Stage.h"
 
 Gate::Gate(CVector3 pos, CQuaternion rot, Player* player, Stage* stage) :

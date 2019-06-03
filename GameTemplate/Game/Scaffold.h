@@ -22,6 +22,9 @@ public:
 	/// 更新
 	/// </summary>
 	void Update();
+
+	void AABB();
+
 	/// <summary>
 	/// 前方向移動
 	/// </summary>
@@ -54,7 +57,10 @@ public:
 	{
 		return m_sstate;
 	}
-
+	bool Getflag()
+	{
+		return syoutotuflag;
+	}
 private:
 	SState m_sstate = State_FrontMove;					//
 	SkinModel m_model;									//スキンモデル。
@@ -67,5 +73,6 @@ private:
 	PhysicsStaticObject m_phyStaticObject;				//静的物理オブジェクト
 	int Hantei = 0;
 	Stage* m_stage;
+	bool syoutotuflag = false;
 
 };

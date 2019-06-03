@@ -5,6 +5,8 @@
 #include "sound/SoundEngine.h"
 #include "sound/SoundSource.h"
 #include "level/Level.h"
+#include "Player_StateMachine.h"
+#include "PlState.h"
 
 class Enemy;
 class Spring;
@@ -29,17 +31,9 @@ public:
 	/// </summary>
 	void Update();
 	/// <summary>
-	/// 移動処理
-	/// </summary>
-	void Move();
-	/// <summary>
 	/// 攻撃
 	/// </summary>
 	void Attack();
-	/// </summary>
-	/// 回転
-	/// </summary>
-	void Turn();
 	/// <summary>
 	/// アニメーションコントロール
 	/// </summary>
@@ -61,10 +55,6 @@ public:
 	/// </summary>
 	void Scafflod();
 	/// <summary>
-	/// 簡易的なAABB
-	/// </summary>
-	void AABB();
-	/// <summary>
 	/// 描画
 	/// </summary>
 	void Draw();
@@ -81,6 +71,22 @@ public:
 	CVector3 GetRite()
 	{
 		return m_rite;
+	}
+	CQuaternion GetRotation()
+	{
+		return m_rotation;
+	}
+	void SetRotation(CQuaternion rot)
+	{
+		m_rotation = rot;
+	}
+	CVector3 GetMoveSpeed()
+	{
+		return m_moveSpeed;
+	}
+	void SetMoveSpeed(CVector3 move)
+	{
+		m_moveSpeed = move;
 	}
 	/// <summary>
 	/// プレイヤーのポジションを設定
@@ -160,45 +166,21 @@ public:
 	{
 		m_coin[N] = coin;
 	}
+	//アニメーションのステートのセッター。
+	void SetAnimation(PlState::EnAnimationClip state)
+	{
+		m_animation.Play(state, 0.2f);
+	}
+	const CharacterController& GetCharaCon()
+	{
+		return m_charaCon;
+	}
 private:
-	/// <summary>
-	/// アニメーションのenum
-	/// </summary>
-	enum EnAnimationClip {
-		enAnimationClip_idle,		//待機アニメーション。
-		enAnimationClip_run,		//走りアニメーション。
-		enAnimationClip_walk,		//歩きアニメーション。
-		enAnimationClip_attack,		//歩きアニメーション。
-		enAnimationClip_jump,		//ジャンプアニメーション。
-		enAnimationClip_damage,		//ダメージアニメーション
-		enAnimationClip_godown,		//ダウンアニメーション
-		enAnimationClip_toptojump,
-		enAnimationClip_salute,
-		enAnimationClip_Num,		//アニメーションクリップの総数。
-	};
-	/// <summary>
-	/// プレイヤーのステートのenum
-	/// </summary>
-	enum PState {
-		State_Idel,					//基本状態(歩)
-		State_MoveRun,				//ダッシ状態
-		State_Jump,					//ジャンプ状態
-		State_Attack,				//攻撃状態。
-		State_Damage,				//ダメージ状態
-		State_Scaffold,				//足場上状態
-		State_Scaffold1,
-		State_TurnScaffold,
-		State_InvincibleCount,		//無敵時間状態
-		State_SpringJump,			//バネジャンプ状態
-		State_Return,				//復帰状態
-		State_Deth ,				//死亡状態
-		State_Goal					//ゴール時状態
-	};
-	PState m_pstate = State_Idel;
 	SkinModel m_model;									//スキンモデル。
 	Animation m_animation;								//アニメーション。
-	AnimationClip m_animationClips[enAnimationClip_Num];//アニメーションクリップ。
+	AnimationClip m_animationClips[PlState::EnAnimationClip::enAnimationClip_Num];//アニメーションクリップ。
 	CVector3 m_position = CVector3::Zero();             //座標。
+	CVector3 m_oldposition = CVector3::Zero();			//スタート位置保存用
 	CVector3 m_moveSpeed = CVector3::Zero();			//移動速度。
 	CVector3 m_scale = CVector3::One();					//拡大率。
 	CQuaternion m_rotation = CQuaternion::Identity();   //回転。
@@ -208,7 +190,6 @@ private:
 	CVector3 m_forward = CVector3::Zero();				//前方向
 	CVector3 ambientColor = { 0.6f, 0.6f, 0.6f };		//環境光のカラー
 	CharacterController m_charaCon;						//キャラクターコントローラ
-	float m_moveSpeedWhenStartJump;						//ジャンプ前の移動速度
 	int Time = 0;										//無敵時間
 	int DamageCount = 0;								//ダメージ量のカウント
 	int Zanki = 4;										//残機
@@ -217,11 +198,9 @@ private:
 	Spring* m_spring[10];								//ジャンプ台
 	Coin* m_coin[100];									//コイン
 	HP m_hp;											//HP
+	Player_StateMachine m_stMa;
 	Scaffold* m_scaffold[2];							//動く足場
 	TurnScaffold* m_turnscaffold[10];					//回転する足場
-	bool syoutotuflag = false;							//衝突フラグ
-	bool syoutotuflag1 = false;							//衝突フラグ1
-	bool syoutotuflag2 = false;							//衝突フラグ1
 	CSoundSource m_spjumpse;							//ジャンプ台に乗った時の音
 	float m_deltatime = 1.0f / 30.0f;                   //1フレームの経過時間
 	Effekseer::Effect* m_sampleEffect = nullptr;
