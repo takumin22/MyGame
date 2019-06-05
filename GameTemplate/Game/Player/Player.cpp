@@ -100,10 +100,7 @@ Player::~Player()
 }
 void Player::AnimationControl()
 {
-	//CVector3 move = CVector3::Zero();
- //   move.x = g_pad[0].GetLStickXF();
-	//move.z = g_pad[0].GetLStickYF();
-	//move.y = 0.0f;
+
 	//if ( m_charaCon.IsJump() == true) {
 	//	m_animation.Play(enAnimationClip_jump,0.2);
 	//}
@@ -185,36 +182,38 @@ void Player::Damage()
 }
 void Player::SpringJump()
 {
-	//CVector3 springForward = CVector3::AxisY();
-	//m_rotation.Multiply(springForward);
-	////ジャンプ台からプレイヤーに伸びるベクトルを求める。
-	//CVector3 toPlayerDir = m_position - m_spring[0]->GetSPosition();
-	////ジャンプ台までの距離を求めておく。
-	//float toPlayerLen = toPlayerDir.Length();
-	////正規化
-	//toPlayerDir.Normalize();
-	////springForwardとtoPlayerDirとの内積を計算する。
-	//float d = springForward.Dot(toPlayerDir);
-	////内積の結果をacos関数に渡して、springForwardとtoPlayerDirのなす角を求める。
-	//float angle = acos(d);
+	if (g_game->GetNo() <= 1) {
+		CVector3 springForward = CVector3::AxisY();
+		m_rotation.Multiply(springForward);
+		//ジャンプ台からプレイヤーに伸びるベクトルを求める。
+		CVector3 toPlayerDir = m_position - m_spring[0]->GetSPosition();
+		//ジャンプ台までの距離を求めておく。
+		float toPlayerLen = toPlayerDir.Length();
+		//正規化
+		toPlayerDir.Normalize();
+		//springForwardとtoPlayerDirとの内積を計算する。
+		float d = springForward.Dot(toPlayerDir);
+		//内積の結果をacos関数に渡して、springForwardとtoPlayerDirのなす角を求める。
+		float angle = acos(d);
 
-	////ジャンプ台からプレイヤーに伸びるベクトルを求める。
-	//CVector3 toPlayerDjr = m_position - m_spring[1]->GetSPosition();
-	////ジャンプ台までの距離を求めておく。
-	//float toPlayerLan = toPlayerDjr.Length();
-	////正規化
-	//toPlayerDjr.Normalize();
-	////springForwardとtoPlayerDirとの内積を計算する。
-	//float e = springForward.Dot(toPlayerDjr);
-	////内積の結果をacos関数に渡して、springForwardとtoPlayerDirのなす角を求める。
-	//float ange = acos(e);
-	//	
-	//if (fabsf(angle) < CMath::DegToRad(50.0f)
-	//	&& toPlayerLen <= 70.0f ||
-	//	fabsf(ange) < CMath::DegToRad(50.0f)
-	//	&& toPlayerLan <= 70.0f) {
-	//	m_pstate = State_SpringJump;
-	//}
+		//ジャンプ台からプレイヤーに伸びるベクトルを求める。
+		CVector3 toPlayerDjr = m_position - m_spring[1]->GetSPosition();
+		//ジャンプ台までの距離を求めておく。
+		float toPlayerLan = toPlayerDjr.Length();
+		//正規化
+		toPlayerDjr.Normalize();
+		//springForwardとtoPlayerDirとの内積を計算する。
+		float e = springForward.Dot(toPlayerDjr);
+		//内積の結果をacos関数に渡して、springForwardとtoPlayerDirのなす角を求める。
+		float ange = acos(e);
+
+		if (fabsf(angle) < CMath::DegToRad(50.0f)
+			&& toPlayerLen <= 70.0f ||
+			fabsf(ange) < CMath::DegToRad(50.0f)
+			&& toPlayerLan <= 70.0f) {
+			m_moveSpeed.y += 1300.0f;
+		}
+	}
 		
 }
 void Player::PlayerPosRetrun()
@@ -231,16 +230,18 @@ void Player::PlayerPosRetrun()
 }
 void Player::Scafflod()
 {
-	for (int i = 0; i < 2; i++) {
-		if (m_scaffold[i]->Getflag() == true) {
+	if (g_game->GetNo() <= 1) {
+		for (int i = 0; i < 2; i++) {
+			if (m_scaffold[i]->Getflag() == true) {
 
-					if (m_scaffold[i]->GetState() == m_scaffold[i]->State_FrontMove) {
-						m_position.z -= 5.0f;
+				if (m_scaffold[i]->GetState() == m_scaffold[i]->State_FrontMove) {
+					m_position.z -= 5.0f;
 
-					}
-					else if (m_scaffold[i]->GetState() == m_scaffold[i]->State_BackMove) {
-						m_position.z += 5.0f;
-					}
+				}
+				else if (m_scaffold[i]->GetState() == m_scaffold[i]->State_BackMove) {
+					m_position.z += 5.0f;
+				}
+			}
 		}
 	}
 	m_charaCon.SetPosition(m_position);
@@ -256,6 +257,7 @@ void Player::Update()
 		static float JUMP_SPEED = 700.0f;
 		PlayerPosRetrun();
 		Scafflod();
+		SpringJump();
 		//Turn();
 		//AnimationControl();
 	//switch (m_pstate)

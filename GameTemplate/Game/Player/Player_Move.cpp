@@ -77,16 +77,6 @@ void Player_Move::Turn()
 		|| fabsf(m_moveSpeed.z) > 0.1f) {
 		auto angle = atan2f(m_moveSpeed.x, m_moveSpeed.z);
 		m_rotation.SetRotation(CVector3::AxisY(), angle);
-		//走るアニメーションの再生するためにステートの変更
-		if (m_player->GetCharaCon().IsOnGround()) {
-			m_player->SetAnimation(PlState::EnAnimationClip::enAnimationClip_run);
-		}
-	}
-	else {
-		//待機アニメーションの再生するためにステートの変更
-		if (m_player->GetCharaCon().IsOnGround()) {
-			m_player->SetAnimation(PlState::EnAnimationClip::enAnimationClip_idle);
-		}
 	}
 }
 
@@ -101,9 +91,27 @@ void Player_Move::Jump()
 		}
 	}
 
+
+}
+void Player_Move::MoveAnim()
+{
+	CVector3 move = CVector3::Zero();
+	move.x = g_pad[0].GetLStickXF();
+	move.z = g_pad[0].GetLStickYF();
+	move.y = 0.0f;
 	if (m_player->GetCharaCon().IsJump())
 	{
 		m_player->SetAnimation(PlState::EnAnimationClip::enAnimationClip_jump);
+	}
+
+	//走るアニメーションの再生するためにステートの変更
+	if (m_player->GetCharaCon().IsOnGround()) {
+		if (move.Length() > 0.001f) {
+			m_player->SetAnimation(PlState::EnAnimationClip::enAnimationClip_run);
+		}
+		else {
+			m_player->SetAnimation(PlState::EnAnimationClip::enAnimationClip_idle);
+		}
 	}
 }
 void Player_Move::Update()
@@ -113,6 +121,7 @@ void Player_Move::Update()
 	Move();
 	Turn();
 	Jump();
+	MoveAnim();
 	m_player->SetMoveSpeed(m_moveSpeed);
 	m_player->SetRotation(m_rotation);
 }

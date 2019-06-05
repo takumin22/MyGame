@@ -12,7 +12,7 @@
 #include "Title.h"
 #include "graphics/ShadowMap.h"
 #include "graphics/Camera.h"
-
+#include "sky.h"
 
 
 Game* g_game = nullptr;
@@ -20,9 +20,16 @@ Game* g_game = nullptr;
 Game::Game()
 {
 	g_game = this;
+	if (g_currentScene->GetSceneNo() == 1)
+	{
+		StageNo = 0;
+	}
+	else if (g_currentScene->GetSceneNo() == 2)
+	{
+		StageNo = 1;
+	}
 	m_stage = new Stage(StageNo++);
-	//m_cubemap = new sky;
-	//m_cubemap->Init(L"Resource/sprite/CLOUD2.dds", L"Assets/modelData/sky.cmo", CVector3{ 1000000.0f,1000000.0f,1000000.0f });
+	m_cubemap = new sky;
 	m_goalsprite.Init(L"Resource/sprite/kari.dds", 1280, 720);
 	m_stagecrear.Init(L"Resource/sprite/stagecrear.dds", 1280, 720);
 	m_gameCamera.SetPlayer(&m_player);
@@ -47,7 +54,6 @@ Game::Game()
 
 Game::~Game()
 {
-	delete m_cubemap;
 	delete m_stage;
 	if (m_frameBufferRenderTargetView != nullptr) {
 		m_frameBufferRenderTargetView->Release();
@@ -60,7 +66,7 @@ Game::~Game()
 void Game::Update()
 {
 
-
+	m_cubemap->Update();
 	switch (m_gstate)
 	{
 	case State_Default:
@@ -71,6 +77,10 @@ void Game::Update()
 		m_hp.Update();
 		m_stage->Update();
 		m_stagebgm.Play(true);
+		if (g_pad[0].IsTrigger(enButtonStart) == true)
+		{
+			m_gstate = State_Pose;
+		}
 		if (m_stage->GetEnemyCount() == 5)
 		{
 
@@ -122,6 +132,24 @@ void Game::Update()
 					m_gstate = State_TitleChange;
 				}
 			}
+		}
+		break;
+	case State_Pose:
+		m_pose.Updata();
+		if (g_pad[0].IsTrigger(enButtonA) == true && m_pose.GetFlag() == false)
+		{
+			m_gstate = State_Default;
+		}
+		if (ChangeFlag == false && m_pose.GetFlag() == true && g_fade->GetState() == Fade::idel) {
+			g_fade->Fadein();
+			ChangeFlag = true;
+
+		}
+		if (ChangeFlag == true && g_fade->GetState() == Fade::idel)
+		{
+			g_fade->Fadeout();
+			ChangeFlag = false;
+			m_gstate = State_TitleChange;
 		}
 		break;
 	case State_StageChange:
@@ -193,8 +221,11 @@ void Game::Draw()
 	m_player.Draw();
 	//ステージの描画
 	m_stage->Draw();
+	m_cubemap->Draw();
 	m_hp.Draw();
-
+	if (m_gstate == State_Pose) {
+		m_pose.Draw();
+	}
 	if (m_goal.GetGFlag() == false && m_stage->GetEnemyCount() >= 0) {
 		//ゴールを表示
 
@@ -224,7 +255,9 @@ void Game::Draw()
 		);
 
 		//秒の計算をする
-		taim = (int)m_time.GetAllSeconds() % 201;
+		if (m_gstate == !State_Pose) {
+			taim = (int)m_time.GetAllSeconds() % 201;
+		}
 		swprintf_s(toubatu, L"残り時間%d秒", (GAMETIME - taim));		//表示用にデータを加工
 		m_font.Draw(
 			toubatu,		//表示する文字列。
@@ -241,7 +274,7 @@ void Game::Draw()
 		m_goalsprite.Draw();
 
 		TimeScore = GAMETIME - taim;
-		swprintf_s(toubatu, L"スコア %d", m_stage->GetScore());
+		swprintf_s(toubatu, L"スコア", m_stage->GetScore());
 		m_font.Draw(
 			toubatu,		//表示する文字列。
 			{ -200.0f , 100.0f },			//表示する座標。0.0f, 0.0が画面の中心。

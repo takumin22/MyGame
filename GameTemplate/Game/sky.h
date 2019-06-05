@@ -6,13 +6,6 @@ public:
 	sky();
 	~sky();
 	/// <summary>
-	/// 初期化関数
-	/// </summary>
-	/// <param name="mapfilepath">テクスチャーファイルパス(L"filepath")</param>
-	/// <param name="modelfilePath">モデルファイルパス(L"filepath")</param>
-	/// <param name="scale">スケール(CVector3)</param>
-	void Init(const wchar_t* mapfilepath, const wchar_t* modelfilePath, CVector3 scale);
-	/// <summary>
 	/// アップデート関数
 	/// </summary>
 	void Update();
@@ -20,13 +13,6 @@ public:
 	/// 描画関数
 	/// </summary>
 	void Draw();
-	void Relese();
-	/// <summary>
-	/// ファイルからddsを作成する関数
-	/// </summary>
-	/// <param name="fileName">ファイルパス(L"filepath")</param>
-	/// <returns>bool</returns>
-	bool CreateFromDDSTextureFromFile(const wchar_t* fileName);
 	/// <summary>
 	/// スケールを再設定する関数
 	/// </summary>

@@ -145,7 +145,9 @@
     <ClCompile Include="Player\Player_State.cpp" />
     <ClCompile Include="Player\Player_StateMachine.cpp" />
     <ClCompile Include="graphics\SkinModelEffect.cpp" />
-    <ClCompile Include="graphics\sky.cpp" />
+    <ClCompile Include="sky.cpp" />
+    <ClCompile Include="StageSelect.cpp" />
+    <ClCompile Include="Pose.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -264,7 +266,9 @@
     <ClInclude Include="Player\Player_State.h" />
     <ClInclude Include="Player\PlState.h" />
     <ClInclude Include="Player\Player_StateMachine.h" />
-    <ClInclude Include="graphics\sky.h" />
+    <ClInclude Include="sky.h" />
+    <ClInclude Include="StageSelect.h" />
+    <ClInclude Include="Pose.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\104677.jpg" />
@@ -279,6 +283,7 @@
     <Image Include="Assets\modelData\utc_ao.png" />
     <Image Include="Assets\modelData\utc_nomal.tga" />
     <Image Include="Assets\modelData\utc_spec.tga" />
+    <Image Include="Assets\sprite\Pose.png" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Chara_4Hero.fbx" />
@@ -306,6 +311,7 @@
     <MeshContentTask Include="Assets\modelData\turnasiba.FBX" />
     <MeshContentTask Include="Assets\modelData\unityChan.fbx" />
     <MeshContentTask Include="Assets\animData\UnityChanAnim.fbx" />
+    <MeshContentTask Include="Assets\modelData\sky.FBX" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\animData\damage.tka" />
@@ -331,5 +337,7 @@
     <ImageContentTask Include="Assets\sprite\taittol.png" />
     <ImageContentTask Include="Assets\sprite\test.png" />
     <ImageContentTask Include="Assets\sprite\yaji.png" />
+    <ImageContentTask Include="Assets\sprite\taittol1.png" />
+    <ImageContentTask Include="Assets\sprite\StageSelect.jpeg" />
   </ItemGroup>
 </Project>

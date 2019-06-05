@@ -210,6 +210,10 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 		//スペキュラマップが設定されていたらレジスタt5に設定する。
 		d3dDeviceContext->PSSetShaderResources(5, 1, &m_specularMapSRV);
 	}
+	if (m_skyMapSRV != nullptr)
+	{
+		d3dDeviceContext->PSSetShaderResources(0, 1, &m_skyMapSRV);
+	}
 	//描画。
 	m_modelDx->Draw(
 		d3dDeviceContext,

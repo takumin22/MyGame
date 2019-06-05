@@ -26,8 +26,8 @@ void __cdecl ModelEffect::Apply(ID3D11DeviceContext* deviceContext)
 		deviceContext->PSSetShader((ID3D11PixelShader*)m_psShadowMap.GetBody(), NULL, 0);
 		break;
 	case enRenderMode_CubeMap:
-		m_psShader.Load("Assets/shader/model.fx", "PSCubeMain", Shader::EnType::PS);
-		m_pPSShader = &m_psShader;
+		deviceContext->PSSetShader((ID3D11PixelShader*)m_psSkyMap.GetBody(), NULL, 0);
+		deviceContext->VSSetShader((ID3D11VertexShader*)m_vsShader.GetBody(), NULL, 0);
 		break;
 	}
 

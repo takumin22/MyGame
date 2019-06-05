@@ -3,7 +3,7 @@
 
 Camera g_camera3D;		//3DƒJƒƒ‰B
 Camera g_camera2D;
-
+Camera g_cameraSelect;
 void Camera::Update()
 {
 

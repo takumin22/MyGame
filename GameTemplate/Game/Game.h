@@ -18,7 +18,8 @@
 #include "sound/SoundEngine.h"
 #include "sound/SoundSource.h"
 #include "graphics/RenderTarget.h"
-#include"graphics/sky.h"
+#include"sky.h"
+#include "Pose.h"
 
 
 //これらは前方宣言でよい！
@@ -27,7 +28,7 @@
 class Goal;
 class Stage;
 class Coin;
-
+class sky;
 //ゲームクラス。
 class Game : public IScene
 {
@@ -52,10 +53,11 @@ public:
 	/// ゲームのステートのenum
 	/// </summary>
 	enum GameState {
-		State_Default, //デフォルト状態
-		State_StageChange,//ステージ遷移中
-		State_TitleChange, //タイトル遷移中
-		State_GameOver
+		State_Default,		//デフォルト状態
+		State_StageChange,	//ステージ遷移中
+		State_Pose,
+		State_TitleChange,	//タイトル遷移中
+		State_GameOver		//ゲームオーバー
 	};
 
 	/// <summary>
@@ -115,12 +117,13 @@ public:
 private:
 
 	GameState m_gstate = State_Default;
-	int StageNo = 0;
+	int StageNo = 1;
 	Player m_player;						//プレイヤー
+	Pose m_pose;
 	Goal m_goal;                            //ゴール
 	Coin* m_coin;                           //コイン
 	Stage* m_stage;                         //ステージ
-	sky*					m_cubemap = nullptr;					//キューブマップクラスのポインター
+	sky*	m_cubemap;					//キューブマップクラスのポインター
 	GameCamera m_gameCamera;				//ゲームカメラ。
 	RenderTarget m_mainRenderTarget;		//メインレンダリングターゲット。
 	Level m_level;							//レベルを初期化。

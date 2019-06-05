@@ -95,6 +95,11 @@ public:
 	{
 		m_normalMapSRV = srv;
 	}
+	//法線マップを設定
+	void SetskyMap(ID3D11ShaderResourceView* srv)
+	{
+		m_skyMapSRV = srv;
+	}
 	/// <summary>
 	/// スペキュラマップを設定。
 	/// </summary>
@@ -184,4 +189,5 @@ private:
 	bool m_isShadowReciever = false;						//シャドウレシーバーのフラグ。
 	ID3D11ShaderResourceView* m_normalMapSRV = nullptr;		//線マップのSRV
 	ID3D11ShaderResourceView* m_specularMapSRV = nullptr;	//スペキュラマップのSRV
+	ID3D11ShaderResourceView* m_skyMapSRV = nullptr;	//スペキュラマップのSRV
 };

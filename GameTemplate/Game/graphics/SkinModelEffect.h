@@ -15,6 +15,8 @@ protected:
 	Shader m_psShader;
 	Shader m_vsShadowMap;			//シャドウマップ生成用の頂点シェーダー。
 	Shader m_psShadowMap;		//シャドウマップ生成用のピクセルシェーダー。
+	Shader m_vsSkyMap;
+	Shader m_psSkyMap;
 	bool isSkining;
 	ID3D11ShaderResourceView* m_albedoTex = nullptr;
 	std::array<ID3D11ShaderResourceView*, 4> m_albedoTextureStack = { nullptr };
@@ -30,6 +32,8 @@ public:
 		//todo シャドウマップ用のシェーダーをロード。
 		m_psShadowMap.Load("Assets/shader/model.fx", "PSMain_ShadowMap", Shader::EnType::PS);
 		//m_vsShadowMap.Load("Assets/shader/model.fx", "VSMain_ShadowMap", Shader::EnType::VS);
+		m_psSkyMap.Load("Assets/shader/model.fx", "PSCubeMain", Shader::EnType::PS);
+
 	}
 	virtual ~ModelEffect()
 	{
@@ -61,6 +65,10 @@ public:
 	void SetRenderMode(EnRenderMode renderMode)
 	{
 		m_renderMode = renderMode;
+	}
+	void InitSkyTexture()
+	{
+
 	}
 
 };

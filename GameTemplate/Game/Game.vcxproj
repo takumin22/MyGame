@@ -123,7 +123,6 @@
     <ClCompile Include="graphics\SkinModel.cpp" />
     <ClCompile Include="graphics\SkinModelDataManager.cpp" />
     <ClCompile Include="graphics\SkinModelEffect.cpp" />
-    <ClCompile Include="graphics\sky.cpp" />
     <ClCompile Include="HID\Pad.cpp" />
     <ClCompile Include="HP.cpp" />
     <ClCompile Include="level\Level.cpp" />
@@ -142,9 +141,11 @@
     <ClCompile Include="Player\Player_Move.cpp" />
     <ClCompile Include="Player\Player_State.cpp" />
     <ClCompile Include="Player\Player_StateMachine.cpp" />
+    <ClCompile Include="Pose.cpp" />
     <ClCompile Include="PostEffect.cpp" />
     <ClCompile Include="Scaffold.cpp" />
     <ClCompile Include="graphics\ShadowMap.cpp" />
+    <ClCompile Include="sky.cpp" />
     <ClCompile Include="sound\SoundEngine.cpp" />
     <ClCompile Include="sound\SoundSource.cpp" />
     <ClCompile Include="sound\WaveFile.cpp" />
@@ -153,6 +154,7 @@
     <ClCompile Include="character\SpringCamera.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="StageSelect.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -188,7 +190,6 @@
     <ClInclude Include="graphics\SkinModelDataManager.h" />
     <ClInclude Include="graphics\SkinModelEffect.h" />
     <ClInclude Include="graphics\SkinModelShaderConst.h" />
-    <ClInclude Include="graphics\sky.h" />
     <ClInclude Include="HID\Pad.h" />
     <ClInclude Include="HP.h" />
     <ClInclude Include="IScene.h" />
@@ -210,9 +211,11 @@
     <ClInclude Include="Player\Player_State.h" />
     <ClInclude Include="Player\Player_StateMachine.h" />
     <ClInclude Include="Player\PlState.h" />
+    <ClInclude Include="Pose.h" />
     <ClInclude Include="PostEffect.h" />
     <ClInclude Include="Scaffold.h" />
     <ClInclude Include="graphics\ShadowMap.h" />
+    <ClInclude Include="sky.h" />
     <ClInclude Include="sound\SoundEngine.h" />
     <ClInclude Include="sound\SoundSource.h" />
     <ClInclude Include="sound\WaveFile.h" />
@@ -221,6 +224,7 @@
     <ClInclude Include="character\SpringCamera.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Stage.h" />
+    <ClInclude Include="StageSelect.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="system\system.h" />
     <ClInclude Include="Timer.h" />
@@ -240,6 +244,9 @@
     <Image Include="Assets\modelData\utc_ao.png" />
     <Image Include="Assets\modelData\utc_nomal.tga" />
     <Image Include="Assets\modelData\utc_spec.tga" />
+    <ImageContentTask Include="Assets\sprite\Pose.png" />
+    <ImageContentTask Include="Assets\sprite\StageSelect.jpeg" />
+    <ImageContentTask Include="Assets\sprite\taittol1.png" />
     <ImageContentTask Include="Assets\sprite\CLOUD2.JPG" />
     <ImageContentTask Include="Assets\sprite\gameover.png" />
     <ImageContentTask Include="Assets\sprite\kari.png" />
@@ -266,6 +273,7 @@
     <MeshContentTask Include="Assets\modelData\karasiba.FBX" />
     <MeshContentTask Include="Assets\modelData\kkk.fbx" />
     <MeshContentTask Include="Assets\modelData\Skeleton%40Skin.FBX" />
+    <MeshContentTask Include="Assets\modelData\sky.FBX" />
     <MeshContentTask Include="Assets\modelData\SlimeLevel1.fbx" />
     <MeshContentTask Include="Assets\modelData\Spring.FBX" />
     <MeshContentTask Include="Assets\modelData\Stage0.FBX" />

@@ -25,9 +25,19 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw() override;
+
+	enum TitleState {
+		State_GameState,
+		State_StageSelect,
+	};
 private:
 	Sprite m_sprite;			//タイトルのスプライトデータ
+	Sprite m_yaji;
 	CSoundSource m_titlebgm;    //タイトルBGM
 	CSoundSource m_decisionse;  //決定音
+	CSoundSource m_cursorse;
 	bool StratFlag = false;		//スタートフラグ
+	TitleState m_titlestate = State_GameState;
+	CVector3 m_pos = { -300.0f,-150.0f,0.0f };				//矢印のポジション
+	CQuaternion m_rot = CQuaternion::Identity();
 };

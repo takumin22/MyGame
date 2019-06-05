@@ -17,6 +17,7 @@ public:
 	/// ジャンプ
 	/// </summary>
 	void Jump();
+	void MoveAnim();
 	/// <summary>
 	/// 更新
 	/// </summary>
