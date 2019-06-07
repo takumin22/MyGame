@@ -248,7 +248,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 		
 
 		{
-			float3 toEyeDir = normalize(eyePos - In.worldPos);
+			float3 toEyeDir = normalize(In.worldPos - eyePos);
 
 			//求めたtoEyeDirの反射ベクトルを求める。
 			float3 reflectEyeDir = -toEyeDir + 2 * dot(normal, toEyeDir) * normal;
@@ -262,7 +262,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 			//}
 			//pow関数を使って、スペキュラを絞る。絞りの強さは定数バッファで渡されている。
 			
-			float3 specLig = pow(t, specPow) * directionLight.color.xyz;
+			float4 specLig = pow(t, specPow) * directionLight.color;
 			//スペキュラ反射が求まったら、ligに加算する。
 			//鏡面反射を反射光に加算する。
 			lig = lig + specLig;
@@ -299,7 +299,6 @@ float4 PSMain( PSInput In ) : SV_Target0
 
 
 	float4 finalColor = float4(0.0f, 0.0f,0.0f, 1.0f);
-   // finalColor.xyz = albedoColor.xyz * lig + albedoColor.xyz * directionLight.ambientLight.xyz;
 	finalColor.xyz += albedoColor.xyz * lig;
 	finalColor.xyz += albedoColor.xyz* directionLight.ambientLight;
 	return finalColor;
