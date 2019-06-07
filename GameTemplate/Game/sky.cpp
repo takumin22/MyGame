@@ -10,7 +10,7 @@ sky::sky()
 	//todo 空マップをロード。
 	//ファイル名を使って、テクスチャをロードして、ShaderResrouceViewを作成する。
 	HRESULT hr = DirectX::CreateDDSTextureFromFileEx(
-		g_graphicsEngine->GetD3DDevice(), L"Assets/modelData/skyCubeMap.dds", 0,
+		g_graphicsEngine->GetD3DDevice(), L"Resource/sprite/skyCubeMap.dds", 0,
 		D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0,
 		false, nullptr, &g_skyMapSRV);
 	m_skinmodel.SetskyMap(g_skyMapSRV);
