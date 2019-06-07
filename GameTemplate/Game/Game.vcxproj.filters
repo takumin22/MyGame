@@ -148,6 +148,9 @@
     <ClCompile Include="sky.cpp" />
     <ClCompile Include="StageSelect.cpp" />
     <ClCompile Include="Pose.cpp" />
+    <ClCompile Include="Player\Player_Damage.cpp" />
+    <ClCompile Include="Player\Player_Deth.cpp" />
+    <ClCompile Include="Player\Player_Attack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -269,6 +272,9 @@
     <ClInclude Include="sky.h" />
     <ClInclude Include="StageSelect.h" />
     <ClInclude Include="Pose.h" />
+    <ClInclude Include="Player\Player_Damage.h" />
+    <ClInclude Include="Player\Player_Deth.h" />
+    <ClInclude Include="Player\Player_Attack.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\104677.jpg" />
@@ -283,7 +289,6 @@
     <Image Include="Assets\modelData\utc_ao.png" />
     <Image Include="Assets\modelData\utc_nomal.tga" />
     <Image Include="Assets\modelData\utc_spec.tga" />
-    <Image Include="Assets\sprite\Pose.png" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Chara_4Hero.fbx" />
@@ -339,5 +344,6 @@
     <ImageContentTask Include="Assets\sprite\yaji.png" />
     <ImageContentTask Include="Assets\sprite\taittol1.png" />
     <ImageContentTask Include="Assets\sprite\StageSelect.jpeg" />
+    <ImageContentTask Include="Assets\sprite\Pose.png" />
   </ItemGroup>
 </Project>

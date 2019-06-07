@@ -228,7 +228,6 @@ void Game::Draw()
 	}
 	if (m_goal.GetGFlag() == false && m_stage->GetEnemyCount() >= 0) {
 		//ゴールを表示
-
 		m_goal.Draw();
 	}
 	m_postEffect->Draw();
@@ -241,7 +240,7 @@ void Game::Draw()
 			{ -FRAME_BUFFER_W / 2.0f,FRAME_BUFFER_H / 2.0f },			//表示する座標。0.0f, 0.0が画面の中心。
 			{ 0.0f,1.0f,0.0f,1.0f },
 			0.0f,
-			1.5f,
+			m_fontscale,
 			{ 0.0f,1.0f }
 		);
 		swprintf_s(toubatu, L"スコア %d", m_stage->GetScore());
@@ -250,7 +249,7 @@ void Game::Draw()
 			{ -FRAME_BUFFER_W / 2.0f,300.0f },			//表示する座標。0.0f, 0.0が画面の中心。
 			{ 0.0f,1.0f,0.0f,1.0f },
 			0.0f,
-			1.5f,
+			m_fontscale,
 			{ 0.0f,1.0f }
 		);
 
@@ -264,7 +263,7 @@ void Game::Draw()
 			{ -200.0f,FRAME_BUFFER_H / 2.0f },			//表示する座標。0.0f, 0.0が画面の中心。
 			{ 1.0f,0.0f,0.0f,1.0f },
 			0.0f,
-			1.5f,
+			m_fontscale,
 			{ 0.0f,1.0f }
 		);
 	}
@@ -280,7 +279,7 @@ void Game::Draw()
 			{ -200.0f , 100.0f },			//表示する座標。0.0f, 0.0が画面の中心。
 			{ 0.0f,0.0f,0.0f,1.0f },
 			0.0f,
-			1.5f,
+			m_fontscale,
 			{ 0.0f,1.0f }
 		);
 		swprintf_s(toubatu, L"タイムスコア %d", TimeScore);
@@ -289,7 +288,7 @@ void Game::Draw()
 			{ -300.0f , 30.0f },			//表示する座標。0.0f, 0.0が画面の中心。
 			{ 0.0f,0.0f,0.0f,1.0f },
 			0.0f,
-			1.5f,
+			m_fontscale,
 			{ 0.0f,1.0f }
 		);
 		swprintf_s(toubatu, L"合計スコア %d", m_stage->GetScore() + TimeScore);
@@ -298,7 +297,7 @@ void Game::Draw()
 			{ -250.0f , -50.0f },			//表示する座標。0.0f, 0.0が画面の中心。
 			{ 0.0f,0.0f,0.0f,1.0f },
 			0.0f,
-			1.5f,
+			m_fontscale,
 			{ 0.0f,1.0f }
 		);
 	}

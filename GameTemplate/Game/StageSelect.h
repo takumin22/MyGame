@@ -30,6 +30,7 @@ private:
 	bool flag = false;
 	bool StratFlag = false;
 	wchar_t moji[256];
+	float m_fontsize = 4.0f;
 	Font m_font;					//ƒtƒHƒ“ƒg
 };
 

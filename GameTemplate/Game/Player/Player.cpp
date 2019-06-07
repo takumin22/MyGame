@@ -98,86 +98,66 @@ Player::~Player()
 		g_normalMapSRV->Release();
 	}
 }
-void Player::AnimationControl()
-{
-
-	//if ( m_charaCon.IsJump() == true) {
-	//	m_animation.Play(enAnimationClip_jump,0.2);
-	//}
-	//else if (m_pstate) {
-	//	if ( move.Length() > 0.7f ) {
-	//		//走りモーション。
-	//		m_animation.Play(enAnimationClip_run, 0.2f);
-	//	}
-	//	else if (move.Length() > 0.0001f || move.Length() < -0.0001) {
-	//		//歩きモーション。
-	//		m_animation.Play(enAnimationClip_walk, 0.2f);
-	//	}
-	//	else if (m_pstate == State_Attack) {
-	//		m_animation.Play(enAnimationClip_attack, 0.2f);
-	//	}
-	//	else if (m_pstate == State_Goal)
-	//	{
-	//		m_animation.Play(enAnimationClip_salute, 0.2f);
-	//	}
-	//	else if (m_pstate == State_Damage)
-	//	{
-	//		m_animation.Play(enAnimationClip_damage, 0.2f);
-	//	}
-	//	else if (m_pstate == State_Deth)
-	//	{
-	//		m_animation.Play(enAnimationClip_godown, 0.3);
-	//	}
-	//	else if( move.Length() == 0.0f){
-	//		//待機モーション
-	//		m_animation.Play(enAnimationClip_idle, 0.2f);
-	//	}
-	//}
-
-}
 void Player::Attack()
 {
-	int hoge = -1;
-	int num = m_model.GetSkeleton().GetNumBones();
-	for (int i = 0; i < num; i++) {
-		auto bonename = m_model.GetSkeleton().GetBone(i)->GetName();
-		wchar_t moveFilePath[256];
-		swprintf_s(moveFilePath, L"Character1_RightHand");
-		//腕のボーン番号を名前で取得
-		int result = wcscmp(moveFilePath, bonename);
-		if (result == 0)
-		{
-			hoge = m_model.GetSkeleton().GetBone(i)->GetNo();
-			break;
-		}
+	
+	if (g_pad[0].IsTrigger(enButtonB) == true)
+	{
+		m_moveSpeed = { 0.0f,0.0f,0.0f };
+		m_stMa.Change(PlState::PState::State_Attack);
 	}
-	armboneNo = hoge;
+	//int hoge = -1;
+	//int num = m_model.GetSkeleton().GetNumBones();
+	//for (int i = 0; i < num; i++) {
+	//	auto bonename = m_model.GetSkeleton().GetBone(i)->GetName();
+	//	wchar_t moveFilePath[256];
+	//	swprintf_s(moveFilePath, L"Character1_RightHand");
+	//	//腕のボーン番号を名前で取得
+	//	int result = wcscmp(moveFilePath, bonename);
+	//	if (result == 0)
+	//	{
+	//		hoge = m_model.GetSkeleton().GetBone(i)->GetNo();
+	//		break;
+	//	}
+	//}
+	//armboneNo = hoge;
 }
 void Player::Damage()
 {
-	//CVector3 toEnemyDlr;
-	//float toEnemyLan;
-	//for (int i = 0; i <= 4; i++) {
-	//	if (m_enemy[i]->GetEnemyDeth() == false) {
-	//		////エネミーからプレイヤーに伸びるベクトルを求める。
-	//		//CVector3 toEnemyDir = m_position - m_enemy[2]->GetEPosition();
-	//		//エネミーからプレイヤーに伸びるベクトルを求める。
-	//		 toEnemyDlr = m_position - m_enemy[i]->GetEPosition();
-	//		////エネミーまでの距離を求めておく。
-	//		//float toEnemyLen = toEnemyDir.Length();
-	//		//エネミーまでの距離を求めておく。
-	//		toEnemyLan = toEnemyDlr.Length();
-	//}
-	//		if (toEnemyLan <= 70.0f) {
-	//			DamageCount++;
-	//			if (DamageCount <= 3) {
-	//				m_pstate = State_Damage;
-	//			}
-	//			else {
-	//				m_pstate = State_Deth;
-	//			}
-	//		}
-	//	}
+	CVector3 toEnemyDlr;
+	float toEnemyLan;
+	for (int i = 0; i <= 4; i++) {
+		if (m_enemy[i]->GetEnemyDeth() == false) {
+			////エネミーからプレイヤーに伸びるベクトルを求める。
+			//CVector3 toEnemyDir = m_position - m_enemy[2]->GetEPosition();
+			//エネミーからプレイヤーに伸びるベクトルを求める。
+			toEnemyDlr = m_position - m_enemy[i]->GetEPosition();
+			////エネミーまでの距離を求めておく。
+			//float toEnemyLen = toEnemyDir.Length();
+			//エネミーまでの距離を求めておく。
+			toEnemyLan = toEnemyDlr.Length();
+		}
+	}
+	if (toEnemyLan <= 70.0f&& DamageFlag == false) {
+			if (DamageCount <= 2) {
+				DamageCount++;
+				m_stMa.Change(PlState::PState::State_Damage);
+				DamageFlag = true;
+			}
+			else{
+				DamageCount++;
+				m_stMa.Change(PlState::PState::State_Deth);
+			}
+	}
+	if (DamageFlag == true)
+	{
+		Time++;
+		if (Time >= 30)
+		{
+			DamageFlag = false;
+			Time = 0;
+		}
+	}
 	
 }
 void Player::SpringJump()
@@ -218,7 +198,7 @@ void Player::SpringJump()
 }
 void Player::PlayerPosRetrun()
 {
-	if (m_position.y <= -500.0f) {
+
 		if (Zanki >= 1) {
 
 			m_position = m_oldposition;
@@ -226,7 +206,6 @@ void Player::PlayerPosRetrun()
 		}
 		m_moveSpeed.y = 0.0f;
 		Zanki -= 1;
-	}
 }
 void Player::Scafflod()
 {
@@ -249,174 +228,35 @@ void Player::Scafflod()
 }
 void Player::Update()
 {
-	CVector3 move = CVector3::Zero();
-	move.x = g_pad[0].GetLStickXF();
-	move.z = g_pad[0].GetLStickYF();
-	move.y = 0.0f;
 	CQuaternion qRot;
 		static float JUMP_SPEED = 700.0f;
-		PlayerPosRetrun();
+		if (m_position.y <= -500.0f) {
+				PlayerPosRetrun();
+		}
+		Attack();
 		Scafflod();
 		SpringJump();
-		//Turn();
-		//AnimationControl();
-	//switch (m_pstate)
-	//{
-	//case State_Idel: //待機ステート
-	//	m_moveSpeed.x = 0.0f;
-	//	m_moveSpeed.z = 0.0f;
-	//	Time = 0;
-	//	Move();
-	//    Scafflod();
-	//	if (g_game->GetNo() <= 1) {
-	//		Damage();
-	//		SpringJump();
-	//	}
-	//	if (g_pad[0].IsTrigger(enButtonA)) {
-	//		m_moveSpeed.y = JUMP_SPEED;
-	//		m_pstate = State_Jump;
-	//	}
-	//	 if (move.Length() >= 0.7f) {
-	//		//入力がある。
-	//		m_pstate = State_MoveRun;
-	//	}
-	//	if (g_pad[0].IsTrigger(enButtonB)) {
-	//		m_pstate = State_Attack;
-	//	}
-	//	if (g_game->GetGoal() == true) {
-	//		m_pstate = State_Goal;
-	//	}
-	//	if (m_position.y <= -500.0f) {
-	//		//プレイヤーをスタート位置に戻す
-	//		m_pstate = State_Return;
-	//	}
-	//	break;
-	//case State_MoveRun:
-	//	Move();
-	//	Scafflod();
-	//	if (g_game->GetNo() <= 1) {
-	//		Damage();
-	//		SpringJump();
-	//	}
-	//	
-	//	if (move.Length() < 0.7f ) {
-	//		//入力がなくなった。
-	//		m_pstate = State_Idel;
-	//	}
-	//	 if (g_pad[0].IsTrigger(enButtonA)) {
-	//		//この時点でのXZ方向の速度を記憶しておく。
-	//		m_moveSpeedWhenStartJump = m_moveSpeed.Length();
-	//		m_moveSpeed.y = JUMP_SPEED;
-	//		m_pstate = State_Jump;
-	//	}
-	//	if (g_pad[0].IsTrigger(enButtonB)) {
-	//		m_pstate = State_Attack;
-	//	}
-	//	if (m_position.y <= -500.0f) {
-	//		//プレイヤーをスタート位置に戻す
-	//		m_pstate = State_Return;
-	//	}
-	//	if (g_game->GetGoal() == true) {
-	//		m_pstate = State_Goal;
-	//	}
-	//	break;
-	//case State_Jump:
-	//	Move();
-	//	if (!m_charaCon.IsJump()) {
-	//		if (move.Length() < 0.7f) {
-	//			//入力がなくなった。
-	//			m_pstate = State_Idel;
-	//		}
-	//		else {
-	//			m_pstate = State_MoveRun;
-	//		}
-	//	}
-	//	if (m_position.y <= -500.0f ) {
-	//		m_pstate = State_Return;
-	//	}
-	//	break;
-	//case State_Attack:
-	//	m_moveSpeed.x = 0.0f;
-	//	m_moveSpeed.z = 0.0f;
-	//	if (m_animation.IsPlaying() == false) {
-	//			m_pstate = State_Idel;
-	//		
-	//	}
-	//	break;
-	//case State_SpringJump: //バネジャンプ
-	//	m_spjumpse.Play(false);
-	//	m_moveSpeed.y += 1300.0f;
-	//	m_pstate = State_Idel;
-	//	break;
-	//case State_Return://スタートに戻る
-	//	PlayerPosRetrun();
-	//	m_moveSpeed.y = 0.0f;
-	//	DamageCount = 0;
-	//	m_pstate = State_Idel;
-	//	break;
-	//case State_Scaffold://足場上
-	//    Move();
-	//	Scafflod();
-	//	for (int i = 0; i < 2; i++) {
-	//		if (m_scaffold[i]->GetState() == m_scaffold[i]->State_FrontMove) {
-	//			m_position.z -= 2.5f;
+		if (g_game->GetNo() <= 1) {
+			Damage();
+		}
+		m_stMa.Update();
+	if (m_animation.IsPlaying() == false)
+	{
+		if (DamageCount <= 3) {
+			m_stMa.Change(PlState::PState::State_Idel);
+		}
+		else {
+			Time++;
+				m_moveSpeed = { 0.0f,0.0f,0.0f };
+			if (Time >= 60)
+			{
 
-	//		}
-	//		else if (m_scaffold[i]->GetState() == m_scaffold[i]->State_BackMove) {
-	//			m_position.z += 2.5f;
-	//		}
-	//	}
-	//if (g_pad[0].IsTrigger(enButtonA)) {
-	//	//この時点でのXZ方向の速度を記憶しておく。
-	//	m_moveSpeedWhenStartJump = m_moveSpeed.Length();
-	//	m_moveSpeed.y = JUMP_SPEED;
-	//	//m_pstate = State_Jump;
-	//}
-	//if (m_position.y <= -500.0f) {
-	//	//プレイヤーをスタート位置に戻す
-	//	m_pstate = State_Return;
-	//}
- //      m_charaCon.SetPosition(m_position);
-	//	break;
-	//case State_Damage: //ダメージ(仮)
-	//	Time++;
-	//	Move();
-	//	
-	//	 if (Time == 30.0f) {
-	//		 m_pstate = State_InvincibleCount;
-	//	 }
-	//	break;
-	//case State_InvincibleCount:  //無敵時間(仮)	
-	//	Move();
-	//	Time++;
-	//	if (g_pad[0].IsTrigger(enButtonA)) {
-	//		m_moveSpeed.y = JUMP_SPEED;
-	//	}
-	//	if (Time== 60.0f) {
-	//		m_pstate = State_Idel;
-	//	}
-	//	break;
-	//case State_Deth:  //死亡
-	//	m_moveSpeed.x = 0.0f;
-	//	m_moveSpeed.z = 0.0f;
-	//	Time++;
-	//	if (Time >= 60.0f) {
-	//		m_pstate = State_Return;
-	//	}
-	//	break;
-	//case State_Goal:
-	//	m_moveSpeed.x = 0.0f;
-	//	m_moveSpeed.z = 0.0f;
-
-	//	if (g_game->GetGoal() == false) {
-	//		m_pstate = State_Idel;
-	//	}
-	//	break;
-	//}
-
-	m_stMa.Update();
-	//ワールド行列の更新。
-	
+				PlayerPosRetrun();
+				DamageCount = 0;
+				m_stMa.Change(PlState::PState::State_Idel);
+			}
+		}
+	}
 	g_shadowMap->RegistShadowCaster(&m_model);
 	auto r_pos = m_position;
 	CVector3 pos = { 0.0f, -1000.0f, 0.0f,};
@@ -431,6 +271,7 @@ void Player::Update()
 	m_rite = { m_mRot.m[0][0] ,m_mRot.m[0][1],m_mRot.m[0][2] };
 	m_up = { m_mRot.m[1][0] ,m_mRot.m[1][1] ,m_mRot.m[1][2] };
 	m_forward = { m_mRot.m[2][0] ,m_mRot.m[2][1] ,m_mRot.m[2][2] };
+	//ワールド行列の更新。
 	m_model.UpdateWorldMatrix(m_position, m_rotation,m_scale);
 	m_animation.Update(1.0f / 30.0f);
 }

@@ -146,6 +146,7 @@ private:
 	int taim = 0;						//経過時間
 	bool ChangeFlag = false;
 	wchar_t toubatu[256];
+	float m_fontscale = 0.7f;
 	PostEffect* m_postEffect;				//ポストエフェクト。
 	Sprite m_copyMainRtToFrameBufferSprite;			//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
 	D3D11_VIEWPORT m_frameBufferViewports;			//フレームバッファのビューポート。

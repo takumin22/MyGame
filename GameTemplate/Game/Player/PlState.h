@@ -24,8 +24,6 @@ public:
 		State_Idel,					//基本状態(歩)
 		State_Attack,				//攻撃状態。
 		State_Damage,				//ダメージ状態
-		State_Scaffold,				//足場上状態
-		State_TurnScaffold,
 		State_InvincibleCount,		//無敵時間状態
 		State_SpringJump,			//バネジャンプ状態
 		State_Return,				//復帰状態

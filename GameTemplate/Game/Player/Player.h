@@ -35,10 +35,6 @@ public:
 	/// </summary>
 	void Attack();
 	/// <summary>
-	/// アニメーションコントロール
-	/// </summary>
-	void AnimationControl();
-	/// <summary>
 	/// ダメージ処理
 	/// </summary>
 	void Damage();
@@ -190,7 +186,8 @@ private:
 	CVector3 m_forward = CVector3::Zero();				//前方向
 	CVector3 ambientColor = { 0.6f, 0.6f, 0.6f };		//環境光のカラー
 	CharacterController m_charaCon;						//キャラクターコントローラ
-	int Time = 0;										//無敵時間
+	bool DamageFlag = false;
+	int Time = 0;
 	int DamageCount = 0;								//ダメージ量のカウント
 	int Zanki = 4;										//残機
 	int armboneNo = -1;

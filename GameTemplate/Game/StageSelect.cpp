@@ -27,7 +27,10 @@ void StageSelect::Update()
 		qrot.SetRotationDeg(CVector3::AxisY(), 1.0f);
 		m_model.UpdateWorldMatrix(m_position, m_rotation, { 0.02f,0.02f,0.02f });
 		m_model1.UpdateWorldMatrix(m_position1, m_rotation1, { 0.01f,0.01f,0.01f });
-		m_mojiscale *= 2.0f; 
+		if (m_fontsize >= 1.0f)
+		{
+			m_fontsize -= 0.2f;
+		}
 	switch (m_select)
 	{
 	case State_Stage01:
@@ -131,10 +134,10 @@ void StageSelect::Draw()
 	m_font.Draw
 	(
 		moji,		//表示する文字列。
-		{ -200.0f,FRAME_BUFFER_H / 2.0f },			//表示する座標。0.0f, 0.0が画面の中心。
-		{ 1.0f,1.0f,0.0f,1.0f },
+		{ -100.0f,FRAME_BUFFER_H / 2.0f },			//表示する座標。0.0f, 0.0が画面の中心。
+		{ 1.0f,0.0f,0.0f,1.0f },
 		m_mojiscale,
-		2.0f,
+		m_fontsize,
 		{ 0.0f,1.0f }
 	);
 	m_model.Draw(

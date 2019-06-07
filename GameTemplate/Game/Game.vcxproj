@@ -138,6 +138,9 @@
     <ClCompile Include="physics\PhysicsStaticObject.cpp" />
     <ClCompile Include="graphics\RenderTarget.cpp" />
     <ClCompile Include="Player\Player.cpp" />
+    <ClCompile Include="Player\Player_Attack.cpp" />
+    <ClCompile Include="Player\Player_Damage.cpp" />
+    <ClCompile Include="Player\Player_Deth.cpp" />
     <ClCompile Include="Player\Player_Move.cpp" />
     <ClCompile Include="Player\Player_State.cpp" />
     <ClCompile Include="Player\Player_StateMachine.cpp" />
@@ -207,6 +210,9 @@
     <ClInclude Include="physics\PhysicsStaticObject.h" />
     <ClInclude Include="graphics\RenderTarget.h" />
     <ClInclude Include="Player\Player.h" />
+    <ClInclude Include="Player\Player_Attack.h" />
+    <ClInclude Include="Player\Player_Damage.h" />
+    <ClInclude Include="Player\Player_Deth.h" />
     <ClInclude Include="Player\Player_Move.h" />
     <ClInclude Include="Player\Player_State.h" />
     <ClInclude Include="Player\Player_StateMachine.h" />
