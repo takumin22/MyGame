@@ -24,7 +24,7 @@ sky::~sky()
 void sky::Update()
 {
 
-	m_skinmodel.UpdateWorldMatrix(m_position, CQuaternion::Identity(), CVector3{10000.0f, 10000.0f, 10000.0f});
+	m_skinmodel.UpdateWorldMatrix(m_position, CQuaternion::Identity(), CVector3{100000.0f, 100000.0f, 100000.0f});
 }
 
 void sky::Draw()

@@ -7,10 +7,12 @@
 #include "level/Level.h"
 #include "Player_StateMachine.h"
 #include "PlState.h"
+#include "Sprite.h"
 
 class Enemy;
 class Spring;
 class Scaffold;
+class Stage;
 class TurnScaffold;
 class Coin;
 class HP;
@@ -64,10 +66,6 @@ public:
 	CVector3 GetUp() {
 		return m_up;
 	}
-	CVector3 GetRite()
-	{
-		return m_rite;
-	}
 	CQuaternion GetRotation()
 	{
 		return m_rotation;
@@ -83,6 +81,10 @@ public:
 	void SetMoveSpeed(CVector3 move)
 	{
 		m_moveSpeed = move;
+	}
+	CVector3 GetAttackPos()
+	{
+		return m_attackPos;
 	}
 	/// <summary>
 	/// プレイヤーのポジションを設定
@@ -124,7 +126,7 @@ public:
 	/// <param name="enemy"></param>
 	void SetEnemy(int N, Enemy* enemy)
 	{
-		m_enemy[N] = enemy;
+		m_enemy.push_back(enemy);
 	}
 	/// <summary>
 	/// ジャンプ台のインスタンスをセット
@@ -133,7 +135,7 @@ public:
 	/// <param name="spring"></param>
 	void SetSpring(int N, Spring* spring)
 	{
-		m_spring[N] = spring;
+		m_spring.push_back(spring);
 	}
 	/// <summary>
 	/// 足場のインスタンスをセット
@@ -171,6 +173,7 @@ public:
 	{
 		return m_charaCon;
 	}
+
 private:
 	SkinModel m_model;									//スキンモデル。
 	Animation m_animation;								//アニメーション。
@@ -185,14 +188,16 @@ private:
 	CVector3 m_up = CVector3::Zero();					//上方向
 	CVector3 m_forward = CVector3::Zero();				//前方向
 	CVector3 ambientColor = { 0.6f, 0.6f, 0.6f };		//環境光のカラー
+	CVector3 m_attackPos = CVector3::Zero();
 	CharacterController m_charaCon;						//キャラクターコントローラ
 	bool DamageFlag = false;
 	int Time = 0;
 	int DamageCount = 0;								//ダメージ量のカウント
 	int Zanki = 4;										//残機
-	int armboneNo = -1;
-    Enemy* m_enemy[10];									//エネミー
-	Spring* m_spring[10];								//ジャンプ台
+	bool posflag = false;
+	Sprite m_sprite;
+    std::vector<Enemy*> m_enemy;									//エネミー
+	std::vector<Spring*> m_spring;								//ジャンプ台
 	Coin* m_coin[100];									//コイン
 	HP m_hp;											//HP
 	Player_StateMachine m_stMa;
@@ -202,6 +207,5 @@ private:
 	float m_deltatime = 1.0f / 30.0f;                   //1フレームの経過時間
 	Effekseer::Effect* m_sampleEffect = nullptr;
 	Effekseer::Handle m_playEffectHandle = -1;
-	Level m_level;
 };
 

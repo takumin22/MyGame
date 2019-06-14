@@ -112,8 +112,11 @@ private:
 	AnimationClip m_animationClips[enAnimationClip_Num];//アニメーションクリップ。
 	CVector3 m_position = CVector3::Zero();				//座標。
 	CVector3 m_moveSpeed = CVector3::Zero();			//移動速度。
+	CVector3 m_kari = CVector3::Zero();
+	CVector3 m_kari1 = CVector3::Zero();
 	CVector3 m_scale = CVector3::One();					//拡大率。
 	CVector3 m_up = CVector3::Zero();					//上方向
+	CVector3 m_front = CVector3::Zero();
 	CMatrix m_mRot;
 	int idoutime = 0;									//移動時間
 	CQuaternion m_rotation = CQuaternion::Identity();	//回転。
@@ -122,6 +125,7 @@ private:
 	bool EnemyDeth = false;								//死亡状態
 	int AnimPlayTime = 0;								//アニメーションの再生時間
 	int i = 1;
+	bool punchflag = false;
 	Effekseer::Effect* m_enemyEffect = nullptr;
 	Effekseer::Handle m_enemyEffectHandle = -1;
 };

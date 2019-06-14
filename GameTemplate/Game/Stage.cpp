@@ -61,7 +61,7 @@ Stage::Stage(int No)
 				return true;
 			}
 			else if (objData.ForwardMatchName(L"star1") == true) {
-				//コイン
+				//星
 				g_game->Getgoal()->SetPosition(objData.position);
 				return true;
 			}
@@ -81,9 +81,23 @@ Stage::Stage(int No)
 				g_game->GetPlayer()->SetPosition(objData.position);
 				return true;
 			}
+			else if (objData.ForwardMatchName(L"Spring") == true) {
+				//バネ
+				auto spring = new Spring(objData.position, objData.rotation, g_game->GetPlayer());
+				m_springList.push_back(spring);
+				g_game->GetPlayer()->SetSpring(StageNo1++, spring);
+				return true;
+			}
 			else if (objData.EqualName(L"star1") == true) {
-				//コイン
+				//星
 				g_game->Getgoal()->SetPosition(objData.position);
+				return true;
+			}
+			else if (objData.ForwardMatchName(L"Coin") == true) {
+				//コイン
+				auto coin = new Coin(objData.position, objData.rotation, g_game->GetPlayer());
+				m_coinList.push_back(coin);
+				g_game->GetPlayer()->SetCoin(StageNo4++, coin);
 				return true;
 			}
 			return false;

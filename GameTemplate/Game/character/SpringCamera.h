@@ -26,7 +26,7 @@ public:
 		*@param[in]	height		カプセルコライダーの高さ。
 		*@param[in]	position	初期位置。
 		*/
-	void Init(float radius, float height, const CVector3& position);
+	void Init(float radius, float height, float normalpush, const CVector3& position);
 	/*!
 		* @brief	実行。
 		*@param[in]	deltaTime		経過時間。単位は秒。
@@ -94,5 +94,6 @@ private:
 	CapsuleCollider		m_collider;						//コライダー。
 	float				m_radius = 0.0f;
 	float				m_height = 0.0f;		
+	float				m_normalpush = 0.0f;
 	RigidBody			m_rigidBody;					//剛体。
 };

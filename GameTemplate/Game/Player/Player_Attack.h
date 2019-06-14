@@ -6,5 +6,8 @@ public:
 	Player_Attack(Player* pla, Player_StateMachine *psm);
 	~Player_Attack();
 	void Update();
+
 private:
+	CVector3 m_attackPos = CVector3::Zero();
+
 };

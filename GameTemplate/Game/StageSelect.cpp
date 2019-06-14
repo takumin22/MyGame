@@ -22,9 +22,6 @@ StageSelect::~StageSelect()
 
 void StageSelect::Update()
 {
-
-		CQuaternion qrot;
-		qrot.SetRotationDeg(CVector3::AxisY(), 1.0f);
 		m_model.UpdateWorldMatrix(m_position, m_rotation, { 0.02f,0.02f,0.02f });
 		m_model1.UpdateWorldMatrix(m_position1, m_rotation1, { 0.01f,0.01f,0.01f });
 		if (m_fontsize >= 1.0f)
@@ -35,15 +32,13 @@ void StageSelect::Update()
 	{
 	case State_Stage01:
 		g_currentScene->SetSceneNo(1);
-
-		m_rotation.Multiply(qrot);
 		if (g_pad[0].IsTrigger(enButtonRight) == true)
 		{
 			flag = true;
 		}
 		if (flag == true) {
-			m_position.x += 5.0f;
-			m_position1.x += 5.0f;
+			m_position.x += 8.0f;
+			m_position1.x += 8.0f;
 			if (m_position.x >= 300.0f) {
 				flag = false;
 				m_select = State_Stage02;
@@ -71,14 +66,13 @@ void StageSelect::Update()
 		break;
 	case State_Stage02:
 		g_currentScene->SetSceneNo(2);
-		m_rotation1.Multiply(qrot);
 		if (g_pad[0].IsTrigger(enButtonLeft) == true)
 		{
 			flag = true;
 		}
 		if (flag == true) {
-			m_position.x -= 5.0f;
-			m_position1.x -= 5.0f;
+			m_position.x -= 8.0f;
+			m_position1.x -= 8.0f;
 			if (m_position.x <= 0.0f) {
 				flag = false;
 				m_select = State_Stage01;

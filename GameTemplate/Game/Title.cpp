@@ -14,6 +14,8 @@ Title::Title()
 	m_cursorse.Init(L"Assets/sound/cursor7.wav");
 	m_yaji.Init(L"Resource/sprite/yaji.dds", 100, 200);
 	m_yaji.Update(m_pos, m_rot ,CVector3::One());
+	m_titlelogo.Init(L"Resource/sprite/Title logo.dds", 1280, 720);
+	m_titlelogo.Update(m_logopos, CQuaternion::Identity(), CVector3::One());
 	//m_titlebgm.Init(L"Assets/sound/Title.wav");
 	//m_titlebgm.SetVolume(0.8f);
 	//m_titlebgm.Play(true);
@@ -30,14 +32,17 @@ void Title::Update()
 {	
 	m_sprite.Update(CVector3::Zero(), CQuaternion::Identity(), CVector3::One());
 	m_yaji.Update(m_pos,m_rot, CVector3::One());
-
+	m_titlelogo.Update(m_logopos, CQuaternion::Identity(), CVector3::One());
+	if (m_logopos.y >= 200.0f) {
+		m_logopos.y -= 2.0f;
+	}
 
 	switch (m_titlestate)
 	{
 	case State_GameState:
 		if (g_pad[0].IsPress(enButtonDown))
 		{
-			m_pos.y -= 100.0f;
+			m_pos.y -= 130.0f;
 			m_pos.x -= 80.0f;
 			m_cursorse.Play(false);
 			//g_currentScene->SetSceneNo(1);
@@ -63,7 +68,7 @@ void Title::Update()
 	case State_StageSelect:
 		if (g_pad[0].IsPress(enButtonUp))
 		{
-			m_pos.y += 100.0f;
+			m_pos.y += 130.0f;
 			m_pos.x += 80.0f;
 			m_cursorse.Play(false);
 			m_titlestate = State_GameState;
@@ -92,4 +97,5 @@ void Title::Draw()
 	g_graphicsEngine->ChangeBackBaffer();
 	m_sprite.Draw();
 	m_yaji.Draw();
+	m_titlelogo.Draw();
 }

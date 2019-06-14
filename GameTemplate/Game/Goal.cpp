@@ -9,6 +9,8 @@ Goal::Goal()
 {
 	//cmoファイルの読み込み。
 	m_model.Init(L"Assets/modelData/star1.cmo", enFbxUpAxisZ ,{2.5f,2.5f,2.5f,1.0f});
+
+	m_starEffect = Effekseer::Effect::Create(g_graphicsEngine->GetEffekseerManager(), (const EFK_CHAR*)L"Assets/effect/coineffect.efk");
 }
 
 
@@ -25,13 +27,23 @@ void Goal::GoalGet()
 	//ゴールまでの距離を求めておく。
 	float toGoalLen = toGoalDir.Length();
 	if (toGoalLen <= 80.0f) {
-		GetFlag = true;	
+		flag = true;	
 	}
-	else if (GetFlag == true)
+	if (flag == true)
 	{
-		GetFlag = false;
+		srot += 0.5f;
+		m_position.y += 1.5;
+		StarTime++;
 	}
 
+	if (StarTime >= 45.0f)
+	{
+		GetFlag = true;
+		//エフェクトを再生する。
+		m_starEffectHandle = g_graphicsEngine->GetEffekseerManager()->Play(m_starEffect, m_position.x, m_position.y, m_position.z);
+		StarTime = 0;
+		flag = false;
+	}
 }
 
 void Goal::Update()
@@ -39,7 +51,7 @@ void Goal::Update()
 
 		GoalGet();
 		CQuaternion qRot;
-		qRot.SetRotationDeg(CVector3::AxisY(), 2.0f);
+		qRot.SetRotationDeg(CVector3::AxisY(), srot);
 		m_rotation.Multiply(qRot);
 		g_shadowMap->RegistShadowCaster(&m_model);
 		//ワールド行列の更新

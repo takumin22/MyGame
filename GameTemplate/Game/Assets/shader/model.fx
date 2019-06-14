@@ -255,14 +255,14 @@ float4 PSMain( PSInput In ) : SV_Target0
 
 			//求めた反射ベクトルとディレクションライトの方向との内積を取って、スペキュラの強さを計算する。
 			float t = max(0.0f, dot(-directionLight.direction,reflectEyeDir));
-			//float specPower = 1.0f;
-			//if (isHasSpecularMap) {
-			//	//スペキュラマップがある。
-			//	specPower = g_specularMap.Sample(Sampler, In.TexCoord);
-			//}
+			float specPower = 1.0f;
+			if (isHasSpecularMap) {
+				//スペキュラマップがある。
+				specPower = g_specularMap.Sample(Sampler, In.TexCoord);
+			}
 			//pow関数を使って、スペキュラを絞る。絞りの強さは定数バッファで渡されている。
 			
-			float4 specLig = pow(t, specPow) * directionLight.color;
+			float4 specLig = pow(t, specPow) * specPower * directionLight.color;
 			//スペキュラ反射が求まったら、ligに加算する。
 			//鏡面反射を反射光に加算する。
 			lig = lig + specLig;

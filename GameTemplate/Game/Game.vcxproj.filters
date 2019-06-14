@@ -289,6 +289,8 @@
     <Image Include="Assets\modelData\utc_ao.png" />
     <Image Include="Assets\modelData\utc_nomal.tga" />
     <Image Include="Assets\modelData\utc_spec.tga" />
+    <Image Include="Assets\modelData\Chara_4Hero.fbm\Texture_MetallicSmooth.tga" />
+    <Image Include="Assets\sprite\Title logo.png" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Chara_4Hero.fbx" />

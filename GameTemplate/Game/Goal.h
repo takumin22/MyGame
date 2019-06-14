@@ -57,5 +57,10 @@ private:
 	Player* m_player = nullptr;							//プレイヤー
 	bool GetFlag = false;								//ゴールフラグ
 	Stage* m_stage;										//ステージ
+	Effekseer::Effect* m_starEffect = nullptr;
+	Effekseer::Handle m_starEffectHandle = -1;
+	bool flag = false;
+	float srot = 2.0f;
+	int StarTime = 0;
 };
 

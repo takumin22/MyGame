@@ -41,15 +41,19 @@ Enemy::~Enemy()
 
 void Enemy::Move()
 {
-
+	m_kari = m_front * 5.0f;
 	idoutime++;
-	m_position.x += 5.0f*i;
+	m_position += m_kari;
 	//Y方向の移動速度は重力加速を行う。
 	m_moveSpeed.y -= 1800.0f * (1.0f / 60.0f);
-	m_rotation.SetRotationDeg(CVector3::AxisY(), 90.0f*i);
+
+	//m_rotation.SetRotationDeg(CVector3::AxisY(), 90.0f*i);
 	if (idoutime >= 40) {
 		idoutime = 0;
-		i *= -1;
+		CQuaternion qrto;
+	qrto.SetRotationDeg(CVector3::AxisY(), 180.0f);
+	m_rotation.Multiply(qrto);
+		//i *= -1;
 	}
 }
 void Enemy::Search()
@@ -82,23 +86,31 @@ void Enemy::Tracking()
 }
 void Enemy::Damage()
 {
-	m_mRot.MakeRotationFromQuaternion(m_rotation);
+
 	m_up = { m_mRot.m[1][0] ,m_mRot.m[1][1] ,m_mRot.m[1][2] };
 	CVector3 springForward = CVector3::AxisY();
 	m_rotation.Multiply(springForward);
 	//エネミーからプレイヤーに伸びるベクトルを求める。
 	CVector3 toEnemyDir = m_player->GetPosition() - m_position;
+	CVector3 toEnemyDir2 = m_player->GetAttackPos() - m_position;
 	//エネミーまでの距離を求めておく。
 	float toEnemyLen = toEnemyDir.Length();
+	float toEnemyLen2 = toEnemyDir2.Length();
 	//正規化
 	toEnemyDir.Normalize();
+	
 	//springForwardとtoEnemyDirとの内積を計算する。
 	float d = toEnemyDir.Dot(m_up);
 	//内積の結果をacos関数に渡して、springForwardとtoEnemyDirのなす角を求める。
 	float angle = acosf(d);
 	angle = CMath::RadToDeg(angle);
 
-	if (toEnemyLen <= 60.0f &&  angle <= 65.0f) {
+	if (toEnemyLen <= 60.0f &&  angle <= 65.0f ) {
+		m_estate = State_EDamage;
+	}
+	if (toEnemyLen2 <= 60.0f)
+	{
+		punchflag = true;
 		m_estate = State_EDamage;
 	}
 }
@@ -115,7 +127,9 @@ void Enemy::EnemyAnimation()
 }
 void Enemy::Update()
 {
-
+	
+	m_mRot.MakeRotationFromQuaternion(m_rotation);
+	m_front = { m_mRot.m[2][0] ,m_mRot.m[2][1] ,m_mRot.m[2][2] };
 	Damage();
 	EnemyAnimation();
 	switch (m_estate)
@@ -138,6 +152,13 @@ void Enemy::Update()
 		m_moveSpeed.z = 0.0f;
 		m_moveSpeed.y = 0.0f;
 		AnimPlayTime++;
+		if (punchflag == true) {
+			m_position -= m_kari * 5.0f;
+
+		}
+		if (AnimPlayTime >= 10) {
+			punchflag = false;
+		}
 		if (AnimPlayTime >= 50) {
 			EnemyDeth = true;
 			m_enemyEffectHandle = g_graphicsEngine->GetEffekseerManager()->Play(m_enemyEffect, m_position.x, m_position.y, m_position.z);
