@@ -8,6 +8,7 @@
 #include "level/Level.h"
 #include "Spring.h"
 #include "Coin.h"
+#include "RedCoin.h"
 #include "Goal.h"
 #include "sound/SoundEngine.h"
 #include "sound/SoundSource.h"
@@ -60,6 +61,13 @@ Stage::Stage(int No)
 				g_game->GetPlayer()->SetCoin(StageNo4++, coin);
 				return true;
 			}
+			else if (objData.ForwardMatchName(L"RedCoin") == true) {
+				//コイン
+				auto redcoin = new RedCoin(objData.position, objData.rotation, g_game->GetPlayer());
+				m_rcoinList.push_back(redcoin);
+				g_game->GetPlayer()->SetRedCoin(StageNo5++, redcoin);
+				return true;
+			}
 			else if (objData.ForwardMatchName(L"star1") == true) {
 				//星
 				g_game->Getgoal()->SetPosition(objData.position);
@@ -81,6 +89,13 @@ Stage::Stage(int No)
 				g_game->GetPlayer()->SetPosition(objData.position);
 				return true;
 			}
+			else if (objData.ForwardMatchName(L"kkk") == true) {
+				//エネミー
+				auto enemy = new Enemy(objData.position, objData.rotation, g_game->GetPlayer());
+				m_enemyList.push_back(enemy);
+				g_game->GetPlayer()->SetEnemy(StageNo++, enemy);
+				return true;
+			}
 			else if (objData.ForwardMatchName(L"Spring") == true) {
 				//バネ
 				auto spring = new Spring(objData.position, objData.rotation, g_game->GetPlayer());
@@ -93,11 +108,24 @@ Stage::Stage(int No)
 				g_game->Getgoal()->SetPosition(objData.position);
 				return true;
 			}
+			else if (objData.ForwardMatchName(L"turnasiba") == true) {
+				auto turnscaffold = new TurnScaffold(objData.position, objData.rotation, g_game->GetPlayer());
+				m_turnscaffold.push_back(turnscaffold);
+				g_game->GetPlayer()->SetTurnScaffold(StageNo3++, turnscaffold);
+				return true;
+			}
 			else if (objData.ForwardMatchName(L"Coin") == true) {
 				//コイン
 				auto coin = new Coin(objData.position, objData.rotation, g_game->GetPlayer());
 				m_coinList.push_back(coin);
 				g_game->GetPlayer()->SetCoin(StageNo4++, coin);
+				return true;
+			}
+			else if (objData.ForwardMatchName(L"RedCoin") == true) {
+				//コイン
+				auto redcoin = new RedCoin(objData.position, objData.rotation, g_game->GetPlayer());
+				m_rcoinList.push_back(redcoin);
+				g_game->GetPlayer()->SetRedCoin(StageNo5++, redcoin);
 				return true;
 			}
 			return false;
@@ -129,6 +157,9 @@ Stage::~Stage()
 	for (auto& coin : m_coinList) {
 		delete coin;
 	}
+	for (auto& redcoin : m_rcoinList) {
+		delete redcoin;
+	}
 	for (auto& goal : m_goalList)
 	{
 		delete goal;
@@ -136,6 +167,7 @@ Stage::~Stage()
 	Score = 0;
 	EnemyCount = 0;
 	CoinCount = 0;
+	RedCoinCount = 0;
 	StageNo = 0;
 	StageNo1 = 0;
 	StageNo2 = 0;
@@ -187,6 +219,9 @@ void Stage::Draw()
 	for (auto& coin : m_coinList) {
 		coin->Draw();
 	}
+	for (auto& redcoin : m_rcoinList) {
+		redcoin->Draw();
+	}
 }
 
 void Stage::Update()
@@ -228,6 +263,19 @@ void Stage::Update()
 			CoinCount++;
 			m_coinList.erase(std::remove(m_coinList.begin(), m_coinList.end(), coin)
 				, m_coinList.end());
+		}
+	}
+	for (auto& redcoin : m_rcoinList) {
+		redcoin->Update();
+		if (redcoin->GetCoinGet() == true)
+		{
+			//コインの音を鳴らす
+			m_coinse.Play(false);
+			Score += 100;
+			delete redcoin;
+			RedCoinCount++;
+			m_rcoinList.erase(std::remove(m_rcoinList.begin(), m_rcoinList.end(), redcoin)
+				, m_rcoinList.end());
 		}
 	}
 	for (auto& turnscaffold : m_turnscaffold) {

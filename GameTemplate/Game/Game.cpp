@@ -227,7 +227,7 @@ void Game::Draw()
 	if (m_gstate == State_Pose) {
 		m_pose.Draw();
 	}
-	if (m_goal.GetGFlag() == false && m_stage->GetEnemyCount() >= 0) {
+	if (m_goal.GetGFlag() == false && m_stage->GetRedCoinCount() == 3) {
 		//ゴールを表示
 		m_goal.Draw();
 	}
@@ -244,7 +244,7 @@ void Game::Draw()
 			m_fontscale,
 			{ 0.0f,1.0f }
 		);
-		swprintf_s(toubatu, L"スコア %d", m_stage->GetScore());
+		swprintf_s(toubatu, L"残機 %d", m_player.GetZanki());
 		m_font.Draw(
 			toubatu,		//表示する文字列。
 			{ -FRAME_BUFFER_W / 2.0f,300.0f },			//表示する座標。0.0f, 0.0が画面の中心。
@@ -253,7 +253,6 @@ void Game::Draw()
 			m_fontscale,
 			{ 0.0f,1.0f }
 		);
-
 		//秒の計算をする
 		if (m_gstate == !State_Pose) {
 			taim = (int)m_time.GetAllSeconds() % 201;

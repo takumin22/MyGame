@@ -9,6 +9,7 @@
 #include "Stage.h"
 #include "Coin.h"
 #include "HP.h"
+#include "RedCoin.h"
 #include "Player_StateMachine.h"
 #include "graphics/animation/Animation.h"
 #include "graphics/animation/AnimationClip.h"
@@ -171,9 +172,9 @@ void Player::SpringJump()
 			float d = springForward.Dot(toPlayerDir);
 			//内積の結果をacos関数に渡して、springForwardとtoPlayerDirのなす角を求める。
 			float angle = acos(d);
-			if (fabsf(angle) < CMath::DegToRad(90.0f)
-				&& toPlayerLen <= 70.0f) {
-				m_moveSpeed.y += 1300.0f;
+			if (fabsf(angle) < CMath::DegToRad(90.0f)&& toPlayerLen<=90.0
+				) {
+				m_moveSpeed.y += 1500.0;
 			}
 		}
 
@@ -199,17 +200,38 @@ void Player::Scafflod()
 			if (m_scaffold[i]->Getflag() == true) {
 
 				if (m_scaffold[i]->GetState() == m_scaffold[i]->State_FrontMove) {
-					m_position.z -= 5.0f;
+					m_position.z -= m_scaffold[i]->GetSpeed();
 
 				}
 				else if (m_scaffold[i]->GetState() == m_scaffold[i]->State_BackMove) {
-					m_position.z += 5.0f;
+					m_position.z += m_scaffold[i]->GetSpeed();
 				}
 			}
 		}
 	}
 	m_charaCon.SetPosition(m_position);
 
+}
+void Player::TurnScafflod()
+{
+	CVector3 m = CVector3::Zero();
+	if (g_game->GetNo() <= 2) {
+		for (int i = 0; i < m_turnscaffold.size(); i++) {
+
+
+			if (m_turnscaffold[i]->Getflag() == true) {
+			CVector3 kk = m_position-m_turnscaffold[i]->GetPosition();
+			CVector3 kL=kk;
+
+			CQuaternion qrot;
+			qrot.SetRotationDeg(CVector3::AxisY(), 2.0f);
+			qrot.Multiply(kk);
+			m = kk-kL;
+			m_position += m;
+			}
+		}
+	}
+	m_charaCon.SetPosition(m_position);
 }
 void Player::Update()
 {
@@ -251,6 +273,7 @@ void Player::Update()
 
 	//キャラクタを移動させる。
 	m_position = m_charaCon.Execute(1.0f / 30.0f, m_moveSpeed);
+	TurnScafflod();
 	m_mRot.MakeRotationFromQuaternion(m_rotation);
 	m_rite = { m_mRot.m[0][0] ,m_mRot.m[0][1],m_mRot.m[0][2] };
 	m_up = { m_mRot.m[1][0] ,m_mRot.m[1][1] ,m_mRot.m[1][2] };

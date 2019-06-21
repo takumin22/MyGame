@@ -51,9 +51,8 @@ void Enemy::Move()
 	if (idoutime >= 40) {
 		idoutime = 0;
 		CQuaternion qrto;
-	qrto.SetRotationDeg(CVector3::AxisY(), 180.0f);
-	m_rotation.Multiply(qrto);
-		//i *= -1;
+		qrto.SetRotationDeg(CVector3::AxisY(), 180.0f);
+		m_rotation.Multiply(qrto);
 	}
 }
 void Enemy::Search()
@@ -158,6 +157,7 @@ void Enemy::Update()
 		}
 		if (AnimPlayTime >= 10) {
 			punchflag = false;
+			
 		}
 		if (AnimPlayTime >= 50) {
 			EnemyDeth = true;

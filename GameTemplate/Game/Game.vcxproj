@@ -146,6 +146,7 @@
     <ClCompile Include="Player\Player_StateMachine.cpp" />
     <ClCompile Include="Pose.cpp" />
     <ClCompile Include="PostEffect.cpp" />
+    <ClCompile Include="RedCoin.cpp" />
     <ClCompile Include="Scaffold.cpp" />
     <ClCompile Include="graphics\ShadowMap.cpp" />
     <ClCompile Include="sky.cpp" />
@@ -219,6 +220,7 @@
     <ClInclude Include="Player\PlState.h" />
     <ClInclude Include="Pose.h" />
     <ClInclude Include="PostEffect.h" />
+    <ClInclude Include="RedCoin.h" />
     <ClInclude Include="Scaffold.h" />
     <ClInclude Include="graphics\ShadowMap.h" />
     <ClInclude Include="sky.h" />
@@ -280,6 +282,8 @@
     <MeshContentTask Include="Assets\modelData\Island.fbx" />
     <MeshContentTask Include="Assets\modelData\karasiba.FBX" />
     <MeshContentTask Include="Assets\modelData\kkk.fbx" />
+    <MeshContentTask Include="Assets\modelData\NewWorld.fbx" />
+    <MeshContentTask Include="Assets\modelData\RedCoin.FBX" />
     <MeshContentTask Include="Assets\modelData\Skeleton%40Skin.FBX" />
     <MeshContentTask Include="Assets\modelData\sky.FBX" />
     <MeshContentTask Include="Assets\modelData\SlimeLevel1.fbx" />

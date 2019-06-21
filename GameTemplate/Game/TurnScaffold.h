@@ -16,6 +16,10 @@ public:
 	/// </summary>
 	~TurnScaffold();
 	/// <summary>
+	/// 
+	/// </summary>
+	void AABB();
+	/// <summary>
 	/// 更新
 	/// </summary>
 	void Update();
@@ -31,6 +35,18 @@ public:
 	{
 		return m_position;
 	}
+	bool Getflag()
+	{
+		return syoutotuflag;
+	}
+	CVector3 GetmoveSpeed()
+	{
+		return m_moveSpeed;
+	}
+	CQuaternion kari()
+	{
+		return aa;
+	}
 private:
 	SkinModel m_model;									//スキンモデル。
 	CVector3 m_position = CVector3::Zero();				//座標。
@@ -40,5 +56,7 @@ private:
 	PhysicsStaticObject m_phyStaticObject;				//静的物理オブジェクト
 	Player* m_player = nullptr;							//プレイヤー
 	bool Hantei = false; //判定用のフラグ
+	bool syoutotuflag = false;
+	CQuaternion aa;
 };
 

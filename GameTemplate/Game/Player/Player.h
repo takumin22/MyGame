@@ -15,6 +15,7 @@ class Scaffold;
 class Stage;
 class TurnScaffold;
 class Coin;
+class RedCoin;
 class HP;
 
 class Player
@@ -52,6 +53,7 @@ public:
 	/// 足場上の処理
 	/// </summary>
 	void Scafflod();
+	void TurnScafflod();
 	/// <summary>
 	/// 描画
 	/// </summary>
@@ -153,7 +155,7 @@ public:
 	/// <param name="turnscaffold"></param>
 	void SetTurnScaffold(int N, TurnScaffold* turnscaffold)
 	{
-		m_turnscaffold[N] = turnscaffold;
+		m_turnscaffold.push_back(turnscaffold);
 	}
 	/// <summary>
 	/// コインのインスタンスをセット
@@ -164,6 +166,10 @@ public:
 	{
 		m_coin[N] = coin;
 	}
+	void SetRedCoin(int N, RedCoin*redcoin)
+	{
+		m_redcoin.push_back(redcoin);
+	}
 	//アニメーションのステートのセッター。
 	void SetAnimation(PlState::EnAnimationClip state)
 	{
@@ -173,13 +179,17 @@ public:
 	{
 		return m_charaCon;
 	}
-
+	CQuaternion getk()
+	{
+		return ki;
+	}
 private:
 	SkinModel m_model;									//スキンモデル。
 	Animation m_animation;								//アニメーション。
 	AnimationClip m_animationClips[PlState::EnAnimationClip::enAnimationClip_Num];//アニメーションクリップ。
 	CVector3 m_position = CVector3::Zero();             //座標。
 	CVector3 m_oldposition = CVector3::Zero();			//スタート位置保存用
+	CVector3 kk = CVector3::Zero();
 	CVector3 m_moveSpeed = CVector3::Zero();			//移動速度。
 	CVector3 m_scale = CVector3::One();					//拡大率。
 	CQuaternion m_rotation = CQuaternion::Identity();   //回転。
@@ -198,14 +208,17 @@ private:
 	Sprite m_sprite;
     std::vector<Enemy*> m_enemy;									//エネミー
 	std::vector<Spring*> m_spring;								//ジャンプ台
+	std::vector<RedCoin*> m_redcoin;
 	Coin* m_coin[100];									//コイン
 	HP m_hp;											//HP
 	Player_StateMachine m_stMa;
 	Scaffold* m_scaffold[2];							//動く足場
-	TurnScaffold* m_turnscaffold[10];					//回転する足場
+	std::vector<TurnScaffold*> m_turnscaffold;					//回転する足場
 	CSoundSource m_spjumpse;							//ジャンプ台に乗った時の音
 	float m_deltatime = 1.0f / 30.0f;                   //1フレームの経過時間
 	Effekseer::Effect* m_sampleEffect = nullptr;
 	Effekseer::Handle m_playEffectHandle = -1;
+	CQuaternion ki;
+	float ka;
 };
 

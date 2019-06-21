@@ -61,6 +61,10 @@ public:
 	{
 		return syoutotuflag;
 	}
+	float GetSpeed()
+	{
+		return Speed;
+	}
 private:
 	SState m_sstate = State_FrontMove;					//
 	SkinModel m_model;									//スキンモデル。
@@ -74,5 +78,5 @@ private:
 	int Hantei = 0;
 	Stage* m_stage;
 	bool syoutotuflag = false;
-
+	float Speed = 5.0f;
 };

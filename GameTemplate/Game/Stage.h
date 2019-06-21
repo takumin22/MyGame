@@ -65,6 +65,10 @@ public:
 	{
 		return EnemyCount;
 	}
+	int GetRedCoinCount()
+	{
+		return RedCoinCount;
+	}
 	/// <summary>
 	/// スコアをゲット
 	/// </summary>
@@ -86,10 +90,12 @@ private:
 	std::vector< Coin*> m_coinList;				//コインのリスト
 	std::vector<TurnScaffold*> m_turnscaffold;	//回転足場のリスト
 	std::vector<Gate*> m_gateList;				//ゲートのリスト
+	std::vector<RedCoin*> m_rcoinList;
 	CSoundSource m_edamegese;					//エネミーのダメージSE
 	CSoundSource m_hakkense;					//ジャンプ台出現時のSE
 	CSoundSource m_coinse;						//コインの取得SE
 	int CoinCount = 0;							//取得コイン数
+	int RedCoinCount = 0;
 	int EnemyCount = 0;							//倒したエネミー数
 	bool SEflag = true;							//SEを鳴らすかのフラグ
 	int Score = 0;								//スコア

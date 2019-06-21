@@ -151,6 +151,7 @@
     <ClCompile Include="Player\Player_Damage.cpp" />
     <ClCompile Include="Player\Player_Deth.cpp" />
     <ClCompile Include="Player\Player_Attack.cpp" />
+    <ClCompile Include="RedCoin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -275,6 +276,7 @@
     <ClInclude Include="Player\Player_Damage.h" />
     <ClInclude Include="Player\Player_Deth.h" />
     <ClInclude Include="Player\Player_Attack.h" />
+    <ClInclude Include="RedCoin.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\104677.jpg" />
@@ -285,12 +287,9 @@
     <Image Include="Assets\modelData\Pixel Cube Atlas.png" />
     <Image Include="Assets\modelData\PLASTERT.TGA" />
     <Image Include="Assets\modelData\StoneMonster.png" />
-    <Image Include="Assets\modelData\Texture_Chara_4Hero_Normal.tga" />
     <Image Include="Assets\modelData\utc_ao.png" />
     <Image Include="Assets\modelData\utc_nomal.tga" />
     <Image Include="Assets\modelData\utc_spec.tga" />
-    <Image Include="Assets\modelData\Chara_4Hero.fbm\Texture_MetallicSmooth.tga" />
-    <Image Include="Assets\sprite\Title logo.png" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Chara_4Hero.fbx" />
@@ -319,6 +318,8 @@
     <MeshContentTask Include="Assets\modelData\unityChan.fbx" />
     <MeshContentTask Include="Assets\animData\UnityChanAnim.fbx" />
     <MeshContentTask Include="Assets\modelData\sky.FBX" />
+    <MeshContentTask Include="Assets\modelData\NewWorld.fbx" />
+    <MeshContentTask Include="Assets\modelData\RedCoin.FBX" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\animData\damage.tka" />
@@ -347,5 +348,8 @@
     <ImageContentTask Include="Assets\sprite\taittol1.png" />
     <ImageContentTask Include="Assets\sprite\StageSelect.jpeg" />
     <ImageContentTask Include="Assets\sprite\Pose.png" />
+    <ImageContentTask Include="Assets\sprite\Title logo.png" />
+    <ImageContentTask Include="Assets\modelData\Chara_4Hero.fbm\Texture_MetallicSmooth.tga" />
+    <ImageContentTask Include="Assets\modelData\Texture_Chara_4Hero_Normal.tga" />
   </ItemGroup>
 </Project>

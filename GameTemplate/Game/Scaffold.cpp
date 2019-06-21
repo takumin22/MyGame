@@ -44,11 +44,11 @@ void Scaffold::AABB()
 }
 void Scaffold::FrontMove()
 {
-	m_position.z -= 5.0f;	
+	m_position.z -= Speed;	
 }
 void Scaffold::BackMove()
 {
-	m_position.z += 5.0f;
+	m_position.z += Speed;
 }
 void Scaffold::Update()
 {

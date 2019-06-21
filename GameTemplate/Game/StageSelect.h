@@ -26,7 +26,6 @@ private:
 	CVector3 m_position1 = {-300.0f,0.0f,0.0f};				//ç¿ïWÅB
 	CQuaternion m_rotation1 = CQuaternion::Identity();
 	CVector3 m_scale1 = CVector3::One();					//ägëÂó¶ÅB
-	float m_mojiscale;
 	bool flag = false;
 	bool StratFlag = false;
 	wchar_t moji[256];

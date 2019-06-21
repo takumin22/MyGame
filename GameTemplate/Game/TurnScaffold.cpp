@@ -19,10 +19,31 @@ TurnScaffold::~TurnScaffold()
 {
 }
 
+void TurnScaffold::AABB()
+{
+	//簡易的なAABB
+	auto vMax = m_position;
+	auto vMin = vMax;
+	vMax.x += 250.0f;
+	vMax.y += 0.0f;
+	vMax.z += 250.0f;
+	vMin.x -= 250.0f;
+	vMin.y -= 0.0f;
+	vMin.z -= 250.0f;
+	if (m_player->GetPosition().x <= vMax.x && m_player->GetPosition().x >= vMin.x &&
+		m_player->GetPosition().y <= vMax.y && m_player->GetPosition().y >= vMin.y &&
+		m_player->GetPosition().z >= vMin.z && m_player->GetPosition().z <= vMax.z) {
+		syoutotuflag = true;   // 衝突！！
+
+	}
+	else {
+		syoutotuflag = false; //衝突していない
+	}
+}
 void TurnScaffold::Update()
 {
 
-
+	AABB();
 	m_phyStaticObject.Releasehantei();
 	Hantei = true;
 	if (Hantei == true) {
@@ -32,8 +53,11 @@ void TurnScaffold::Update()
 	CQuaternion qRot;
 	qRot.SetRotationDeg(CVector3::AxisY(), 2.0f);
 	m_rotation.Multiply(qRot);
+	//aa = m_rotation;
+	//aa.Multiply(m_player->getk());
 	g_shadowMap->RegistShadowCaster(&m_model);
 	m_model.SetShadowReciever(true);
+
 	//ワールド行列の更新
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
 }
