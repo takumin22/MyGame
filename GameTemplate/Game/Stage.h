@@ -11,10 +11,12 @@
 #include "Coin.h"
 #include "Goal.h"
 #include "Gate.h"
+#include "EnemyFly.h"
 #include "sound/SoundEngine.h"
 #include "sound/SoundSource.h"
 class Game;
 class Enemy;
+class EnemyFly;
 class Stage 
 {
 public:
@@ -35,20 +37,7 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw();
-	void StageMove();
 	void StageSE();
-	/// <summary>
-	/// ステージを設定
-	/// </summary>
-	/// <param name="StageNo">ステージのナンバー</param>
-	void SetCount(int StageNo)
-	{
-		StageCount = StageNo;
-	}
-	int GetCount()
-	{
-		return StageCount;
-	}
 	/// <summary>
 	/// コインカウントを取得
 	/// </summary>
@@ -90,7 +79,8 @@ private:
 	std::vector< Coin*> m_coinList;				//コインのリスト
 	std::vector<TurnScaffold*> m_turnscaffold;	//回転足場のリスト
 	std::vector<Gate*> m_gateList;				//ゲートのリスト
-	std::vector<RedCoin*> m_rcoinList;
+	std::vector<RedCoin*> m_rcoinList;			//レッドコインのリスト
+	std::vector<EnemyFly*> m_enemyflyList;
 	CSoundSource m_edamegese;					//エネミーのダメージSE
 	CSoundSource m_hakkense;					//ジャンプ台出現時のSE
 	CSoundSource m_coinse;						//コインの取得SE

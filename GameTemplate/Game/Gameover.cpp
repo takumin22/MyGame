@@ -17,9 +17,16 @@ void Gameover::Update()
 {
 	m_oversprite.Update(CVector3::Zero(), CQuaternion::Identity(), CVector3::One());
 
-	if (g_pad[0].IsTrigger(enButtonA) && g_fade->GetState() == Fade::idel)
+	if (g_pad[0].IsPress(enButtonA) == true && g_fade->GetState() == Fade::idel) {
+		g_fade->Fadein();
+		flag = true;
+
+	}
+	if (flag == true && g_fade->GetState() == Fade::idel)
 	{
-		//g_fade->Fadein();
+		g_fade->Fadeout();
+		flag = false;
+		flag1 = true;
 	}
 }
 

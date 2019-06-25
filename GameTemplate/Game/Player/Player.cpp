@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "EnemyFly.h"
 #include "Game.h"
 #include "Goal.h"
 #include "Spring.h"
@@ -121,8 +122,6 @@ void Player::Attack()
 }
 void Player::Damage()
 {
-	//CVector3 toEnemyDlr;
-	//float toEnemyLan;
 	for (int i = 0; i < m_enemy.size(); i++) {
 		if (m_enemy[i]->GetEState() != Enemy::EState::State_EDamage) {
 			if (m_enemy[i]->GetEnemyDeth() == false) {
@@ -145,15 +144,7 @@ void Player::Damage()
 		}
 	}
 
-	if (DamageFlag == true)
-	{
-		Time++;
-		if (Time >= 30)
-		{
-			DamageFlag = false;
-			Time = 0;
-		}
-	}
+
 	
 }
 void Player::SpringJump()
@@ -222,7 +213,6 @@ void Player::TurnScafflod()
 			if (m_turnscaffold[i]->Getflag() == true) {
 			CVector3 kk = m_position-m_turnscaffold[i]->GetPosition();
 			CVector3 kL=kk;
-
 			CQuaternion qrot;
 			qrot.SetRotationDeg(CVector3::AxisY(), 2.0f);
 			qrot.Multiply(kk);
@@ -235,15 +225,23 @@ void Player::TurnScafflod()
 }
 void Player::Update()
 {
-	m_sprite.Update(m_attackPos, CQuaternion::Identity(), CVector3::One());
 	if (m_position.y <= -500.0f) {
 		PlayerPosRetrun();
 	}
 	Attack();
 	Scafflod();
 	SpringJump();
-	if (g_game->GetNo() <= 1) {
+	if (g_game->GetNo() <= 2) {
 		Damage();
+		if (DamageFlag == true)
+		{
+			Time++;
+			if (Time >= 30)
+			{
+				DamageFlag = false;
+				Time = 0;
+			}
+		}
 	}
 	m_stMa.Update();
 	if (m_animation.IsPlaying() == false)

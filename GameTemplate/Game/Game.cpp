@@ -96,8 +96,18 @@ void Game::Update()
 			m_goal.Update();
 		}
 		if (m_player.GetZanki() <= 0 || m_time.GetAllSeconds() >= GAMETIME) {
+			if (ChangeFlag == false && g_fade->GetState() == Fade::idel) {
+				g_fade->Fadein();
+				ChangeFlag = true;
 
-			m_gstate = State_GameOver;
+			}
+			if (ChangeFlag == true && g_fade->GetState() == Fade::idel)
+			{
+				g_fade->Fadeout();
+				ChangeFlag = false;
+				m_gstate = State_GameOver;
+			}
+
 		}
 		if (m_goal.GetGFlag() == true)
 		{
@@ -115,7 +125,7 @@ void Game::Update()
 				if (ChangeFlag == true && g_fade->GetState() == Fade::idel) {
 					g_fade->Fadeout();
 					ChangeFlag = false;
-					m_gstate = State_StageChange /*State_TitleChange*/;
+					m_gstate = State_StageChange;
 				}
 
 			}
@@ -161,7 +171,6 @@ void Game::Update()
 		Goal = false;
 		GoalCount = 0;
 		taim = 0;
-		
 		m_gstate = State_Default;
 		break;
 	case State_TitleChange:
@@ -171,16 +180,7 @@ void Game::Update()
 		break;
 	case State_GameOver:
 		m_over.Update();
-
-		if (g_pad[0].IsPress(enButtonA) == true && g_fade->GetState() == Fade::idel) {
-			g_fade->Fadein();
-			ChangeFlag = true;
-
-		}
-		if (ChangeFlag == true && g_fade->GetState() == Fade::idel)
-		{
-			g_fade->Fadeout();
-			ChangeFlag = false;
+		if (m_over.Getflag() == true && g_fade->GetState() == Fade::fadeout) {
 			m_gstate = State_TitleChange;
 		}
 		break;
@@ -207,33 +207,8 @@ void Game::ChangeRenderTarget(ID3D11DeviceContext* d3dDeviceContext, ID3D11Rende
 		d3dDeviceContext->RSSetViewports(1, viewport);
 	}
 }
-void Game::Draw()
+void Game::GameFont()
 {
-	m_font.BeginDraw();	//フォントの描画開始。
-
-						////レンダリングターゲットをメインに変更する。
-	auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
-	ChangeRenderTarget(d3dDeviceContext, &m_mainRenderTarget, m_mainRenderTarget.GetViewport());
-	//メインレンダリングターゲットをクリアする。
-	float clearColor[] = { 0.0f, 0.7f, 1.0f, 1.0f };
-	m_mainRenderTarget.ClearRenderTarget(clearColor);
-
-	//プレイヤーの描画。
-	m_player.Draw();
-	//ステージの描画
-	m_stage->Draw();
-	m_cubemap->Draw();
-	m_hp.Draw();
-	if (m_gstate == State_Pose) {
-		m_pose.Draw();
-	}
-	if (m_goal.GetGFlag() == false && m_stage->GetRedCoinCount() == 3) {
-		//ゴールを表示
-		m_goal.Draw();
-	}
-	m_postEffect->Draw();
-	//制限時間のタイマーをラップでストップさせる。
-	m_time.TimerStop();
 	if (m_goal.GetGFlag() == false) {
 		swprintf_s(toubatu, L"コイン %d", m_stage->GetCoinCount());
 		m_font.Draw(
@@ -301,6 +276,36 @@ void Game::Draw()
 			{ 0.0f,1.0f }
 		);
 	}
+}
+void Game::Draw()
+{
+	m_font.BeginDraw();	//フォントの描画開始。
+
+						////レンダリングターゲットをメインに変更する。
+	auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
+	ChangeRenderTarget(d3dDeviceContext, &m_mainRenderTarget, m_mainRenderTarget.GetViewport());
+	//メインレンダリングターゲットをクリアする。
+	float clearColor[] = { 0.0f, 0.7f, 1.0f, 1.0f };
+	m_mainRenderTarget.ClearRenderTarget(clearColor);
+
+	//プレイヤーの描画。
+	m_player.Draw();
+	//ステージの描画
+	m_stage->Draw();
+	m_cubemap->Draw();
+	m_hp.Draw();
+	if (m_gstate == State_Pose) {
+		m_pose.Draw();
+	}
+	if (m_goal.GetGFlag() == false && m_stage->GetRedCoinCount() == 3) {
+		//ゴールを表示
+		m_goal.Draw();
+	}
+	m_postEffect->Draw();
+
+	//制限時間のタイマーをラップでストップさせる。
+	m_time.TimerStop();
+	GameFont();
 	//タイマーを再開させる
 	m_time.TimerRestart();
 	//文字表示の終了

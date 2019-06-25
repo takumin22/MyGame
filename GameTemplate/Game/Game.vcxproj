@@ -104,6 +104,7 @@
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="ConstantBufferGPU.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyFly.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="font.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="Coin.h" />
     <ClInclude Include="ConstantBufferGPU.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyFly.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="font.h" />
     <ClInclude Include="Game.h" />
@@ -270,12 +272,8 @@
   <ItemGroup>
     <MeshContentTask Include="Assets\animData\UnityChanAnim.fbx" />
     <MeshContentTask Include="Assets\modelData\Chara_4Hero.fbx" />
-    <MeshContentTask Include="Assets\modelData\Chara_4Hero1.fbx" />
     <MeshContentTask Include="Assets\modelData\Coin.FBX" />
     <MeshContentTask Include="Assets\modelData\Dammy.FBX" />
-    <MeshContentTask Include="Assets\modelData\enemy.FBX" />
-    <MeshContentTask Include="Assets\modelData\enemy1.FBX" />
-    <MeshContentTask Include="Assets\modelData\enemy_00.FBX" />
     <MeshContentTask Include="Assets\modelData\fence_gate.FBX" />
     <MeshContentTask Include="Assets\modelData\fence_single.FBX" />
     <MeshContentTask Include="Assets\modelData\Green_Cube.fbx" />

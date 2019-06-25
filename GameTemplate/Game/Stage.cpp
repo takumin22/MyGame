@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Stage.h"
 #include "Enemy.h"
+#include "EnemyFly.h"
 #include"Game.h"
 #include "Player/Player.h"
 #include "Scaffold.h"
@@ -34,6 +35,13 @@ Stage::Stage(int No)
 				g_game->GetPlayer()->SetEnemy(StageNo++, enemy);
 				return true;
 			}
+			else if (objData.ForwardMatchName(L"StoneMonster") == true) {
+				//エネミー
+				auto enemyfly = new EnemyFly(objData.position, objData.rotation, g_game->GetPlayer());
+				m_enemyflyList.push_back(enemyfly);
+				g_game->GetPlayer()->SetEnemyFly(StageNo6++, enemyfly);
+				return true;
+			}
 			else if (objData.ForwardMatchName(L"Spring") == true) {
 				//バネ
 				auto spring = new Spring(objData.position, objData.rotation, g_game->GetPlayer());
@@ -62,7 +70,7 @@ Stage::Stage(int No)
 				return true;
 			}
 			else if (objData.ForwardMatchName(L"RedCoin") == true) {
-				//コイン
+				//レッドコイン
 				auto redcoin = new RedCoin(objData.position, objData.rotation, g_game->GetPlayer());
 				m_rcoinList.push_back(redcoin);
 				g_game->GetPlayer()->SetRedCoin(StageNo5++, redcoin);
@@ -96,6 +104,13 @@ Stage::Stage(int No)
 				g_game->GetPlayer()->SetEnemy(StageNo++, enemy);
 				return true;
 			}
+			else if (objData.ForwardMatchName(L"StoneMonster") == true) {
+				//エネミー
+				auto enemyfly = new EnemyFly(objData.position, objData.rotation, g_game->GetPlayer());
+				m_enemyflyList.push_back(enemyfly);
+				g_game->GetPlayer()->SetEnemyFly(StageNo6++, enemyfly);
+				return true;
+			}
 			else if (objData.ForwardMatchName(L"Spring") == true) {
 				//バネ
 				auto spring = new Spring(objData.position, objData.rotation, g_game->GetPlayer());
@@ -122,7 +137,7 @@ Stage::Stage(int No)
 				return true;
 			}
 			else if (objData.ForwardMatchName(L"RedCoin") == true) {
-				//コイン
+				//レッドコイン
 				auto redcoin = new RedCoin(objData.position, objData.rotation, g_game->GetPlayer());
 				m_rcoinList.push_back(redcoin);
 				g_game->GetPlayer()->SetRedCoin(StageNo5++, redcoin);
@@ -139,6 +154,10 @@ Stage::~Stage()
 	//エネミー破棄
 	for (auto& enemy : m_enemyList) {
 		delete enemy;
+	}
+	//エネミー破棄
+	for (auto& enemyfly : m_enemyflyList) {
+		delete enemyfly;
 	}
 	for (auto& scaffold : m_sacaffoldList) {
 		delete scaffold;
@@ -174,10 +193,7 @@ Stage::~Stage()
 	StageNo3 = 0;
 	StageNo4 = 0;
 	StageNo5 = 0;
-}
-
-void Stage::StageMove()
-{
+	StageNo6 = 0;
 }
 
 void Stage::StageSE()
@@ -200,6 +216,10 @@ void Stage::Draw()
 	//エネミーを描画。
 	for (auto& enemy : m_enemyList) {
 		enemy->Draw();
+	}
+	//エネミー破棄
+	for (auto& enemyfly : m_enemyflyList) {
+		enemyfly->Draw();
 	}
 	if (EnemyCount >= 0) {
 	
@@ -226,6 +246,7 @@ void Stage::Draw()
 
 void Stage::Update()
 {
+
 	//バネの更新。
 	if (EnemyCount >= 0) {
 		for (auto& spring : m_springList) {
@@ -250,6 +271,19 @@ void Stage::Update()
 			delete enemy;
 			m_enemyList.erase(std::remove(m_enemyList.begin(), m_enemyList.end(), enemy)
 				, m_enemyList.end());
+		}
+	}
+	//エネミーを更新。
+	for (auto& enemyfly : m_enemyflyList) {
+		enemyfly->Update();
+		if (enemyfly->GetEnemyDeth() == true)
+		{
+			Score += 10;
+			EnemyCount++;
+			m_edamegese.Play(false);
+			delete enemyfly;
+			m_enemyflyList.erase(std::remove(m_enemyflyList.begin(), m_enemyflyList.end(), enemyfly)
+				, m_enemyflyList.end());
 		}
 	}
 	for (auto& coin : m_coinList) {

@@ -10,6 +10,7 @@
 #include "Sprite.h"
 
 class Enemy;
+class EnemyFly;
 class Spring;
 class Scaffold;
 class Stage;
@@ -84,6 +85,10 @@ public:
 	{
 		m_moveSpeed = move;
 	}
+	void AddMoveSpeed(CVector3 move)
+	{
+		m_moveSpeed += move;
+	}
 	CVector3 GetAttackPos()
 	{
 		return m_attackPos;
@@ -129,6 +134,15 @@ public:
 	void SetEnemy(int N, Enemy* enemy)
 	{
 		m_enemy.push_back(enemy);
+	}
+	/// <summary>
+	/// エネミーのインスタンスをセット
+	/// </summary>
+	/// <param name="N"></param>
+	/// <param name="enemy"></param>
+	void SetEnemyFly(int N, EnemyFly* enemyfly)
+	{
+		m_enemyfly.push_back(enemyfly);
 	}
 	/// <summary>
 	/// ジャンプ台のインスタンスをセット
@@ -179,17 +193,12 @@ public:
 	{
 		return m_charaCon;
 	}
-	CQuaternion getk()
-	{
-		return ki;
-	}
 private:
 	SkinModel m_model;									//スキンモデル。
 	Animation m_animation;								//アニメーション。
 	AnimationClip m_animationClips[PlState::EnAnimationClip::enAnimationClip_Num];//アニメーションクリップ。
 	CVector3 m_position = CVector3::Zero();             //座標。
 	CVector3 m_oldposition = CVector3::Zero();			//スタート位置保存用
-	CVector3 kk = CVector3::Zero();
 	CVector3 m_moveSpeed = CVector3::Zero();			//移動速度。
 	CVector3 m_scale = CVector3::One();					//拡大率。
 	CQuaternion m_rotation = CQuaternion::Identity();   //回転。
@@ -208,7 +217,8 @@ private:
 	Sprite m_sprite;
     std::vector<Enemy*> m_enemy;									//エネミー
 	std::vector<Spring*> m_spring;								//ジャンプ台
-	std::vector<RedCoin*> m_redcoin;
+	std::vector<RedCoin*> m_redcoin;					//レッドコイン
+	std::vector<EnemyFly*> m_enemyfly;
 	Coin* m_coin[100];									//コイン
 	HP m_hp;											//HP
 	Player_StateMachine m_stMa;
@@ -218,7 +228,5 @@ private:
 	float m_deltatime = 1.0f / 30.0f;                   //1フレームの経過時間
 	Effekseer::Effect* m_sampleEffect = nullptr;
 	Effekseer::Handle m_playEffectHandle = -1;
-	CQuaternion ki;
-	float ka;
 };
 

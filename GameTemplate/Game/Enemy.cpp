@@ -106,6 +106,9 @@ void Enemy::Damage()
 
 	if (toEnemyLen <= 60.0f &&  angle <= 65.0f ) {
 		m_estate = State_EDamage;
+		if (g_pad[0].IsTrigger(enButtonA)) {
+			m_player->AddMoveSpeed({0.0f,700.0f,0.0f});
+		}
 	}
 	if (toEnemyLen2 <= 60.0f)
 	{
@@ -166,7 +169,9 @@ void Enemy::Update()
 		}
 		break;
 	}
-	m_moveSpeed.y -= 1800.0f /** (1.0f / 60.0f)*/;
+	if (m_estate != State_EDamage) {
+		m_moveSpeed.y -= 1800.0f /** (1.0f / 60.0f)*/;
+	}
 	m_charaCon.SetPosition(m_position);
 	m_position = m_charaCon.Execute(1.0f / 60.0f, m_moveSpeed);
 	m_model.SetShadowReciever(true);

@@ -152,6 +152,7 @@
     <ClCompile Include="Player\Player_Deth.cpp" />
     <ClCompile Include="Player\Player_Attack.cpp" />
     <ClCompile Include="RedCoin.cpp" />
+    <ClCompile Include="EnemyFly.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -277,6 +278,7 @@
     <ClInclude Include="Player\Player_Deth.h" />
     <ClInclude Include="Player\Player_Attack.h" />
     <ClInclude Include="RedCoin.h" />
+    <ClInclude Include="EnemyFly.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\104677.jpg" />
@@ -293,12 +295,8 @@
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Chara_4Hero.fbx" />
-    <MeshContentTask Include="Assets\modelData\Chara_4Hero1.fbx" />
     <MeshContentTask Include="Assets\modelData\Coin.FBX" />
     <MeshContentTask Include="Assets\modelData\Dammy.FBX" />
-    <MeshContentTask Include="Assets\modelData\enemy.FBX" />
-    <MeshContentTask Include="Assets\modelData\enemy_00.FBX" />
-    <MeshContentTask Include="Assets\modelData\enemy1.FBX" />
     <MeshContentTask Include="Assets\modelData\fence_gate.FBX" />
     <MeshContentTask Include="Assets\modelData\fence_single.FBX" />
     <MeshContentTask Include="Assets\modelData\Green_Cube.fbx" />
