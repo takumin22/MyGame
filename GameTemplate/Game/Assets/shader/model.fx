@@ -262,7 +262,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 			}
 			//pow関数を使って、スペキュラを絞る。絞りの強さは定数バッファで渡されている。
 			
-			float4 specLig = pow(t, specPow) * specPower * directionLight.color;
+			float3 specLig = pow(t, specPow) * specPower * directionLight.color;
 			//スペキュラ反射が求まったら、ligに加算する。
 			//鏡面反射を反射光に加算する。
 			lig = lig + specLig;

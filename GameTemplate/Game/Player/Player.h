@@ -55,6 +55,7 @@ public:
 	/// </summary>
 	void Scafflod();
 	void TurnScafflod();
+	void VecterCler();
 	/// <summary>
 	/// •`‰æ
 	/// </summary>

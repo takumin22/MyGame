@@ -20,7 +20,6 @@ void Gameover::Update()
 	if (g_pad[0].IsPress(enButtonA) == true && g_fade->GetState() == Fade::idel) {
 		g_fade->Fadein();
 		flag = true;
-
 	}
 	if (flag == true && g_fade->GetState() == Fade::idel)
 	{

@@ -167,6 +167,7 @@ void Game::Update()
 		//現在のステージを消して次のステージを呼ぶ
 		m_goal.SetGoalFlag(false);
 		delete m_stage;
+		m_player.VecterCler();
 		m_stage = new Stage(StageNo++);
 		Goal = false;
 		GoalCount = 0;
@@ -210,9 +211,9 @@ void Game::ChangeRenderTarget(ID3D11DeviceContext* d3dDeviceContext, ID3D11Rende
 void Game::GameFont()
 {
 	if (m_goal.GetGFlag() == false) {
-		swprintf_s(toubatu, L"コイン %d", m_stage->GetCoinCount());
+		//swprintf_s(toubatu, L"コイン %d", m_stage->GetCoinCount());
 		m_font.Draw(
-			toubatu,		//表示する文字列。
+			L"コイン",		//表示する文字列。
 			{ -FRAME_BUFFER_W / 2.0f,FRAME_BUFFER_H / 2.0f },			//表示する座標。0.0f, 0.0が画面の中心。
 			{ 0.0f,1.0f,0.0f,1.0f },
 			0.0f,
@@ -285,7 +286,7 @@ void Game::Draw()
 	auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
 	ChangeRenderTarget(d3dDeviceContext, &m_mainRenderTarget, m_mainRenderTarget.GetViewport());
 	//メインレンダリングターゲットをクリアする。
-	float clearColor[] = { 0.0f, 0.7f, 1.0f, 1.0f };
+	float clearColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	m_mainRenderTarget.ClearRenderTarget(clearColor);
 
 	//プレイヤーの描画。
@@ -297,7 +298,7 @@ void Game::Draw()
 	if (m_gstate == State_Pose) {
 		m_pose.Draw();
 	}
-	if (m_goal.GetGFlag() == false && m_stage->GetRedCoinCount() == 3) {
+	if (m_goal.GetGFlag() == false && m_stage->GetRedCoinCount() >= 3) {
 		//ゴールを表示
 		m_goal.Draw();
 	}

@@ -105,6 +105,14 @@ Player::~Player()
 	}
 	posflag = false;
 }
+void Player::VecterCler()
+{
+	m_enemy.clear();
+	m_enemyfly.clear();
+	m_spring.clear();
+	m_redcoin.clear();
+	m_turnscaffold.clear();
+}
 void Player::Attack()
 {
 	
@@ -129,8 +137,8 @@ void Player::Damage()
 				CVector3 toEnemyDlr = m_position - m_enemy[i]->GetEPosition();
 				//エネミーまでの距離を求めておく。
 				float toEnemyLan = toEnemyDlr.Length();
-				if (toEnemyLan <= 70.0f&& DamageFlag == false) {
-					if (DamageCount <= 2) {
+				if (toEnemyLan <= 70.0f&& DamageFlag == false || m_position.y <= -500.0f) {
+					if (DamageCount <= 2 ) {
 						DamageCount++;
 						m_stMa.Change(PlState::PState::State_Damage);
 						DamageFlag = true;
@@ -225,13 +233,29 @@ void Player::TurnScafflod()
 }
 void Player::Update()
 {
-	if (m_position.y <= -500.0f) {
-		PlayerPosRetrun();
+	if (m_position.y <= -1500.0f) {
+		if (m_animation.IsPlaying() == false)
+		{
+			if (DamageCount <= 3) {
+				m_stMa.Change(PlState::PState::State_Idel);
+			}
+			else {
+				Time++;
+				m_moveSpeed = { 0.0f,0.0f,0.0f };
+				if (Time >= 60)
+				{
+
+					PlayerPosRetrun();
+					DamageCount = 0;
+					m_stMa.Change(PlState::PState::State_Idel);
+				}
+			}
+		}
 	}
 	Attack();
 	Scafflod();
 	SpringJump();
-	if (g_game->GetNo() <= 2) {
+	if (g_game->GetNo() <= 2 ) {
 		Damage();
 		if (DamageFlag == true)
 		{
