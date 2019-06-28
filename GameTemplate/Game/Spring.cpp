@@ -23,12 +23,7 @@ Spring::~Spring()
 }
 void Spring::Update()
 {
-	if (m_scale.z <= 1.0f) {
-		m_scale.z += 0.2f;
-	}
-	else if(m_scale.z >= 0.1f) {
-		m_scale.z -= 0.2f;
-	}
+
 	g_shadowMap->RegistShadowCaster(&m_model);
 	m_model.SetShadowReciever(true);
 	m_model.UpdateWorldMatrix(m_position, m_rotation, m_scale);
