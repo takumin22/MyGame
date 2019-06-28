@@ -54,7 +54,7 @@ Game::Game()
 
 Game::~Game()
 {
-	delete &m_time;
+	//delete &m_time;
 	delete m_stage;
 	if (m_frameBufferRenderTargetView != nullptr) {
 		m_frameBufferRenderTargetView->Release();
