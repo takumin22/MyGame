@@ -38,6 +38,7 @@ Game::Game()
 	m_kirakirase.Init(L"Assets/sound/kirakira.wav");
 	m_kirakirase.SetVolume(0.4f);
 	m_stagebgm.SetVolume(0.5f);
+	m_stagebgm.Play(true);
 	m_time.TimerStart();
 	//メインとなるレンダリングターゲットを作成する。
 	m_mainRenderTarget.Create(
@@ -77,7 +78,6 @@ void Game::Update()
 		m_gameCamera.Update();
 		m_hp.Update();
 		m_stage->Update();
-		m_stagebgm.Play(true);
 		if (g_pad[0].IsTrigger(enButtonStart) == true)
 		{
 			m_gstate = State_Pose;
@@ -168,10 +168,10 @@ void Game::Update()
 		m_goal.SetGoalFlag(false);
 		delete m_stage;
 		m_player.VecterCler();
+		m_time.TimerStart();
 		m_stage = new Stage(StageNo++);
 		Goal = false;
 		GoalCount = 0;
-		taim = 0;
 		m_gstate = State_Default;
 		break;
 	case State_TitleChange:

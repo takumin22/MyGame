@@ -16,20 +16,20 @@ Title::Title()
 	m_yaji.Update(m_pos, m_rot ,CVector3::One());
 	m_titlelogo.Init(L"Resource/sprite/Title logo.dds", 1280, 720);
 	m_titlelogo.Update(m_logopos, CQuaternion::Identity(), CVector3::One());
-	//m_titlebgm.Init(L"Assets/sound/Title.wav");
-	//m_titlebgm.SetVolume(0.8f);
-	//m_titlebgm.Play(true);
+	m_titlebgm.Init(L"Assets/sound/Title.wav");
+	m_titlebgm.SetVolume(0.8f);
+
 }
 
 
 Title::~Title()
 {
-
-
+	
 }
 void Title::Update()
 
 {	
+	m_titlebgm.Play(true);
 	m_sprite.Update(CVector3::Zero(), CQuaternion::Identity(), CVector3::One());
 	m_yaji.Update(m_pos,m_rot, CVector3::One());
 	m_titlelogo.Update(m_logopos, CQuaternion::Identity(), CVector3::One());
@@ -85,7 +85,7 @@ void Title::Update()
 		{
 
 			g_currentScene = new StageSelect;
-			//m_titlebgm.Stop();
+			m_titlebgm.Stop();
 			g_fade->Fadeout();
 			delete this;
 		}

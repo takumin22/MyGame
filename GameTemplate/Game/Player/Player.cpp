@@ -112,6 +112,7 @@ void Player::VecterCler()
 	m_spring.clear();
 	m_redcoin.clear();
 	m_turnscaffold.clear();
+	posflag = false;
 }
 void Player::Attack()
 {

@@ -153,6 +153,7 @@
     <ClCompile Include="Player\Player_Attack.cpp" />
     <ClCompile Include="RedCoin.cpp" />
     <ClCompile Include="EnemyFly.cpp" />
+    <ClCompile Include="GameCler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -279,6 +280,7 @@
     <ClInclude Include="Player\Player_Attack.h" />
     <ClInclude Include="RedCoin.h" />
     <ClInclude Include="EnemyFly.h" />
+    <ClInclude Include="GameCler.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\104677.jpg" />

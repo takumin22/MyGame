@@ -2,6 +2,8 @@
 #include "IScene.h"
 #include "Sprite.h"
 #include "Fade.h"
+#include "sound/SoundEngine.h"
+#include "sound/SoundSource.h"
 class StageSelect : public IScene
 {
 public:
@@ -31,5 +33,6 @@ private:
 	wchar_t moji[256];
 	float m_fontsize = 4.0f;
 	Font m_font;					//ƒtƒHƒ“ƒg
+	CSoundSource m_cursorse;
 };
 

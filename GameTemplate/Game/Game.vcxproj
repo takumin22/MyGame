@@ -109,6 +109,7 @@
     <ClCompile Include="font.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCamera.cpp" />
+    <ClCompile Include="GameCler.cpp" />
     <ClCompile Include="Gameover.cpp" />
     <ClCompile Include="Gate.cpp" />
     <ClCompile Include="GaussianBlur.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="font.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCamera.h" />
+    <ClInclude Include="GameCler.h" />
     <ClInclude Include="Gameover.h" />
     <ClInclude Include="Gate.h" />
     <ClInclude Include="GaussianBlur.h" />

@@ -12,6 +12,7 @@ StageSelect::StageSelect()
 	g_camera3D.SetTarget({0.0f,0.0f,0.0f});
 	g_camera3D.SetFar(1000.0f);
 	g_camera3D.Update();
+	m_cursorse.Init(L"Assets/sound/cursor7.wav");
 
 }
 
@@ -51,6 +52,7 @@ void StageSelect::Update()
 
 			//スタートの条件になったのでフェードを開始する
 			g_fade->Fadein();
+			m_cursorse.Play(false);
 			StratFlag = true;
 
 		}
@@ -86,6 +88,7 @@ void StageSelect::Update()
 
 			//スタートの条件になったのでフェードを開始する
 			g_fade->Fadein();
+			m_cursorse.Play(false);
 			StratFlag = true;
 
 		}
