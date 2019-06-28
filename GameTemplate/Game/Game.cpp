@@ -211,9 +211,9 @@ void Game::ChangeRenderTarget(ID3D11DeviceContext* d3dDeviceContext, ID3D11Rende
 void Game::GameFont()
 {
 	if (m_goal.GetGFlag() == false) {
-		//swprintf_s(toubatu, L"コイン %d", m_stage->GetCoinCount());
+		swprintf_s(toubatu, L"コイン %d", m_stage->GetCoinCount());
 		m_font.Draw(
-			L"コイン",		//表示する文字列。
+			toubatu,		//表示する文字列。
 			{ -FRAME_BUFFER_W / 2.0f,FRAME_BUFFER_H / 2.0f },			//表示する座標。0.0f, 0.0が画面の中心。
 			{ 0.0f,1.0f,0.0f,1.0f },
 			0.0f,
@@ -249,7 +249,7 @@ void Game::GameFont()
 		m_goalsprite.Draw();
 
 		TimeScore = GAMETIME - taim;
-		swprintf_s(toubatu, L"スコア", m_stage->GetScore());
+		swprintf_s(toubatu, L"スコア %d", m_stage->GetScore());
 		m_font.Draw(
 			toubatu,		//表示する文字列。
 			{ -200.0f , 100.0f },			//表示する座標。0.0f, 0.0が画面の中心。
