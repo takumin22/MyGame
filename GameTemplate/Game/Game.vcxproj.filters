@@ -154,6 +154,7 @@
     <ClCompile Include="RedCoin.cpp" />
     <ClCompile Include="EnemyFly.cpp" />
     <ClCompile Include="GameCler.cpp" />
+    <ClCompile Include="Score.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -281,6 +282,7 @@
     <ClInclude Include="RedCoin.h" />
     <ClInclude Include="EnemyFly.h" />
     <ClInclude Include="GameCler.h" />
+    <ClInclude Include="Score.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\104677.jpg" />
@@ -294,6 +296,7 @@
     <Image Include="Assets\modelData\utc_ao.png" />
     <Image Include="Assets\modelData\utc_nomal.tga" />
     <Image Include="Assets\modelData\utc_spec.tga" />
+    <Image Include="Assets\sprite\GoalSprite.png" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Chara_4Hero.fbx" />
@@ -351,5 +354,6 @@
     <ImageContentTask Include="Assets\sprite\Title logo.png" />
     <ImageContentTask Include="Assets\modelData\Chara_4Hero.fbm\Texture_MetallicSmooth.tga" />
     <ImageContentTask Include="Assets\modelData\Texture_Chara_4Hero_Normal.tga" />
+    <ImageContentTask Include="Assets\sprite\wood_kanban.png" />
   </ItemGroup>
 </Project>

@@ -31,7 +31,8 @@ Game::Game()
 	m_stage = new Stage(StageNo++);
 	m_cubemap = new sky;
 	m_goalsprite.Init(L"Resource/sprite/kari.dds", 1280, 720);
-	m_stagecrear.Init(L"Resource/sprite/stagecrear.dds", 1280, 720);
+	//m_goalsprite.Update({ 0.0f,0.0f,0.0f }, CQuaternion::Identity(), {1.0f,1.0f,1.0f});
+	//m_stagecrear.Init(L"Resource/sprite/stagecrear.dds", 1280, 720);
 	m_gameCamera.SetPlayer(&m_player);
 	m_goal.SetPlayer(&m_player);
 	m_stagebgm.Init(L"Assets/sound/stagebgm.wav");
@@ -57,12 +58,12 @@ Game::~Game()
 {
 	//delete &m_time;
 	delete m_stage;
-	if (m_frameBufferRenderTargetView != nullptr) {
-		m_frameBufferRenderTargetView->Release();
-	}
-	if (m_frameBufferDepthStencilView != nullptr) {
-		m_frameBufferDepthStencilView->Release();
-	}
+	//if (m_frameBufferRenderTargetView != nullptr) {
+	//	m_frameBufferRenderTargetView->Release();
+	//}
+	//if (m_frameBufferDepthStencilView != nullptr) {
+	//	m_frameBufferDepthStencilView->Release();
+	//}
 }
 
 void Game::Update()
@@ -113,35 +114,8 @@ void Game::Update()
 		{
 			GoalCount++;
 			Goal = true;
-			if (StageNo <= 1 && GoalCount >= 120.0f) {
-				
-				if (g_pad[0].IsPress(enButtonA) == true) {
-					taim = 0;
-					if (g_fade->GetState() == Fade::idel) {
-						g_fade->Fadein();
-						ChangeFlag = true;
-					}
-				}
-				if (ChangeFlag == true && g_fade->GetState() == Fade::idel) {
-					g_fade->Fadeout();
-					ChangeFlag = false;
-					m_gstate = State_StageChange;
-				}
-
-			}
-			if (StageNo > 1 && StageNo <= 2 && GoalCount >= 120.0f) {
-
-				if (g_pad[0].IsPress(enButtonA) == true && g_fade->GetState() == Fade::idel) {
-					g_fade->Fadein();
-					ChangeFlag = true;
-					
-				}
-				if (ChangeFlag == true && g_fade->GetState() == Fade::idel)
-				{
-					g_fade->Fadeout();
-					ChangeFlag = false;
-					m_gstate = State_TitleChange;
-				}
+			if (GoalCount >= 120.0f) {
+				m_gstate = State_GameClear;
 			}
 		}
 		break;
@@ -171,6 +145,8 @@ void Game::Update()
 		m_time.TimerStart();
 		m_stage = new Stage(StageNo++);
 		Goal = false;
+		flag = false;
+		m_cler.Relese();
 		GoalCount = 0;
 		m_gstate = State_Default;
 		break;
@@ -178,6 +154,38 @@ void Game::Update()
 		StageNo = 0;
 		g_currentScene = new Title;
 		delete this;
+		break;
+	case State_GameClear:
+		m_cler.Update();
+		if (StageNo <= 1) 
+		{
+			if (g_pad[0].IsPress(enButtonA) == true) {
+				taim = 0;
+				if (g_fade->GetState() == Fade::idel) {
+					g_fade->Fadein();
+					ChangeFlag = true;
+				}
+			}
+			if (ChangeFlag == true && g_fade->GetState() == Fade::idel) {
+				g_fade->Fadeout();
+				ChangeFlag = false;
+				m_gstate = State_StageChange;
+			}
+		}
+		else if (StageNo > 1 && StageNo <= 2)
+		{
+			if (g_pad[0].IsPress(enButtonA) == true && g_fade->GetState() == Fade::idel) {
+				g_fade->Fadein();
+				ChangeFlag = true;
+
+			}
+			if (ChangeFlag == true && g_fade->GetState() == Fade::idel)
+			{
+				g_fade->Fadeout();
+				ChangeFlag = false;
+				m_gstate = State_TitleChange;
+			}
+		}
 		break;
 	case State_GameOver:
 		m_over.Update();
@@ -211,7 +219,7 @@ void Game::ChangeRenderTarget(ID3D11DeviceContext* d3dDeviceContext, ID3D11Rende
 void Game::GameFont()
 {
 	if (m_goal.GetGFlag() == false) {
-		swprintf_s(toubatu, L"コイン %d", m_stage->GetCoinCount());
+		swprintf_s(toubatu, L"コイン%02d", m_stage->GetCoinCount());
 		m_font.Draw(
 			toubatu,		//表示する文字列。
 			{ -FRAME_BUFFER_W / 2.0f,FRAME_BUFFER_H / 2.0f },			//表示する座標。0.0f, 0.0が画面の中心。
@@ -220,7 +228,7 @@ void Game::GameFont()
 			m_fontscale,
 			{ 0.0f,1.0f }
 		);
-		swprintf_s(toubatu, L"残機 %d", m_player.GetZanki());
+		swprintf_s(toubatu, L"残機%02d", m_player.GetZanki());
 		m_font.Draw(
 			toubatu,		//表示する文字列。
 			{ -FRAME_BUFFER_W / 2.0f,300.0f },			//表示する座標。0.0f, 0.0が画面の中心。
@@ -233,7 +241,7 @@ void Game::GameFont()
 		if (m_gstate == !State_Pose) {
 			taim = (int)m_time.GetAllSeconds() % 201;
 		}
-		swprintf_s(toubatu, L"残り時間%d秒", (GAMETIME - taim));		//表示用にデータを加工
+		swprintf_s(toubatu, L"残り時間%03d秒", (GAMETIME - taim));		//表示用にデータを加工
 		m_font.Draw(
 			toubatu,		//表示する文字列。
 			{ -200.0f,FRAME_BUFFER_H / 2.0f },			//表示する座標。0.0f, 0.0が画面の中心。
@@ -244,38 +252,14 @@ void Game::GameFont()
 		);
 	}
 
+	
+	if (m_gstate == State_GameClear && m_cler.GetSpritePos().y <= 10.0f) {
 
-	if (m_goal.GetGFlag() == true && GoalCount >= 120.0f) {
-		m_goalsprite.Draw();
-
-		TimeScore = GAMETIME - taim;
-		swprintf_s(toubatu, L"スコア %d", m_stage->GetScore());
-		m_font.Draw(
-			toubatu,		//表示する文字列。
-			{ -200.0f , 100.0f },			//表示する座標。0.0f, 0.0が画面の中心。
-			{ 0.0f,0.0f,0.0f,1.0f },
-			0.0f,
-			m_fontscale,
-			{ 0.0f,1.0f }
-		);
-		swprintf_s(toubatu, L"タイムスコア %d", TimeScore);
-		m_font.Draw(
-			toubatu,		//表示する文字列。
-			{ -300.0f , 30.0f },			//表示する座標。0.0f, 0.0が画面の中心。
-			{ 0.0f,0.0f,0.0f,1.0f },
-			0.0f,
-			m_fontscale,
-			{ 0.0f,1.0f }
-		);
-		swprintf_s(toubatu, L"合計スコア %d", m_stage->GetScore() + TimeScore);
-		m_font.Draw(
-			toubatu,		//表示する文字列。
-			{ -250.0f , -50.0f },			//表示する座標。0.0f, 0.0が画面の中心。
-			{ 0.0f,0.0f,0.0f,1.0f },
-			0.0f,
-			m_fontscale,
-			{ 0.0f,1.0f }
-		);
+		if (flag == false) {
+			TimeScore = GAMETIME - taim;
+			flag = true;
+		}
+	
 	}
 }
 void Game::Draw()
@@ -291,6 +275,7 @@ void Game::Draw()
 
 	//プレイヤーの描画。
 	m_player.Draw();
+
 	//ステージの描画
 	m_stage->Draw();
 	m_cubemap->Draw();
@@ -302,6 +287,10 @@ void Game::Draw()
 		//ゴールを表示
 		m_goal.Draw();
 	}
+	if (m_gstate == State_GameClear)
+	{
+		m_cler.Darw();
+	}
 	m_postEffect->Draw();
 
 	//制限時間のタイマーをラップでストップさせる。
@@ -312,7 +301,6 @@ void Game::Draw()
 	//文字表示の終了
 	m_font.EndDraw();
 	if (m_gstate == State_GameOver) {
-
 		m_over.Draw();
 	}
 

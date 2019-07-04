@@ -12,7 +12,7 @@ StageSelect::StageSelect()
 	g_camera3D.SetTarget({0.0f,0.0f,0.0f});
 	g_camera3D.SetFar(1000.0f);
 	g_camera3D.Update();
-	m_cursorse.Init(L"Assets/sound/cursor7.wav");
+	m_cursorse.Init(L"Assets/sound/decision26 .wav");
 
 }
 

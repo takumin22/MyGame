@@ -27,8 +27,6 @@ Player::Player() : m_stMa(this)
 	m_model.SetAmbientLight(ambientColor);
 
 	m_spjumpse.Init(L"Assets/sound/springjump.wav");
-	m_sprite.Init(L"Resource/sprite/tairyoku.dds", 60, 60);
-	m_sprite.Update(m_attackPos, CQuaternion::Identity(), CVector3::One());
 	//tkaファイルの読み込み。
 	m_animationClips[PlState::EnAnimationClip::enAnimationClip_idle].Load(L"Assets/animData/standing.tka");
 	m_animationClips[PlState::EnAnimationClip::enAnimationClip_idle].SetLoopFlag(true);

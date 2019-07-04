@@ -20,6 +20,7 @@
 #include "graphics/RenderTarget.h"
 #include"sky.h"
 #include "Pose.h"
+#include "GameCler.h"
 
 
 //これらは前方宣言でよい！
@@ -57,6 +58,7 @@ public:
 		State_StageChange,	//ステージ遷移中
 		State_Pose,
 		State_TitleChange,	//タイトル遷移中
+		State_GameClear,
 		State_GameOver		//ゲームオーバー
 	};
 
@@ -96,6 +98,10 @@ public:
 	{
 		return 	StageNo;
 	}
+	int GetTimeScore()
+	{
+		return TimeScore;
+	}
 	/// <summary>
 	/// ゲームのステートをゲット
 	/// </summary>
@@ -128,6 +134,7 @@ private:
 	GameCamera m_gameCamera;				//ゲームカメラ。
 	RenderTarget m_mainRenderTarget;		//メインレンダリングターゲット。
 	Level m_level;							//レベルを初期化。
+	GameCler m_cler;						//ゲームクリア
 	Gameover m_over;						//ゲームオーバー
 	HP m_hp;								//プレイヤーのHP
 	bool Goal = false;						//ゴール判定
@@ -136,13 +143,13 @@ private:
 	CSoundSource m_coinse;					//コインのSE
 	CSoundSource m_kirakirase;				//ゴール出現時のSE
 	bool SEflag = true;						//SEを鳴らすためのフラグ
+	bool flag = false;
 	Sprite m_goalsprite;		
-	//ゴールのスプライト
-	Sprite m_stagecrear;
 	Font m_font;					//フォント
 	Timer m_time;					//タイマー
 	Title m_title;
 	int GAMETIME = 200;				//残り時間
+	int Score = 0;
 	int TimeScore = 0;				//タイムのスコア
 	int taim = 0;						//経過時間
 	bool ChangeFlag = false;
@@ -151,8 +158,8 @@ private:
 	PostEffect* m_postEffect;				//ポストエフェクト。
 	Sprite m_copyMainRtToFrameBufferSprite;			//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
 	D3D11_VIEWPORT m_frameBufferViewports;			//フレームバッファのビューポート。
-	ID3D11RenderTargetView* m_frameBufferRenderTargetView = nullptr;	//フレームバッファのレンダリングターゲットビュー。
-	ID3D11DepthStencilView* m_frameBufferDepthStencilView = nullptr;	//フレームバッファのデプスステンシルビュー。
+	//ID3D11RenderTargetView* m_frameBufferRenderTargetView = nullptr;	//フレームバッファのレンダリングターゲットビュー。
+	//ID3D11DepthStencilView* m_frameBufferDepthStencilView = nullptr;	//フレームバッファのデプスステンシルビュー。
 
 };
 

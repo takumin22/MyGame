@@ -151,6 +151,7 @@
     <ClCompile Include="RedCoin.cpp" />
     <ClCompile Include="Scaffold.cpp" />
     <ClCompile Include="graphics\ShadowMap.cpp" />
+    <ClCompile Include="Score.cpp" />
     <ClCompile Include="sky.cpp" />
     <ClCompile Include="sound\SoundEngine.cpp" />
     <ClCompile Include="sound\SoundSource.cpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="RedCoin.h" />
     <ClInclude Include="Scaffold.h" />
     <ClInclude Include="graphics\ShadowMap.h" />
+    <ClInclude Include="Score.h" />
     <ClInclude Include="sky.h" />
     <ClInclude Include="sound\SoundEngine.h" />
     <ClInclude Include="sound\SoundSource.h" />
@@ -247,6 +249,8 @@
     <Image Include="Assets\modelData\104677.jpg" />
     <Image Include="Assets\modelData\ASHSEN_2.GIF" />
     <Image Include="Assets\modelData\BUBINGA.JPG" />
+    <ImageContentTask Include="Assets\sprite\GoalSprite.png" />
+    <ImageContentTask Include="Assets\sprite\wood_kanban.png" />
     <ImageContentTask Include="Assets\sprite\Title logo.png" />
     <ImageContentTask Include="Assets\modelData\Chara_4Hero.fbm\Texture_MetallicSmooth.tga" />
     <Image Include="Assets\modelData\ground_grass.tga" />

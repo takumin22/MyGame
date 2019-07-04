@@ -213,15 +213,15 @@ private:
 	bool DamageFlag = false;
 	int Time = 0;
 	int DamageCount = 0;								//ダメージ量のカウント
-	int Zanki = 4;										//残機
+	int Zanki = 99;										//残機
 	bool posflag = false;
-	Sprite m_sprite;
     std::vector<Enemy*> m_enemy;									//エネミー
 	std::vector<Spring*> m_spring;								//ジャンプ台
 	std::vector<RedCoin*> m_redcoin;					//レッドコイン
 	std::vector<EnemyFly*> m_enemyfly;
 	Coin* m_coin[100];									//コイン
 	HP m_hp;											//HP
+	bool kkkkk = false;
 	Player_StateMachine m_stMa;
 	Scaffold* m_scaffold[2];							//動く足場
 	std::vector<TurnScaffold*> m_turnscaffold;					//回転する足場
