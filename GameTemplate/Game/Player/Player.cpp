@@ -182,14 +182,13 @@ void Player::SpringJump()
 }
 void Player::PlayerPosRetrun()
 {
-
-		if (Zanki >= 1) {
+	if (Zanki >= 1) {
 
 			m_position = m_oldposition;
 			m_charaCon.SetPosition(m_position);
-		}
-		m_moveSpeed.y = 0.0f;
-		Zanki -= 1;
+	}
+	m_moveSpeed.y = 0.0f;
+	Zanki -= 1;
 }
 void Player::Scafflod()
 {
@@ -240,7 +239,7 @@ void Player::Update()
 			}
 			else {
 				Time++;
-				m_moveSpeed = { 0.0f,0.0f,0.0f };
+				m_moveSpeed = CVector3::Zero();
 				if (Time >= 60)
 				{
 
@@ -274,7 +273,7 @@ void Player::Update()
 		}
 		else {
 			Time++;
-			m_moveSpeed = { 0.0f,0.0f,0.0f };
+			m_moveSpeed = CVector3::Zero();
 			if (Time >= 60)
 			{
 
@@ -284,6 +283,9 @@ void Player::Update()
 			}
 		}
 	}
+
+
+
 	g_shadowMap->RegistShadowCaster(&m_model);
 	auto r_pos = m_position;
 	CVector3 pos = { 0.0f, -1000.0f, 0.0f, };

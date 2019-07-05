@@ -55,7 +55,7 @@ public:
 	/// </summary>
 	enum GameState {
 		State_Default,		//デフォルト状態
-		State_StageChange,	//ステージ遷移中
+		State_StageChange,	//ステージ遷移中]
 		State_Pose,
 		State_TitleChange,	//タイトル遷移中
 		State_GameClear,
@@ -110,6 +110,10 @@ public:
 	{
 		return m_gstate;
 	}
+	bool Contenyu()
+	{
+		return continuityflug;
+	}
 	/// <summary>
 	/// メインレンダリングターゲットを取得。
 	/// </summary>
@@ -144,11 +148,12 @@ private:
 	CSoundSource m_kirakirase;				//ゴール出現時のSE
 	bool SEflag = true;						//SEを鳴らすためのフラグ
 	bool flag = false;
+	bool continuityflug = false;
 	Sprite m_goalsprite;		
 	Font m_font;					//フォント
 	Timer m_time;					//タイマー
 	Title m_title;
-	int GAMETIME = 200;				//残り時間
+	int GAMETIME = 999;				//残り時間
 	int Score = 0;
 	int TimeScore = 0;				//タイムのスコア
 	int taim = 0;						//経過時間
@@ -158,8 +163,6 @@ private:
 	PostEffect* m_postEffect;				//ポストエフェクト。
 	Sprite m_copyMainRtToFrameBufferSprite;			//メインレンダリングターゲットに描かれた絵をフレームバッファにコピーするためのスプライト。
 	D3D11_VIEWPORT m_frameBufferViewports;			//フレームバッファのビューポート。
-	//ID3D11RenderTargetView* m_frameBufferRenderTargetView = nullptr;	//フレームバッファのレンダリングターゲットビュー。
-	//ID3D11DepthStencilView* m_frameBufferDepthStencilView = nullptr;	//フレームバッファのデプスステンシルビュー。
 
 };
 

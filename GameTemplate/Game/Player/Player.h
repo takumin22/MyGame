@@ -94,6 +94,9 @@ public:
 	{
 		return m_attackPos;
 	}
+	void SetZanki(int i) {
+		Zanki = i;
+	}
 	/// <summary>
 	/// プレイヤーのポジションを設定
 	/// </summary>
@@ -210,21 +213,20 @@ private:
 	CVector3 ambientColor = { 0.6f, 0.6f, 0.6f };		//環境光のカラー
 	CVector3 m_attackPos = CVector3::Zero();
 	CharacterController m_charaCon;						//キャラクターコントローラ
-	bool DamageFlag = false;
-	int Time = 0;
+	bool DamageFlag = false;							
+	int Time = 0;										
 	int DamageCount = 0;								//ダメージ量のカウント
-	int Zanki = 99;										//残機
-	bool posflag = false;
-    std::vector<Enemy*> m_enemy;									//エネミー
-	std::vector<Spring*> m_spring;								//ジャンプ台
+	int Zanki = 1;										//残機
+	bool posflag = false;								//oldpos設定用のフラグ
+    std::vector<Enemy*> m_enemy;						//エネミー
+	std::vector<Spring*> m_spring;						//ジャンプ台
 	std::vector<RedCoin*> m_redcoin;					//レッドコイン
-	std::vector<EnemyFly*> m_enemyfly;
+	std::vector<EnemyFly*> m_enemyfly;					//フライエネミー
 	Coin* m_coin[100];									//コイン
 	HP m_hp;											//HP
-	bool kkkkk = false;
-	Player_StateMachine m_stMa;
+	Player_StateMachine m_stMa;							//ステートマシーン
 	Scaffold* m_scaffold[2];							//動く足場
-	std::vector<TurnScaffold*> m_turnscaffold;					//回転する足場
+	std::vector<TurnScaffold*> m_turnscaffold;			//回転する足場
 	CSoundSource m_spjumpse;							//ジャンプ台に乗った時の音
 	float m_deltatime = 1.0f / 30.0f;                   //1フレームの経過時間
 	Effekseer::Effect* m_sampleEffect = nullptr;

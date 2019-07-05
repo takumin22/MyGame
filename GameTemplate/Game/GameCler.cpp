@@ -9,6 +9,7 @@ GameCler::GameCler()
 	m_goalisprite.Update(CVector3::Zero(), CQuaternion::Identity(), CVector3::One());
 	m_sprite.Init(L"Resource/sprite/wood_kanban.dds", 1000, 600);
 	m_sprite.Update(m_spritepos, CQuaternion::Identity(), CVector3::One());
+	m_clerse.Init(L"Assets/sound/drum-japanese1.wav");
 }
 
 
@@ -58,6 +59,7 @@ void GameCler::FontDraw()
 		ScoreTime++;
 		if (ScoreTime >= 30)
 		{
+			m_clerse.Play(false);
 			m_scorenum = timescore;
 
 		}
@@ -84,10 +86,12 @@ void GameCler::FontDraw()
 		ScoreTime++;
 		if (ScoreTime >= 60)
 		{
+			m_clerse.Play(false);
 			m_scorenum = totalscore;
 		}
 		break;
 	case totalscore:
+		
 		swprintf_s(toubatu, L"スコア %04d", g_game->GetStage()->GetScore());
 		m_font.Draw(
 			toubatu,		//表示する文字列。
@@ -118,11 +122,13 @@ void GameCler::FontDraw()
 
 		ScoreTime++;
 		if (ScoreTime >= 90)
-		{
+		{	
+			m_clerse.Play(false);
 			m_scorenum = end;
 		}
 		break;
 	case end:
+	
 		swprintf_s(toubatu, L"スコア %04d", g_game->GetStage()->GetScore());
 		m_font.Draw(
 			toubatu,		//表示する文字列。

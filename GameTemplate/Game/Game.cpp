@@ -58,12 +58,6 @@ Game::~Game()
 {
 	//delete &m_time;
 	delete m_stage;
-	//if (m_frameBufferRenderTargetView != nullptr) {
-	//	m_frameBufferRenderTargetView->Release();
-	//}
-	//if (m_frameBufferDepthStencilView != nullptr) {
-	//	m_frameBufferDepthStencilView->Release();
-	//}
 }
 
 void Game::Update()
@@ -73,6 +67,7 @@ void Game::Update()
 	switch (m_gstate)
 	{
 	case State_Default:
+		continuityflug = false;
 		//プレイヤーの更新。
 		m_player.Update();
 		//カメラの更新
@@ -91,7 +86,7 @@ void Game::Update()
 				SEflag = false;
 			}
 		}
-		if (m_goal.GetGFlag() == false && m_stage->GetEnemyCount() >= 0) {
+		if (m_goal.GetGFlag() == false && m_stage->GetRedCoinCount() >= 3) {
 
 			//ゴールを更新
 			m_goal.Update();
@@ -190,6 +185,10 @@ void Game::Update()
 	case State_GameOver:
 		m_over.Update();
 		if (m_over.Getflag() == true && g_fade->GetState() == Fade::fadeout) {
+			continuityflug = true;
+			m_gstate = State_Default;
+		}
+		else if (m_over.Gettitleflag() == true && g_fade->GetState() == Fade::fadeout) {
 			m_gstate = State_TitleChange;
 		}
 		break;

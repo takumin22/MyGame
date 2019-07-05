@@ -1,6 +1,7 @@
 #pragma once
 #include "Score.h"
 #include "Stage.h"
+#include "sound/SoundSource.h"
 class GameCler
 {
 public:
@@ -39,5 +40,6 @@ private:
 	int m_totalscore = 0;
 	float alpha = 0.0;
 	bool alphaflag = false;
+	CSoundSource m_clerse;
 };
 
