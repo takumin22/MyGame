@@ -1,7 +1,6 @@
 #pragma once
 #include "Score.h"
 #include "Stage.h"
-#include "sound/SoundSource.h"
 class GameCler
 {
 public:

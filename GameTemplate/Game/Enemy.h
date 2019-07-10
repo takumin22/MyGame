@@ -1,7 +1,5 @@
 #pragma once
 #include "character/CharacterController.h"
-#include "sound/SoundEngine.h"
-#include "sound/SoundSource.h"
 #include "graphics/animation/Animation.h"
 #include "graphics/animation/AnimationClip.h"
 
@@ -117,6 +115,7 @@ private:
 	CVector3 m_scale = CVector3::One();					//Šg‘å—¦B
 	CVector3 m_up = CVector3::Zero();					//ã•ûŒü
 	CVector3 m_front = CVector3::Zero();
+	CSoundSource m_damagese;
 	CMatrix m_mRot;
 	int idoutime = 0;									//ˆÚ“®ŠÔ
 	CQuaternion m_rotation = CQuaternion::Identity();	//‰ñ“]B

@@ -20,6 +20,8 @@
 
 #include "btBulletDynamicsCommon.h"
 #include "BulletCollision\CollisionDispatch\btGhostObject.h"
+#include "sound/SoundEngine.h"
+#include "sound/SoundSource.h"
 //Effekseerのヘッダーファイルをインクルード
 #include "Effekseer.h"
 #include "EffekseerRendererDX11.h"

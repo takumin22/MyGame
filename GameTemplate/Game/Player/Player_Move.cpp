@@ -5,7 +5,7 @@
 
 Player_Move::Player_Move(Player* pla, Player_StateMachine * psm) : Player_State(pla,psm)
 {
-
+	m_jumpse.Init(L"Assets/sound/jump.wav");
 }
 
 
@@ -88,6 +88,7 @@ void Player_Move::Jump()
 		{
 			m_moveSpeedWhenStartJump = m_moveSpeed.Length();
 			m_moveSpeed.y = JUMP_SPEED;
+			m_jumpse.Play(false);
 		}
 	}
 

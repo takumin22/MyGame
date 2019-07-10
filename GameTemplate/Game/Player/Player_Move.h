@@ -23,6 +23,7 @@ public:
 	/// </summary>
 	void Update();
 private:
-	float m_moveSpeedWhenStartJump;						//ジャンプ前の移動速度
+	float m_moveSpeedWhenStartJump;						//ジャンプ前の移動速度 
+	CSoundSource m_jumpse;
 };
 

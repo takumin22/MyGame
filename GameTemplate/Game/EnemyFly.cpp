@@ -13,7 +13,8 @@ EnemyFly::EnemyFly(CVector3 pos, CQuaternion rot, Player* player) :
 	//cmoファイルの読み込み。
 	m_model.Init(L"Assets/modelData/StoneMonster.cmo");
 
-
+	m_damagese.Init(L"Assets/sound/punch-middle2.wav");
+	m_damagese.SetVolume(0.5f);
 
 	m_enemyEffect = Effekseer::Effect::Create(g_graphicsEngine->GetEffekseerManager(), (const EFK_CHAR*)L"Assets/effect/hit.efk");
 
@@ -48,6 +49,7 @@ void EnemyFly::Damage()
 	if (toEnemyLen2 <= 60.0f)
 	{
 		punchflag = true;
+		m_damagese.Play(false);
 		m_estate = State_EDamage;
 	}
 }
@@ -64,6 +66,7 @@ void EnemyFly::Update()
 		m_moveSpeed.z = 0.0f;
 		Move();
 		if (m_position.y <= -500.0f) {
+
 			m_estate = State_EDamage;
 
 		}

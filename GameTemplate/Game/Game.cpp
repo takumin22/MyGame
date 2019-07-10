@@ -31,13 +31,11 @@ Game::Game()
 	m_stage = new Stage(StageNo++);
 	m_cubemap = new sky;
 	m_goalsprite.Init(L"Resource/sprite/kari.dds", 1280, 720);
-	//m_goalsprite.Update({ 0.0f,0.0f,0.0f }, CQuaternion::Identity(), {1.0f,1.0f,1.0f});
-	//m_stagecrear.Init(L"Resource/sprite/stagecrear.dds", 1280, 720);
 	m_gameCamera.SetPlayer(&m_player);
 	m_goal.SetPlayer(&m_player);
 	m_stagebgm.Init(L"Assets/sound/stagebgm.wav");
 	m_kirakirase.Init(L"Assets/sound/kirakira.wav");
-	m_kirakirase.SetVolume(0.4f);
+	m_kirakirase.SetVolume(0.5f);
 	m_stagebgm.SetVolume(0.5f);
 	m_stagebgm.Play(true);
 	m_time.TimerStart();
@@ -78,7 +76,7 @@ void Game::Update()
 		{
 			m_gstate = State_Pose;
 		}
-		if (m_stage->GetEnemyCount() == 5)
+		if (m_stage->GetRedCoinCount() == 3)
 		{
 
 			if (SEflag == true) {

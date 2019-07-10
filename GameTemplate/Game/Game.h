@@ -146,6 +146,7 @@ private:
 	CSoundSource m_stagebgm;				//ステージBGM
 	CSoundSource m_coinse;					//コインのSE
 	CSoundSource m_kirakirase;				//ゴール出現時のSE
+	CSoundSource m_posese;
 	bool SEflag = true;						//SEを鳴らすためのフラグ
 	bool flag = false;
 	bool continuityflug = false;

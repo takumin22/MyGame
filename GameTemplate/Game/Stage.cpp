@@ -11,8 +11,6 @@
 #include "Coin.h"
 #include "RedCoin.h"
 #include "Goal.h"
-#include "sound/SoundEngine.h"
-#include "sound/SoundSource.h"
 
 Stage::Stage(int No)
 {

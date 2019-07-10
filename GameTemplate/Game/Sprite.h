@@ -72,6 +72,10 @@ public:
 	{
 		m_mulColor.w = clear;
 	}
+	void Color(CVector4 color)
+	{
+		m_mulColor = color;
+	}
 private:
 
 	/// <summary>

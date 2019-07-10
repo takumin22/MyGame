@@ -151,7 +151,7 @@ void GameCler::FontDraw()
 		m_font.Draw(
 			toubatu,		//表示する文字列。
 			{ -250.0f , -50.0f },			//表示する座標。0.0f, 0.0が画面の中心。
-			{ 0.0f,0.0f,0.0f,1.0f },
+			{ 0.0f,1.0f,1.0f,1.0f },
 			0.0f,
 			m_claerfontscale,
 			{ 0.0f,1.0f }

@@ -12,8 +12,6 @@
 #include "Goal.h"
 #include "Gate.h"
 #include "EnemyFly.h"
-#include "sound/SoundEngine.h"
-#include "sound/SoundSource.h"
 class Game;
 class Enemy;
 class EnemyFly;

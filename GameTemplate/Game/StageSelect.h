@@ -2,8 +2,6 @@
 #include "IScene.h"
 #include "Sprite.h"
 #include "Fade.h"
-#include "sound/SoundEngine.h"
-#include "sound/SoundSource.h"
 class StageSelect : public IScene
 {
 public:

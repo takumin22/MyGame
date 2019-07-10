@@ -2,8 +2,6 @@
 #include "character/CharacterController.h"
 #include "graphics/ShadowMap.h"
 #include "HP.h"
-#include "sound/SoundEngine.h"
-#include "sound/SoundSource.h"
 #include "level/Level.h"
 #include "Player_StateMachine.h"
 #include "PlState.h"

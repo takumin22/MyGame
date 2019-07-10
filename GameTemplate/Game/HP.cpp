@@ -25,6 +25,7 @@ HP::~HP()
 
 void HP::Update()
 {
+	
 }
 
 void HP::Draw()
@@ -45,8 +46,4 @@ void HP::Draw()
 	if (g_game->GetPlayer()->GetDCount() <= 0) {
 		m_hp4.Draw();
 	}
-	
-
-	
-
 }

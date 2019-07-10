@@ -19,6 +19,8 @@ Enemy::Enemy(CVector3 pos, CQuaternion rot, Player* player) :
 	m_animationClips[enAnimation_Damage].Load(L"Assets/animData/enemydeth.tka");
 	m_animationClips[enAnimation_Damage].SetLoopFlag(false);
 
+	m_damagese.Init(L"Assets/sound/punch-middle2.wav");
+	m_damagese.SetVolume(0.5f);
 	//アニメーションの初期化。
 	m_animation.Init(
 		m_model,			//アニメーションを流すスキンモデル。
@@ -113,6 +115,7 @@ void Enemy::Damage()
 	if (toEnemyLen2 <= 60.0f)
 	{
 		punchflag = true;
+		m_damagese.Play(false);
 		m_estate = State_EDamage;
 	}
 }
