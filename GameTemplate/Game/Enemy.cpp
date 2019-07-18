@@ -32,7 +32,7 @@ Enemy::Enemy(CVector3 pos, CQuaternion rot, Player* player) :
 	m_enemyEffect = Effekseer::Effect::Create(g_graphicsEngine->GetEffekseerManager(), (const EFK_CHAR*)L"Assets/effect/hit.efk");
 
 	//キャラコン設定
-	m_charaCon.Init(50.0f, 40.0f, m_position);
+	m_charaCon.Init(60.0f, 50.0f, m_position);
 }
 
 
@@ -60,7 +60,7 @@ void Enemy::Move()
 void Enemy::Search()
 {
 	//エネミーからプレイヤーに伸びるベクトルを求める。
-	CVector3 toEnemyDir = m_player->GetPosition() - m_position;
+	toEnemyDir = m_player->GetPosition() - m_position;
 	//エネミーまでの距離を求めておく。
 	float toEnemyLen = toEnemyDir.Length();
 	if (toEnemyLen < 200.0f) {
@@ -127,6 +127,8 @@ void Enemy::EnemyAnimation()
 	}
 	if (m_estate == State_EDamage)
 	{
+		m_scale.z -= 0.09f;
+		m_scale.z = max(0.1f,m_scale.z);
 		m_animation.Play(enAnimation_Damage, 0.2f);
 	}
 }
@@ -158,7 +160,8 @@ void Enemy::Update()
 		m_moveSpeed.y = 0.0f;
 		AnimPlayTime++;
 		if (punchflag == true) {
-			m_position -= m_kari * 5.0f;
+			toEnemyDir.Normalize();
+			m_position -= toEnemyDir * 50.0f;
 
 		}
 		if (AnimPlayTime >= 10) {

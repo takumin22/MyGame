@@ -186,6 +186,10 @@ public:
 	{
 		m_redcoin.push_back(redcoin);
 	}
+	void SetPosFlag(bool i)
+	{
+		posflag = i;
+	}
 	//アニメーションのステートのセッター。
 	void SetAnimation(PlState::EnAnimationClip state)
 	{

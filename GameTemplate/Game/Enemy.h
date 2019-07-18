@@ -127,5 +127,6 @@ private:
 	bool punchflag = false;
 	Effekseer::Effect* m_enemyEffect = nullptr;
 	Effekseer::Handle m_enemyEffectHandle = -1;
+	CVector3 toEnemyDir = CVector3::Zero();
 };
 

@@ -11,6 +11,7 @@
 #include "Coin.h"
 #include "RedCoin.h"
 #include "Goal.h"
+#include "CheckPoint.h"
 
 Stage::Stage(int No)
 {
@@ -79,6 +80,11 @@ Stage::Stage(int No)
 				g_game->Getgoal()->SetPosition(objData.position);
 				return true;
 			}
+			else if (objData.ForwardMatchName(L"ForestFlag") == true) {
+				//星
+				g_game->GetPoint()->SetPosition(objData.position);
+				return true;
+			}
 			else if (objData.ForwardMatchName(L"fence_gate") == true) {
 				//ゲート
 				auto gate = new Gate(objData.position, objData.rotation, g_game->GetPlayer(),this);
@@ -116,9 +122,14 @@ Stage::Stage(int No)
 				g_game->GetPlayer()->SetSpring(StageNo1++, spring);
 				return true;
 			}
-			else if (objData.EqualName(L"star1") == true) {
+			else if (objData.ForwardMatchName(L"star1") == true) {
 				//星
 				g_game->Getgoal()->SetPosition(objData.position);
+				return true;
+			}
+			else if (objData.ForwardMatchName(L"ForestFlag") == true) {
+				//チェックポイント
+				g_game->GetPoint()->SetPosition(objData.position);
 				return true;
 			}
 			else if (objData.ForwardMatchName(L"turnasiba") == true) {
@@ -181,6 +192,10 @@ Stage::~Stage()
 	{
 		delete goal;
 	}
+	for (auto& checkpoint : m_checkpointList) {
+
+		delete checkpoint;
+	}
 	Score = 0;
 	EnemyCount = 0;
 	CoinCount = 0;
@@ -215,17 +230,11 @@ void Stage::Draw()
 	for (auto& enemy : m_enemyList) {
 		enemy->Draw();
 	}
-	//エネミー破棄
+	//エネミーを描画
 	for (auto& enemyfly : m_enemyflyList) {
 		enemyfly->Draw();
 	}
 	if (EnemyCount >= 0) {
-	
-	
-		if (SEflag == true) {
-			m_hakkense.Play(false);
-				SEflag = false;
-		}
 		//バネの描画。
 		for (auto& spring : m_springList) {
 			spring->Draw();
@@ -258,6 +267,7 @@ void Stage::Update()
 	{
 		gate->Update();
 	}
+
 	//エネミーを更新。
 	for (auto& enemy : m_enemyList) {
 		enemy->Update();
@@ -313,4 +323,5 @@ void Stage::Update()
 	for (auto& turnscaffold : m_turnscaffold) {
 		turnscaffold->Update();
 	}
+
 }

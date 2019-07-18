@@ -21,7 +21,7 @@
 #include"sky.h"
 #include "Pose.h"
 #include "GameCler.h"
-
+#include "CheckPoint.h"
 
 //これらは前方宣言でよい！
 //struct PathPoint;
@@ -85,7 +85,10 @@ public:
 	{
 		return &m_goal;
 	}
-
+	CheckPoint* GetPoint()
+	{
+		return &m_point;
+	}
 	Stage* GetStage()
 	{
 		return m_stage;
@@ -132,6 +135,7 @@ private:
 	Player m_player;						//プレイヤー
 	Pose m_pose;
 	Goal m_goal;                            //ゴール
+	CheckPoint m_point;
 	Coin* m_coin;                           //コイン
 	Stage* m_stage;                         //ステージ
 	sky*	m_cubemap;					//キューブマップクラスのポインター
@@ -154,7 +158,7 @@ private:
 	Font m_font;					//フォント
 	Timer m_time;					//タイマー
 	Title m_title;
-	int GAMETIME = 999;				//残り時間
+	int GAMETIME = 200;				//残り時間
 	int Score = 0;
 	int TimeScore = 0;				//タイムのスコア
 	int taim = 0;						//経過時間

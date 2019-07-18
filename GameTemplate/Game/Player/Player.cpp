@@ -151,7 +151,27 @@ void Player::Damage()
 		}
 	}
 
-
+	for (int i = 0; i < m_enemyfly.size(); i++) {
+		if (m_enemyfly[i]->GetEState() != EnemyFly::EState::State_EDamage) {
+			if (m_enemyfly[i]->GetEnemyDeth() == false) {
+				//エネミーからプレイヤーに伸びるベクトルを求める。
+				CVector3 toEnemyDir = m_position - m_enemyfly[i]->GetEPosition();
+				//エネミーまでの距離を求めておく。
+				float toEnemyLen = toEnemyDir.Length();
+				if (toEnemyLen <= 70.0f&& DamageFlag == false || m_position.y <= -500.0f) {
+					if (DamageCount <= 2) {
+						DamageCount++;
+						m_stMa.Change(PlState::PState::State_Damage);
+						DamageFlag = true;
+					}
+					else {
+						DamageCount++;
+						m_stMa.Change(PlState::PState::State_Deth);
+					}
+				}
+			}
+		}
+	}
 	
 }
 void Player::SpringJump()
@@ -288,11 +308,11 @@ void Player::Update()
 
 	g_shadowMap->RegistShadowCaster(&m_model);
 	auto r_pos = m_position;
-	CVector3 pos = { 0.0f, -1000.0f, 0.0f, };
+	CVector3 pos = { 1000.0f, -1000.0f, 0.0f, };
 	pos *= -1;
 	r_pos.x += pos.x;
 	r_pos.y += pos.y;
-	g_shadowMap->Update(r_pos, m_position);
+	g_shadowMap->UpdateFromLightTarget(r_pos, m_position);
 
 	//キャラクタを移動させる。
 	m_position = m_charaCon.Execute(1.0f / 30.0f, m_moveSpeed);

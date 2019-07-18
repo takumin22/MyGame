@@ -31,7 +31,7 @@ public:
 	*@param[in]	filePath		ロードするcmoファイルのファイルパス。
 	*@param[in] enFbxUpAxis		fbxの上軸。デフォルトはenFbxUpAxisZ。
 	*/
-	void Init(const wchar_t* filePathEnFbxUpAxis, EnFbxUpAxis enFbxUpAxis = enFbxUpAxisZ, CVector4 lightcolor = CVector4::White());
+	void Init(const wchar_t* filePathEnFbxUpAxis, EnFbxUpAxis enFbxUpAxis = enFbxUpAxisZ, CVector4 lightcolor = {0.8f,0.8f,0.8f,1.0f});
 	/*!
 	*@brief	モデルをワールド座標系に変換するためのワールド行列を更新する。
 	*@param[in]	position	モデルの座標。
@@ -88,7 +88,7 @@ public:
 	/// <param name="ambinetLight"></param>
 	void SetAmbientLight(CVector3 ambinetLight)
 	{
-		m_light.directionlight.ambinetLight = ambinetLight;
+		m_light.ambinetLight = ambinetLight;
 	}
 	//法線マップを設定
 	void SetNormalMap(ID3D11ShaderResourceView* srv)
@@ -167,19 +167,13 @@ private:
 		CVector4 direction;		//ライトの方向。
 		CVector4 color;			//ライトのカラー。
 		CVector4 ambinetLight = { 0.2f, 0.2f, 0.2f, 1.0f };	//アンビエントライト。
-	};
-
-	//ライトの構造体
-	struct SLight {
-		SDirectionLight directionlight;   //ディレクションライト
-		CVector3			eyePos;				//視点の座標。
-		float				specPow;			//鏡面反射の絞り。
+		CVector3 eyePos;				//視点の座標。
 	};
 
 private:
 
 	ID3D11Buffer * m_lightCb = nullptr;				//!<ライト用の定数バッファ。
-	SLight				m_light;							//!<ライト構造体
+	SDirectionLight				m_light;							//!<ライト構造体
 	EnFbxUpAxis			m_enFbxUpAxis = enFbxUpAxisZ;	//!<FBXの上方向。
 	ID3D11Buffer*		m_cb = nullptr;					//!<定数バッファ。
 	Skeleton			m_skeleton;						//!<スケルトン。

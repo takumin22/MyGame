@@ -24,7 +24,6 @@ SkinModel::~SkinModel()
 	if (m_lightCb != nullptr) {
 		m_lightCb->Release();
 	}
-
 }
 void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis, CVector4 lightcolor)
 {
@@ -48,9 +47,9 @@ void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis, CVector4 
 }
 void SkinModel::InitDirectionLight(CVector4 color)
 {
-	m_light.directionlight.direction = { 0.707f,-0.707f,0.0f,1.0f };
-	m_light.directionlight.color = color;
-	m_light.specPow = 10.0f;
+	m_light.direction = { 0.707f,-0.707f,0.0f,0.0f };
+	m_light.direction.Normalize();
+	m_light.color = color;
 }
 
 void SkinModel::InitSkeleton(const wchar_t* filePath)
@@ -95,7 +94,7 @@ void SkinModel::InitConstantBuffer()
 	//続いて、ライト用の定数バッファを作成。
 	//作成するバッファのサイズを変更するだけ。
 	//SDirectionLightは16byteの倍数になっているので、切り上げはやらない。
-	bufferDesc.ByteWidth = Raundup16(sizeof(SLight));
+	bufferDesc.ByteWidth = Raundup16(sizeof(SDirectionLight));
 	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bufferDesc, NULL, &m_lightCb);
 }
 void SkinModel::InitSamplerState()
@@ -187,7 +186,6 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 	//ライト用の定数バッファを更新。
 	d3dDeviceContext->UpdateSubresource(m_lightCb, 0, nullptr, &m_light, 0, 0);
 	d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cb);
-
 	d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
 	d3dDeviceContext->PSSetConstantBuffers(1, 1, &m_lightCb);
 	//サンプラステートを設定。
@@ -206,10 +204,10 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 		//法線マップが設定されていたらをレジスタt2に設定する。
 		d3dDeviceContext->PSSetShaderResources(2, 1, &m_normalMapSRV);
 	}
-	if (m_specularMapSRV != nullptr) {
-		//スペキュラマップが設定されていたらレジスタt5に設定する。
-		d3dDeviceContext->PSSetShaderResources(5, 1, &m_specularMapSRV);
-	}
+	//if (m_specularMapSRV != nullptr) {
+	//	//スペキュラマップが設定されていたらレジスタt5に設定する。
+	//	d3dDeviceContext->PSSetShaderResources(5, 1, &m_specularMapSRV);
+	//}
 	if (m_skyMapSRV != nullptr)
 	{
 		d3dDeviceContext->PSSetShaderResources(0, 1, &m_skyMapSRV);

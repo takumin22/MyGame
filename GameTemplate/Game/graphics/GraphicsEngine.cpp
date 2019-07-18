@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GraphicsEngine.h"
 #include "RenderTarget.h"
+#include "ShadowMap.h"
 
 
 GraphicsEngine::GraphicsEngine()

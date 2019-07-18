@@ -38,7 +38,7 @@ void GameCamera::Update()
 		qRot.Multiply(toCameraPos);
 		//X軸周りの回転。
 		CQuaternion qrot;
-		qrot.SetRotationDeg(g_camera3D.GetRight(), y);
+		qrot.SetRotationDeg(g_camera3D.GetRight(), -y);
 		qrot.Multiply(toCameraPos);
 		CVector3 toPosDir = toCameraPos;
 		toPosDir.Normalize();
@@ -72,6 +72,10 @@ void GameCamera::Update()
 
 	}	
 	
+	if (angle > 120.0f) {
+		//カメラが下向きすぎ。
+		toCameraPos = toCameraPosOld;
+	}
 	if (angle  < 30.0f) {
 			//カメラが下向きすぎ。
 		toCameraPos = toCameraPosOld;

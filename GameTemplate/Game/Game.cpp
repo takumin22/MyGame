@@ -33,6 +33,7 @@ Game::Game()
 	m_goalsprite.Init(L"Resource/sprite/kari.dds", 1280, 720);
 	m_gameCamera.SetPlayer(&m_player);
 	m_goal.SetPlayer(&m_player);
+	m_point.SetPlayer(&m_player);
 	m_stagebgm.Init(L"Assets/sound/stagebgm.wav");
 	m_kirakirase.Init(L"Assets/sound/kirakira.wav");
 	m_kirakirase.SetVolume(0.5f);
@@ -72,6 +73,7 @@ void Game::Update()
 		m_gameCamera.Update();
 		m_hp.Update();
 		m_stage->Update();
+		m_point.Update();
 		if (g_pad[0].IsTrigger(enButtonStart) == true)
 		{
 			m_gstate = State_Pose;
@@ -107,6 +109,7 @@ void Game::Update()
 		{
 			GoalCount++;
 			Goal = true;
+			m_time.TimerStop();
 			if (GoalCount >= 120.0f) {
 				m_gstate = State_GameClear;
 			}
@@ -135,7 +138,7 @@ void Game::Update()
 		m_goal.SetGoalFlag(false);
 		delete m_stage;
 		m_player.VecterCler();
-		m_time.TimerStart();
+		m_time.SetAllelapsed(0.0);
 		m_stage = new Stage(StageNo++);
 		Goal = false;
 		flag = false;
@@ -184,9 +187,12 @@ void Game::Update()
 		m_over.Update();
 		if (m_over.Getflag() == true && g_fade->GetState() == Fade::fadeout) {
 			continuityflug = true;
+			m_time.SetAllelapsed(0.0);
+			m_over.OverClear();
 			m_gstate = State_Default;
 		}
 		else if (m_over.Gettitleflag() == true && g_fade->GetState() == Fade::fadeout) {
+			m_over.OverClear();
 			m_gstate = State_TitleChange;
 		}
 		break;
@@ -277,6 +283,7 @@ void Game::Draw()
 	m_stage->Draw();
 	m_cubemap->Draw();
 	m_hp.Draw();
+	m_point.Draw();
 	if (m_gstate == State_Pose) {
 		m_pose.Draw();
 	}

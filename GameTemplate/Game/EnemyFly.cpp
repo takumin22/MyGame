@@ -76,8 +76,10 @@ void EnemyFly::Update()
 		m_moveSpeed.z = 0.0f;
 		m_moveSpeed.y = 0.0f;
 		AnimPlayTime++;
-		if (punchflag == true) {
-			m_position -= m_kari * 5.0f;
+		if (punchflag == true){
+			CVector3 toEnemyDir = m_player->GetPosition() - m_position;
+			toEnemyDir.Normalize();
+			m_position -= toEnemyDir * 50.0f;
 
 		}
 		if (AnimPlayTime >= 10) {

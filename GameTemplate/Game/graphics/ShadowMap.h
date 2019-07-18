@@ -63,15 +63,27 @@ public:
 		return m_lightProjMatrix;
 	}
 	/// <summary>
-	/// 更新。
+	/// 更新(ライトカメラの注視点を指定するバージョン。)
 	/// </summary>
 	/// <remarks>
 	/// ライトビュー行列や、ライトプロジェクション行列を
-	/// 更新します。毎フレーム呼び出してください。
+	/// 更新します。UpdateFromLightTargetかUpdateFromLightDirectionのどちらかを
+	/// 毎フレーム呼び出してください。
 	/// </remarks>
 	/// <param name="pos">ライトカメラの視点の座標</param>
 	/// <param name="target">ライトかめらの注視点の座標</param>
-	void Update(CVector3 lightCameraPos, CVector3 lightCameraTarget);
+	void UpdateFromLightTarget(CVector3 lightCameraPos, CVector3 lightCameraTarget);
+	/// <summary>
+	/// 更新(ライトカメラの向きを指定するバージョン。
+	/// </summary>
+	/// <remarks>
+	/// ライトビュー行列や、ライトプロジェクション行列を
+	/// 更新します。UpdateFromLightTargetかUpdateFromLightDirectionのどちらかを
+	/// 毎フレーム呼び出してください。
+	/// </remarks>
+	/// <param name="lightCameraPos">ライトカメラの視点の座標</param>
+	/// <param name="lightDir">ライトの方向</param>
+	void UpdateFromLightDirection(CVector3 lightCameraPos, CVector3 lightDir);
 	/// <summary>
 	/// シャドウマップにシャドウキャスターをレンダリング。
 	/// 毎フレーム呼び出して下さい。

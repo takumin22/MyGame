@@ -155,6 +155,7 @@
     <ClCompile Include="EnemyFly.cpp" />
     <ClCompile Include="GameCler.cpp" />
     <ClCompile Include="Score.cpp" />
+    <ClCompile Include="CheckPoint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -283,6 +284,7 @@
     <ClInclude Include="EnemyFly.h" />
     <ClInclude Include="GameCler.h" />
     <ClInclude Include="Score.h" />
+    <ClInclude Include="CheckPoint.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\104677.jpg" />
@@ -296,7 +298,6 @@
     <Image Include="Assets\modelData\utc_ao.png" />
     <Image Include="Assets\modelData\utc_nomal.tga" />
     <Image Include="Assets\modelData\utc_spec.tga" />
-    <Image Include="Assets\sprite\GoalSprite.png" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Chara_4Hero.fbx" />
@@ -323,6 +324,7 @@
     <MeshContentTask Include="Assets\modelData\sky.FBX" />
     <MeshContentTask Include="Assets\modelData\NewWorld.fbx" />
     <MeshContentTask Include="Assets\modelData\RedCoin.FBX" />
+    <MeshContentTask Include="Assets\modelData\ForestFlag.fbx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\animData\damage.tka" />
@@ -355,5 +357,7 @@
     <ImageContentTask Include="Assets\modelData\Chara_4Hero.fbm\Texture_MetallicSmooth.tga" />
     <ImageContentTask Include="Assets\modelData\Texture_Chara_4Hero_Normal.tga" />
     <ImageContentTask Include="Assets\sprite\wood_kanban.png" />
+    <ImageContentTask Include="Assets\sprite\GoalSprite.png" />
+    <ImageContentTask Include="Assets\sprite\heart.png" />
   </ItemGroup>
 </Project>

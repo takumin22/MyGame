@@ -101,6 +101,7 @@
   <ItemGroup>
     <ClCompile Include="Bloom.cpp" />
     <ClCompile Include="character\CharacterController.cpp" />
+    <ClCompile Include="CheckPoint.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="ConstantBufferGPU.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -174,6 +175,7 @@
   <ItemGroup>
     <ClInclude Include="Bloom.h" />
     <ClInclude Include="character\CharacterController.h" />
+    <ClInclude Include="CheckPoint.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="ConstantBufferGPU.h" />
     <ClInclude Include="Enemy.h" />
@@ -249,6 +251,7 @@
     <Image Include="Assets\modelData\104677.jpg" />
     <Image Include="Assets\modelData\ASHSEN_2.GIF" />
     <Image Include="Assets\modelData\BUBINGA.JPG" />
+    <ImageContentTask Include="Assets\sprite\heart.png" />
     <ImageContentTask Include="Assets\sprite\GoalSprite.png" />
     <ImageContentTask Include="Assets\sprite\wood_kanban.png" />
     <ImageContentTask Include="Assets\sprite\Title logo.png" />
@@ -282,6 +285,7 @@
     <MeshContentTask Include="Assets\modelData\Dammy.FBX" />
     <MeshContentTask Include="Assets\modelData\fence_gate.FBX" />
     <MeshContentTask Include="Assets\modelData\fence_single.FBX" />
+    <MeshContentTask Include="Assets\modelData\ForestFlag.fbx" />
     <MeshContentTask Include="Assets\modelData\Green_Cube.fbx" />
     <MeshContentTask Include="Assets\modelData\Island.fbx" />
     <MeshContentTask Include="Assets\modelData\karasiba.FBX" />

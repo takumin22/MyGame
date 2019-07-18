@@ -6,10 +6,10 @@
 HP::HP()
 {
 	//HP用のデータを生成
-	m_hp.Init(L"Resource/sprite/tairyoku.dds", 60, 60);
-	m_hp2.Init(L"Resource/sprite/tairyoku.dds", 60, 60);
-	m_hp3.Init(L"Resource/sprite/tairyoku.dds", 60, 60);
-	m_hp4.Init(L"Resource/sprite/tairyoku.dds", 60, 60);
+	m_hp.Init(L"Resource/sprite/heart.dds", 60, 60);
+	m_hp2.Init(L"Resource/sprite/heart.dds", 60, 60);
+	m_hp3.Init(L"Resource/sprite/heart.dds", 60, 60);
+	m_hp4.Init(L"Resource/sprite/heart.dds", 60, 60);
 	//HPのデータを更新
 	m_hp.Update(m_hppos, CQuaternion::Identity(), CVector3::One());
 	m_hp2.Update(m_hppos2, CQuaternion::Identity(), CVector3::One());

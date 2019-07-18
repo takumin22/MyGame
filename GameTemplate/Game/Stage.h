@@ -12,6 +12,7 @@
 #include "Goal.h"
 #include "Gate.h"
 #include "EnemyFly.h"
+#include "CheckPoint.h"
 class Game;
 class Enemy;
 class EnemyFly;
@@ -69,12 +70,13 @@ private:
 
 	int StageCount = 0;
 	Level m_level;								//レベルを初期化。
-	Goal* m_goal;
+	CheckPoint* m_checkpoint;
 	std::vector< Enemy* > m_enemyList;			//エネミーのリスト。
 	std::vector< Scaffold*> m_sacaffoldList;	//足場のリスト。
 	std::vector< Goal*> m_goalList;
 	std::vector< Spring*> m_springList;			//バネリスト
 	std::vector< Coin*> m_coinList;				//コインのリスト
+	std::vector< CheckPoint*> m_checkpointList;
 	std::vector<TurnScaffold*> m_turnscaffold;	//回転足場のリスト
 	std::vector<Gate*> m_gateList;				//ゲートのリスト
 	std::vector<RedCoin*> m_rcoinList;			//レッドコインのリスト

@@ -57,7 +57,10 @@ public:
 	{
 		return (float)m_Allelapsed;
 	}
-
+	void SetAllelapsed(double i)
+	{
+		m_Allelapsed = i;
+	}
 	/// <summary>	
 	/// スタートからの分を返す
 	/// （ラップ関係なしのすべての合計）
