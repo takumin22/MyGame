@@ -163,7 +163,7 @@
                   </Fixed>
                 </ScalingValues>
                 <RendererCommonValues>
-                  <ColorTexture>../../EffekseerRuntime130/Tool/Sample/01_NextSoft01/Texture/t0002.png</ColorTexture>
+                  <ColorTexture>Texture/t0006.png</ColorTexture>
                   <AlphaBlend>2</AlphaBlend>
                   <Wrap>1</Wrap>
                   <FadeOutType>1</FadeOutType>

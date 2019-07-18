@@ -16,8 +16,7 @@ Enemy::Enemy(CVector3 pos, CQuaternion rot, Player* player) :
 	m_animationClips[enAnimationClip_walk].Load(L"Assets/animData/enemywalk1.tka");
 	m_animationClips[enAnimationClip_walk].SetLoopFlag(true);
 
-	m_animationClips[enAnimation_Damage].Load(L"Assets/animData/enemydeth.tka");
-	m_animationClips[enAnimation_Damage].SetLoopFlag(false);
+
 
 	m_damagese.Init(L"Assets/sound/punch-middle2.wav");
 	m_damagese.SetVolume(0.5f);
@@ -129,7 +128,6 @@ void Enemy::EnemyAnimation()
 	{
 		m_scale.z -= 0.09f;
 		m_scale.z = max(0.1f,m_scale.z);
-		m_animation.Play(enAnimation_Damage, 0.2f);
 	}
 }
 void Enemy::Update()
@@ -168,7 +166,7 @@ void Enemy::Update()
 			punchflag = false;
 			
 		}
-		if (AnimPlayTime >= 50) {
+		if (AnimPlayTime >= 30) {
 			EnemyDeth = true;
 			m_enemyEffectHandle = g_graphicsEngine->GetEffekseerManager()->Play(m_enemyEffect, m_position.x, m_position.y, m_position.z);
 			AnimPlayTime = 0;

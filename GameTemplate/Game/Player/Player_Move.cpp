@@ -56,19 +56,7 @@ void Player_Move::Move()
 	m_moveSpeed += cameraForward;
 	m_moveSpeed += cameraRight;
 	m_moveSpeed.y += -1800.0f * m_deltatime;
-	if (m_player->GetCharaCon().IsJump()) {
-		//移動速度に制限を加える。
-		//ジャンプ中にジャンプ前より早くなることはない。
-		auto moveSpeedXZ = CVector3(m_moveSpeed.x, 0.0f, m_moveSpeed.z);
 
-		if (moveSpeedXZ.LengthSq() > m_moveSpeedWhenStartJump * m_moveSpeedWhenStartJump) {
-			moveSpeedXZ.Normalize();
-			moveSpeedXZ *= m_moveSpeedWhenStartJump;
-			m_moveSpeed.x = moveSpeedXZ.x;
-			m_moveSpeed.z = moveSpeedXZ.z;
-
-		}
-	}
 }
 
 void Player_Move::Turn()

@@ -101,7 +101,6 @@ private:
 	/// </summary>
 	enum EnAnimationClip {
 		enAnimationClip_walk,		//歩きアニメーション。
-		enAnimation_Damage,
 		enAnimationClip_Num,		//アニメーションクリップの総数。
 	};
 	EState m_estate = State_Move;						//初期ステート
